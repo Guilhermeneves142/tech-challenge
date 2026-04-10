@@ -10,11 +10,11 @@ export default function RootLayout({
       lang="pt-br"
     >
       {/* Criar componente do menu lateral e colocar no lugar dessa tag */}
-      <aside>
+      {/* <aside> */}
         <div>
-          <h2>FinanceApp</h2>
+          <h2 className="text-brand-primary">FinanceApp</h2>
         </div>
-      </aside>
+      {/* </aside> */}
       <body className="min-h-full flex flex-col">
         <div>
           <h1>DASHBOARD</h1>
