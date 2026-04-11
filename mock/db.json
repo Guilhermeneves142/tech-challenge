@@ -1,6 +1,4 @@
 {
-  "_readme": "Banco de dados mock do FinanceApp. Cada chave vira um endpoint REST em /api/<chave>. Objetos únicos (user, balance) retornam um objeto; arrays retornam listas com suporte a filtros, paginação e ordenação.",
-
   "user": {
     "id": 1,
     "name": "João Silva",
