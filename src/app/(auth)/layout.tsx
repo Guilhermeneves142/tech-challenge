@@ -1,23 +1,6 @@
 import type { ReactNode } from "react"
-import { DollarSign, TrendingUp, Shield, Clock } from "lucide-react"
-
-const features = [
-  {
-    icon: <DollarSign size={20} />,
-    title: "Controle total",
-    description: "Acompanhe receitas e despesas em tempo real",
-  },
-  {
-    icon: <TrendingUp size={20} />,
-    title: "Relatórios inteligentes",
-    description: "Visualize tendências e tome decisões melhores",
-  },
-  {
-    icon: <Shield size={20} />,
-    title: "Segurança avançada",
-    description: "Seus dados protegidos com criptografia de ponta",
-  },
-]
+import { Clock } from "lucide-react"
+import { authFeatures } from "./_data/features"
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
@@ -68,17 +51,20 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
             {/* Features */}
             <ul className="space-y-5">
-              {features.map((f) => (
-                <li key={f.title} className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-full bg-[var(--color-brand-secondary)] flex items-center justify-center text-[var(--color-brand-primary)] shrink-0 mt-0.5">
-                    {f.icon}
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold text-sm">{f.title}</p>
-                    <p className="text-white/50 text-sm mt-0.5">{f.description}</p>
-                  </div>
-                </li>
-              ))}
+              {authFeatures.map((f) => {
+                const Icon = f.icon
+                return (
+                  <li key={f.title} className="flex items-start gap-4">
+                    <div className="w-9 h-9 rounded-full bg-[var(--color-brand-secondary)] flex items-center justify-center text-[var(--color-brand-primary)] shrink-0 mt-0.5">
+                      <Icon size={20} />
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold text-sm">{f.title}</p>
+                      <p className="text-white/50 text-sm mt-0.5">{f.description}</p>
+                    </div>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
