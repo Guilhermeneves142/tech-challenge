@@ -49,6 +49,8 @@ export function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity("Preencha este campo")}
+          onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
         />
       </div>
 
