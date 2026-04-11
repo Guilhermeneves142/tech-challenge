@@ -24,13 +24,8 @@ export function LoginForm() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api"}/user`
       )
-      const user = await res.json()
-
-      if (user.email === email && user.password === password) {
-        router.push("/dashboard")
-      } else {
-        setError("E-mail ou senha incorretos.")
-      }
+      if (!res.ok) throw new Error()
+      router.push("/dashboard")
     } catch {
       setError("Não foi possível conectar ao servidor.")
     } finally {
