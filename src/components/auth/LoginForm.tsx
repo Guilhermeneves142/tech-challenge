@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -7,8 +9,37 @@ import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/auth/PasswordInput"
 
 export function LoginForm() {
+  const router = useRouter()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api"}/user`
+      )
+      const user = await res.json()
+
+      if (user.email === email && user.password === password) {
+        router.push("/dashboard")
+      } else {
+        setError("E-mail ou senha incorretos.")
+      }
+    } catch {
+      setError("Não foi possível conectar ao servidor.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
       {/* E-mail */}
       <div className="space-y-1.5">
         <Label htmlFor="email" className="text-sm font-medium text-foreground">
@@ -20,6 +51,9 @@ export function LoginForm() {
           placeholder="seu@email.com"
           autoComplete="email"
           className="h-10 bg-background"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
       </div>
 
@@ -36,12 +70,22 @@ export function LoginForm() {
             Esqueci minha senha
           </Link>
         </div>
-        <PasswordInput id="password" autoComplete="current-password" />
+        <PasswordInput
+          id="password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
 
+      {/* Erro */}
+      {error && (
+        <p className="text-sm text-destructive">{error}</p>
+      )}
+
       {/* Botão */}
-      <Button type="submit" className="w-full h-10 mt-2 font-semibold">
-        Entrar
+      <Button type="submit" className="w-full h-10 mt-2 font-semibold" disabled={loading}>
+        {loading ? "Entrando..." : "Entrar"}
       </Button>
 
       {/* Divisor */}
