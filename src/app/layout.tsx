@@ -1,3 +1,4 @@
+import Sidebar from "@/components/layout/default/sideBar";
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,6 +9,23 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className="min-h-screen bg-background text-foreground">
+      {/* Criar componente do menu lateral e colocar no lugar dessa tag */}
+      {/* <aside> */}
+      <div className="flex min-h-screen">
+        <aside className="w-[255px]">
+          <Sidebar />
+        </aside>
+
+        <main className="flex-1">
+          {children}
+        </main>
+      </div>
+      {/* </aside> */}
+      
+        <div>
+          <h1>DASHBOARD</h1>
+          <span>Veja o seu resumo financeiro</span>
+        </div>
         {children}
       </body>
     </html>
