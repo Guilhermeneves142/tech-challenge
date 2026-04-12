@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LogOut,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import { DashboardIcon } from "@/components/icons/dashboard-icon";
 import { ProfileIcon } from "@/components/icons/profile-icon";
 import { TransactionsIcon } from "@/components/icons/transactions-icon";
@@ -27,16 +25,13 @@ export default function Sidebar() {
     <div className="flex h-full flex-col justify-between bg-[var(--color-brand-tertiary)] px-4 py-5 text-white">
       <div>
         <div className="mb-8 flex items-center gap-3">
-        <div className="mb-8 flex items-center gap-3">
-  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white">
-    <LogoIcon className="h-5 w-5 text-[var(--color-brand-primary)]" />
-  </div>
+          <div className="mb-8 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white">
+              <LogoIcon className="h-5 w-5 text-[var(--color-brand-primary)]" />
+            </div>
 
-  <h1 className="text-xl font-semibold text-white">
-    FinanceApp
-  </h1>
-</div>
-
+            <h1 className="text-xl font-semibold text-white">FinanceApp</h1>
+          </div>
         </div>
 
         <nav className="flex flex-col gap-2">
@@ -70,9 +65,7 @@ export default function Sidebar() {
 
           <div>
             <p className="text-sm font-semibold leading-none">João Silva</p>
-            <span className="text-xs text-white/75">
-              Plano Profissional
-            </span>
+            <span className="text-xs text-white/75">Plano Profissional</span>
           </div>
         </div>
 
