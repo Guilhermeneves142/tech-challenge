@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently -n \"next,mock\" -c \"cyan,green\" \"next dev\" \"node mock/server.mjs\"",
+    "dev:next": "next dev",
+    "dev:mock": "node mock/server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -28,8 +30,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
+    "json-server": "^0.17.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
