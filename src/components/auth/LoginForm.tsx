@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { PasswordInput } from "@/components/auth/PasswordInput"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/auth/PasswordInput";
 
 export function LoginForm() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api"}/user`
-      )
-      if (!res.ok) throw new Error()
-      router.push("/dashboard")
+        `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api"}/user`,
+      );
+      if (!res.ok) throw new Error();
+      router.push("/main/dasboard");
     } catch {
-      setError("Não foi possível conectar ao servidor.")
+      setError("Não foi possível conectar ao servidor.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -49,7 +49,11 @@ export function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity("Preencha este campo")}
+          onInvalid={(e) =>
+            (e.target as HTMLInputElement).setCustomValidity(
+              "Preencha este campo",
+            )
+          }
           onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
         />
       </div>
@@ -57,7 +61,10 @@ export function LoginForm() {
       {/* Senha */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
-          <Label htmlFor="password" className="text-sm font-medium text-foreground">
+          <Label
+            htmlFor="password"
+            className="text-sm font-medium text-foreground"
+          >
             Senha
           </Label>
           <Link
@@ -76,12 +83,14 @@ export function LoginForm() {
       </div>
 
       {/* Erro */}
-      {error && (
-        <p className="text-sm text-destructive">{error}</p>
-      )}
+      {error && <p className="text-sm text-destructive">{error}</p>}
 
       {/* Botão */}
-      <Button type="submit" className="w-full h-10 mt-2 font-semibold" disabled={loading}>
+      <Button
+        type="submit"
+        className="w-full h-10 mt-2 font-semibold"
+        disabled={loading}
+      >
         {loading ? "Entrando..." : "Entrar"}
       </Button>
 
@@ -98,10 +107,13 @@ export function LoginForm() {
       {/* Link de cadastro */}
       <p className="text-center text-sm text-muted-foreground">
         Não tem uma conta?{" "}
-        <Link href="/cadastro" className="text-primary font-semibold hover:underline">
+        <Link
+          href="/cadastro"
+          className="text-primary font-semibold hover:underline"
+        >
           Cadastre-se grátis
         </Link>
       </p>
     </form>
-  )
+  );
 }
