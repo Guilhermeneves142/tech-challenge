@@ -1,5 +1,5 @@
-import DepositButton from "@/components/dashboard/depositButton";
-import TransferTable from "@/components/dashboard/transferTable";
+import DepositButton from "@/app/dashboard/components/depositButton";
+import TransferTable from "@/app/dashboard/components/transferTable";
 
 export default function DashboardPage() {
 	return (

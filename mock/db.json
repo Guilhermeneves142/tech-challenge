@@ -1,0 +1,59 @@
+{
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@financeapp.com",
+    "password": "123456",
+    "initials": "JS",
+    "plan": "Plano Profissional",
+    "avatar": null
+  },
+
+  "balance": {
+    "current": 0.00,
+    "variation": 0.0,
+    "variationLabel": "+0% este mês"
+  },
+
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Exemplo de transação",
+      "category": "food",
+      "amount": -100.00,
+      "date": "2025-05-01T10:00:00Z",
+      "dateLabel": "01 Mai, 10:00",
+      "type": "debit"
+    }
+  ],
+
+  "categories": [
+    { "id": "food",          "label": "Alimentação",   "icon": "utensils"         },
+    { "id": "transport",     "label": "Transporte",    "icon": "car"              },
+    { "id": "housing",       "label": "Moradia",       "icon": "home"             },
+    { "id": "income",        "label": "Renda",         "icon": "trending-up"      },
+    { "id": "transfer",      "label": "Transferência", "icon": "arrow-right-left" },
+    { "id": "entertainment", "label": "Lazer",         "icon": "tv"               },
+    { "id": "health",        "label": "Saúde",         "icon": "heart-pulse"      },
+    { "id": "education",     "label": "Educação",      "icon": "book-open"        }
+  ],
+
+  "budgets": [
+    {
+      "id": 1,
+      "category": "food",
+      "categoryLabel": "Alimentação",
+      "limit": 0.00,
+      "spent": 0.00,
+      "period": "2025-05"
+    }
+  ],
+
+  "reports": [
+    { "month": "Jan", "income": 0.00, "expenses": 0.00 },
+    { "month": "Fev", "income": 0.00, "expenses": 0.00 },
+    { "month": "Mar", "income": 0.00, "expenses": 0.00 },
+    { "month": "Abr", "income": 0.00, "expenses": 0.00 },
+    { "month": "Mai", "income": 0.00, "expenses": 0.00 }
+  ]
+}
