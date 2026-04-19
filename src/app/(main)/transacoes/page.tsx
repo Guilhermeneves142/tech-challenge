@@ -241,19 +241,19 @@ export default function TransactionsPage() {
 
     return (
         <>
-            <Card className="flex flex-row items-end 4 py-6 overflow-visible px-6">
-                <div className="flex flex-col gap-1">
+            <Card className="flex flex-col sm:flex-row items-end gap-3 py-6 px-6 mb-6 flex-wrap">
+                <div className="flex flex-col gap-1 w-full sm:w-auto">
                     <Label className="text-label">Período</Label>
                     <Input
                         type="date"
-                        className="cursor-pointer w-44"
-                    />
+                        className="cursor-pointer w-full sm:w-44"
+                     />
                 </div>
                 <div className="relative flex flex-col gap-1 flex-1">
                     <Label className="text-label">Buscar</Label>
                     <div className="relative">
                         <Search
-                            className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-primary"
+                            className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-primary" 
                         />
                         <Input
                             type="search"
@@ -275,8 +275,8 @@ export default function TransactionsPage() {
                     }}
                     >
                         <SelectTrigger className="w-full cursor-pointer">
-                            <SelectValue
-                                placeholder="Todos os tipos"
+                            <SelectValue 
+                                placeholder="Todos os tipos" 
                             />
                         </SelectTrigger>
                         <SelectContent side="bottom" className="p-1" sideOffset={6} align="start" alignItemWithTrigger={false}>
@@ -286,11 +286,11 @@ export default function TransactionsPage() {
                                     {type}
                                 </SelectItem>
                             ))}
-
                         </SelectContent>
                     </Select>
                 </div>
-                <Button variant="default" className="cursor-pointer shrink-0">
+
+                <Button variant="default" className="cursor-pointer w-full sm:w-auto shrink-0">
                     <Plus size={16} />
                     Nova Transação
                 </Button>
