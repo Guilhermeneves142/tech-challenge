@@ -2,8 +2,6 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState,
-  FilterFnOption,
   flexRender,
   getCoreRowModel,
 
@@ -17,19 +15,16 @@ import {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+  PaginationLink
 } from "@/components/ui/pagination"
 
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from "@/components/ui/table"
 import { useState } from "react"
 
