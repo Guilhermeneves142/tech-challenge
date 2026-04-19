@@ -296,22 +296,22 @@ export default function TransactionsPage() {
                 </Button>
             </Card>
 
-            <section className="m-6 me-10 ms-10 flex flex-row gap-12">
+            <section className="mx-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
                 <Card className="p-6 bg-brand-secondary text-primary">
                     <h4 >Receitas</h4>
-                    <h2 className="pe-[20px] -mt-3">R$ 8.500,00</h2>
+                    <h2 className="pe-5 -mt-3">R$ 8.500,00</h2>
                 </Card>
                 <Card className="p-6 bg-feedback-error text-card">
                     <h4>Despesas</h4>
-                    <h2 className="pe-[20px] -mt-3">R$ 5.246,00</h2>
+                    <h2 className="pe-5 -mt-3">R$ 5.246,00</h2>
                 </Card>
                 <Card className="p-6 bg-brand-tertiary  text-card">
                     <h4>Seu Saldo Atual</h4>
-                    <h2 className="pe-[20px] -mt-3">R$ 3.254,00</h2>
+                    <h2 className="pe-5 -mt-3">R$ 3.254,00</h2>
                 </Card>
                 <Card className="p-6 bg-card  text-card-foreground">
                     <h4>Lançamentos Futuros</h4>
-                    <h2 className="pe-[20px] -mt-3">R$ 3.254,00</h2>
+                    <h2 className="pe-5 -mt-3">R$ 3.254,00</h2>
                 </Card>
             </section>
 
