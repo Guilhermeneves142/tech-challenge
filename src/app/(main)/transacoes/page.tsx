@@ -2,6 +2,7 @@
 
 import { DeleteIcon } from "@/components/icons/delete.icon";
 import { EditIcon } from "@/components/icons/edit-icon";
+import { Headline } from "@/components/layout/default/headLine";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -241,6 +242,10 @@ export default function TransactionsPage() {
 
     return (
         <>
+            <Headline
+                title="Transações"
+                subTitle="Veja as suas transações"
+            />
             <Card className="flex flex-col sm:flex-row items-end gap-3 py-6 px-6 mb-6 flex-wrap">
                 <div className="flex flex-col gap-1 w-full sm:w-auto">
                     <Label className="text-label">Período</Label>
