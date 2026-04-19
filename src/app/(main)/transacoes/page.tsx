@@ -254,22 +254,22 @@ export default function TransactionsPage() {
                         className="cursor-pointer w-full sm:w-44"
                      />
                 </div>
-                <div className="relative flex flex-col gap-1 flex-1">
+                <div className="relative flex flex-col gap-1 w-full sm:flex-1">  
                     <Label className="text-label">Buscar</Label>
                     <div className="relative">
                         <Search
-                            className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-primary" 
+                        className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-primary" 
                         />
                         <Input
                             type="search"
                             placeholder="Descrição"
-                            className="pl-8"
+                            className="pl-8 w-full"
                             value={globalFilter}
                             onChange={(e) => setGlobalFilter(e.target.value)}
                         />
                     </div>
                 </div>
-                <div className="flex flex-col gap-1 w-48">
+                <div className="flex flex-col gap-1 w-full sm:w-48">
                     <Label className="text-label">Tipo</Label>
                     <Select onValueChange={(value) => {
                         if (value === "Todos os tipos") {
