@@ -3,7 +3,7 @@ type HeadlineProps = {
     subTitle: string
 }
 
-export function Headline({title, subTitle}: HeadlineProps) {
+export default function Headline({title, subTitle}: HeadlineProps) {
     return (
         <>
             <header className="mb-6 pb-4 -mx-6 px-6 border-b border-border-default">

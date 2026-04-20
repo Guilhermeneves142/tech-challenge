@@ -11,7 +11,7 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_2,bolt,local_mall,qr_code,sync_alt&display=block"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_2,bolt,credit_card,home,local_mall,qr_code,sync_alt,trending_up&display=block"
         />
       </head>
       <body className="min-h-screen bg-background text-foreground">

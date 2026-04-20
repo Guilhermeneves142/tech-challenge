@@ -2,7 +2,7 @@
 
 import { DeleteIcon } from "@/components/icons/delete.icon";
 import { EditIcon } from "@/components/icons/edit-icon";
-import { Headline } from "@/components/layout/default/headLine";
+import Headline from "@/components/layout/default/headLine";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
