@@ -12,12 +12,6 @@ export default function DashboardLayout({
       </aside>
 
       <section className="flex-1 px-6 py-2">
-        <header>
-          <h1 className="text-[40px] font-bold">DASHBOARD</h1>
-          <span className="text-[20px] font-medium text-text-secondary">
-            Veja o seu resumo financeiro
-          </span>
-        </header>
         <main className="py-6">{children}</main>
         <footer className="text-center">
           <span className="text-[12px] text-text-tertiary">

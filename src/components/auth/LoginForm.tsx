@@ -25,7 +25,7 @@ export function LoginForm() {
         `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api"}/user`,
       );
       if (!res.ok) throw new Error();
-      router.push("/main/dasboard");
+      router.push("/dashboard");
     } catch {
       setError("Não foi possível conectar ao servidor.");
     } finally {

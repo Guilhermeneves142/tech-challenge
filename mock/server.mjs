@@ -54,7 +54,18 @@ server.get("/api/dashboard", (req, res) => {
  */
 server.get("/api/transactions/summary", (req, res) => {
   const db = router.db;
-  const transactions = db.get("transactions").value();
+  let transactions = db.get("transactions").value();
+
+  // aplica os mesmos filtros
+  if (req.query.type) {
+    transactions = transactions.filter((t) => t.type === req.query.type)
+  }
+
+  if (req.query.description_like) {
+    transactions = transactions.filter((t) =>
+      t.description.toLowerCase().includes(req.query.description_like.toLowerCase())
+    )
+  }
 
   const totalCredit = transactions
     .filter((t) => t.type === "credit")
