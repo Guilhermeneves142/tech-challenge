@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { api } from "@/lib/api";
 import type { TransactionFormState, TransactionFormType, CreateTransactionPayload, TransactionModalMode } from "../types";
 import type { Transaction } from "@/lib/api";
@@ -15,12 +17,13 @@ const INITIAL_STATE: TransactionFormState = {
 
 interface UseTransactionFormOptions {
   mode?: TransactionModalMode;
+  transactionId?: number;
   initialData?: Partial<TransactionFormState>;
   onSuccess?: (transaction: Transaction) => void;
   onClose: () => void;
 }
 
-export function useTransactionForm({ mode = "create", initialData, onSuccess, onClose }: UseTransactionFormOptions) {
+export function useTransactionForm({ mode = "create", transactionId, initialData, onSuccess, onClose }: UseTransactionFormOptions) {
   const [form, setForm] = useState<TransactionFormState>({
     ...INITIAL_STATE,
     ...initialData,
@@ -60,18 +63,23 @@ export function useTransactionForm({ mode = "create", initialData, onSuccess, on
       return;
     }
 
+    const rawAmount = parseFloat(form.amount.replace(",", "."));
+    const now = new Date();
+    const dateLabel = format(new Date(`${form.date}T${format(now, "HH:mm:ss")}`), "dd MMM, HH:mm", { locale: ptBR });
+
     const payload: CreateTransactionPayload = {
       description: form.description.trim(),
-      amount: parseFloat(form.amount.replace(",", ".")),
+      amount: form.type === "debit" ? -rawAmount : rawAmount,
       category: form.category,
       date: new Date(form.date).toISOString(),
+      dateLabel,
       type: form.type,
     };
 
     setLoading(true);
     try {
-      const result = mode === "edit"
-        ? await api.createTransaction(payload)
+      const result = mode === "edit" && transactionId
+        ? await api.updateTransaction(transactionId, payload)
         : await api.createTransaction(payload);
       onSuccess?.(result);
       reset();
@@ -88,5 +96,5 @@ export function useTransactionForm({ mode = "create", initialData, onSuccess, on
     onClose();
   }
 
-  return { form, loading, error, setField, setType, handleSubmit, handleCancel };
+  return { form, loading, error, setField, setType, handleSubmit, handleCancel, reset };
 }

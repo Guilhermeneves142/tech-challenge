@@ -9,6 +9,7 @@ export interface CreateTransactionPayload {
   amount: number;
   category: string;
   date: string;
+  dateLabel: string;
   type: TransactionFormType;
 }
 
@@ -26,5 +27,6 @@ export interface TransactionModalProps {
   categories: Category[];
   mode?: TransactionModalMode;
   initialData?: Partial<TransactionFormState>;
+  transactionId?: number;
   onSuccess?: (transaction: Transaction) => void;
 }
