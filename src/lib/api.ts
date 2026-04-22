@@ -75,6 +75,8 @@ export interface TransactionParams {
   type?: "credit" | "debit";
   category?: string;
   description_like?: string;
+  date_gte?: string;
+  date_lte?: string;
 }
 
 // ── Fetch base ────────────────────────────────
@@ -138,9 +140,16 @@ export const api = {
   getDashboard: () => request<Dashboard>("/dashboard"),
 
   /** Cria uma nova transação */
-  createTransaction: (body: Omit<Transaction, "id" | "dateLabel">) =>
+  createTransaction: (body: Omit<Transaction, "id">) =>
     request<Transaction>("/transactions", {
       method: "POST",
+      body: JSON.stringify(body),
+    }),
+
+  /** Atualiza uma transação existente */
+  updateTransaction: (id: number, body: Partial<Omit<Transaction, "id">>) =>
+    request<Transaction>(`/transactions/${id}`, {
+      method: "PATCH",
       body: JSON.stringify(body),
     }),
 };
