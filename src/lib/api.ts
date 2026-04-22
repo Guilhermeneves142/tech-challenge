@@ -136,4 +136,11 @@ export const api = {
 
   /** Dashboard consolidado (user + balance + últimas 5 transações) */
   getDashboard: () => request<Dashboard>("/dashboard"),
+
+  /** Cria uma nova transação */
+  createTransaction: (body: Omit<Transaction, "id" | "dateLabel">) =>
+    request<Transaction>("/transactions", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
 };
