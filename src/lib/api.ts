@@ -55,10 +55,10 @@ export interface Report {
 }
 
 export interface TransactionSummary {
-  totalCredit: number;
-  totalDebit: number;
-  net: number;
-  count: number;
+  income: number;
+  expense: number;
+  currentBalance: number;
+  future: number;
 }
 
 export interface Dashboard {
@@ -74,10 +74,16 @@ export interface TransactionParams {
   _page?: number;
   type?: "credit" | "debit";
   category?: string;
-  description_like?: string;
-  date_gte?: string;
-  date_lte?: string;
+  descriptionLike?: string;
+  dateGte?: string;
+  dateLte?: string;
 }
+
+const PARAM_KEY_MAP: Partial<Record<keyof TransactionParams, string>> = {
+  descriptionLike: "description_like",
+  dateGte: "date_gte",
+  dateLte: "date_lte",
+};
 
 // ── Fetch base ────────────────────────────────
 
@@ -98,7 +104,7 @@ function toQueryString(params: TransactionParams): string {
   const qs = new URLSearchParams(
     Object.entries(params as Record<string, unknown>)
       .filter(([, v]) => v !== undefined && v !== null)
-      .map(([k, v]) => [k, String(v)])
+      .map(([k, v]) => [PARAM_KEY_MAP[k as keyof TransactionParams] ?? k, String(v)])
   ).toString();
   return qs ? `?${qs}` : "";
 }
@@ -120,9 +126,9 @@ export const api = {
   getTransactionById: (id: number) =>
     request<Transaction>(`/transactions/${id}`),
 
-  /** Totais de crédito/débito do período */
-  getTransactionsSummary: () =>
-    request<TransactionSummary>("/transactions/summary"),
+  /** Receitas, despesas, saldo atual e lançamentos futuros */
+  getTransactionsSummary: (params?: TransactionParams) =>
+    request<TransactionSummary>(`/transactions/summary${params ? toQueryString(params) : ""}`),
 
   /** Categorias disponíveis */
   getCategories: () => request<Category[]>("/categories"),
@@ -152,4 +158,8 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify(body),
     }),
+
+  /** Remove uma transação */
+  deleteTransaction: (id: number) =>
+    request<void>(`/transactions/${id}`, { method: "DELETE" }),
 };
