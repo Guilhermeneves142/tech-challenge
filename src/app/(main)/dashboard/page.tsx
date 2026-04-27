@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeftRight, Bolt, QrCode, TrendingUp } from "lucide-react";
+import { ArrowLeftRight, Zap, QrCode, TrendingUp } from "lucide-react";
 import DashboardMenu from "./components/dashboardMenu";
 import ActionButton from "./components/actionButton";
 import NewTransactionAction from "./components/newTransactionAction";
@@ -29,7 +29,7 @@ export default function DashboardPage() {
       <section className="grid grid-cols-12 gap-3">
         <section className="col-span-12 lg:col-span-9 min-[1400px]:col-span-9">
           <article className="flex flex-wrap items-center gap-2 pb-4">
-            <Bolt
+            <Zap
               className="size-6 shrink-0 text-brand-tertiary max-lg:size-5"
               aria-hidden
             />
