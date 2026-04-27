@@ -23,9 +23,9 @@ export default function DashboardMenu() {
 			<DashboardMenuItem
 				name="Relatórios Financeiros"
 				icon="credit_card"
-				route="/finantial-reports"
-				selected={checkSelected("finantial-reports")}
-				onSelect={() => setSelectedMenu("finantial-reports")}
+				route="/em-construcao"
+				selected={checkSelected("em-construcao")}
+				onSelect={() => setSelectedMenu("em-construcao")}
 			/>
 		</section>
 	)
