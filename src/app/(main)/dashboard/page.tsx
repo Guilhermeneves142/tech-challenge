@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ArrowLeftRight, Bolt, QrCode, TrendingUp } from "lucide-react";
 import DashboardMenu from "./components/dashboardMenu";
 import ActionButton from "./components/actionButton";
 import NewTransactionAction from "./components/newTransactionAction";
@@ -28,9 +29,10 @@ export default function DashboardPage() {
       <section className="grid grid-cols-12 gap-3">
         <section className="col-span-12 lg:col-span-9 min-[1400px]:col-span-9">
           <article className="flex flex-wrap items-center gap-2 pb-4">
-            <span className="material-symbols-outlined text-[24px] text-brand-tertiary max-lg:text-xl">
-              bolt
-            </span>
+            <Bolt
+              className="size-6 shrink-0 text-brand-tertiary max-lg:size-5"
+              aria-hidden
+            />
             <h2 className="text-[24px] font-bold max-lg:text-lg">
               O que você quer fazer?
             </h2>
@@ -40,13 +42,15 @@ export default function DashboardPage() {
             <ActionButton
               className="col-span-12 sm:col-span-6 lg:col-span-3"
               text="Transferir"
-              icon="sync_alt"
+              icon={ArrowLeftRight}
+              disabled
               route="/em-construcao"
             />
             <ActionButton
               className="col-span-12 lg:col-span-3"
               text="Pagar Conta"
-              icon="qr_code"
+              icon={QrCode}
+              disabled
               route="/em-construcao"
             />
           </section>
@@ -61,9 +65,7 @@ export default function DashboardPage() {
             </h2>
           </div>
           <div className="flex w-fit max-w-full items-center gap-1 rounded-full bg-secondary px-3 py-1 text-brand-primary">
-            <span className="material-symbols-outlined shrink-0 text-[12px]">
-              trending_up
-            </span>
+            <TrendingUp className="size-3.5 shrink-0" aria-hidden />
             <span className="min-w-0 truncate text-sm">
               {balance?.variationLabel ?? "+0% este mês"}
             </span>
