@@ -76,7 +76,7 @@ TECH-CHALLENGE/
 
 ### 2. Via instalação local
 #### _Pré-requisitos:_
-* Node.js >=6.9.0
+* Node.js >=22.14
 * npm ou yarn
 
 <br>
