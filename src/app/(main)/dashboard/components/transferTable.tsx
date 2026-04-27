@@ -8,29 +8,33 @@ type TransferTableProps = {
 
 export default function TransferTable({ transactions }: TransferTableProps) {
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between px-6 pt-4 pb-[17px] border-b border-[rgba(6,96,32,0.05)]">
-        <h4 className="text-text-primary">Extrato Recente</h4>
-        <Link
-          href="/transacoes"
-          className="text-[14px] font-bold text-feedback-success hover:opacity-75 transition-opacity"
-        >
-          Ver tudo
-        </Link>
-      </div>
-      <table className="w-full">
-        <tbody>
-          {transactions.map((item) => (
-            <TransferTableItem
-              key={item.id}
-              description={item.description}
-              date={item.dateLabel}
-              value={item.amount}
-            />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <table className="w-full">
+      <thead>
+        <tr>
+          <th className="mb-4 pl-6 text-start text-[20px] font-medium">
+            Extrato Recente
+          </th>
+          <th className="text-primary mb-4 cursor-pointer pr-6 text-end">
+            <Link
+              href="/transacoes"
+              className="w-fit rounded-full px-3 py-2 hover:bg-secondary"
+            >
+              Ver tudo
+            </Link>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {transactions.map((item) => (
+          <TransferTableItem
+            key={item.id}
+            description={item.description}
+            date={item.dateLabel}
+            value={item.amount}
+          />
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -55,18 +59,18 @@ function TransferTableItem({
   return (
     <tr className="hover:bg-gray-100">
       <td className="flex py-4 pl-6">
-        <span className="p-2 rounded-full flex items-center justify-center text-brand-primary bg-brand-secondary">
-          <ShoppingBag size={20} />
+        <span className="flex items-center justify-center rounded-full bg-brand-secondary p-2 text-brand-primary">
+          <ShoppingBag className="size-5 shrink-0" aria-hidden />
         </span>
-        <article className="flex flex-col ml-3">
-          <strong className="text-text-primary font-medium text-[16px]">
+        <article className="ml-3 flex flex-col">
+          <strong className="text-[16px] font-medium text-text-primary">
             {description}
           </strong>
-          <span className="text-text-secondary text-[12px]">{date}</span>
+          <span className="text-[12px] text-text-secondary">{date}</span>
         </article>
       </td>
-      <td className="text-end pr-6">
-        <span className={["font-bold text-[16px]", classColorValue].join(" ")}>
+      <td className="pr-6 text-end">
+        <span className={["text-[16px] font-bold", classColorValue].join(" ")}>
           {valueFormatted}
         </span>
       </td>
