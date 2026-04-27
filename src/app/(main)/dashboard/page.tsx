@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Zap, TrendingUp, ArrowLeftRight, QrCode } from "lucide-react";
 import DashboardMenu from "./components/dashboardMenu";
 import ActionButton from "./components/actionButton";
 import NewTransactionAction from "./components/newTransactionAction";
@@ -27,10 +28,8 @@ export default function DashboardPage() {
       <Headline title="Dashboard" subTitle="Veja o seu resumo financeiro" />
       <section className="grid grid-cols-12 gap-3">
         <section className="min-[1400px]:col-span-9 col-span-8">
-          <article className="flex items-center pb-4">
-            <span className="text-[24px] material-symbols-outlined text-brand-tertiary">
-              bolt
-            </span>
+          <article className="flex items-center gap-1 pb-4">
+            <Zap size={24} className="text-brand-tertiary" />
             <h2 className="text-[24px] font-bold">O que você quer fazer?</h2>
           </article>
           <section className="grid grid-cols-12 gap-3">
@@ -38,14 +37,15 @@ export default function DashboardPage() {
             <ActionButton
               className="col-span-3"
               text="Transferir"
-              icon="sync_alt"
+              icon={ArrowLeftRight}
               route="/em-construcao"
             />
             <ActionButton
               className="col-span-3"
               text="Pagar Conta"
-              icon="qr_code"
+              icon={QrCode}
               route="/em-construcao"
+              locked
             />
           </section>
         </section>
@@ -56,10 +56,8 @@ export default function DashboardPage() {
             </strong>
             <h2 className="text-white text-[48px] font-bold">{currentBalance}</h2>
           </div>
-          <div className="bg-secondary w-fit text-brand-primary px-3 py-1 rounded-full flex items-center">
-            <span className="text-[12px] material-symbols-outlined mr-1.5">
-              trending_up
-            </span>
+          <div className="bg-secondary w-fit text-brand-primary px-3 py-1 rounded-full flex items-center gap-1.5">
+            <TrendingUp size={12} />
             {balance?.variationLabel ?? "+0% este mês"}
           </div>
         </article>

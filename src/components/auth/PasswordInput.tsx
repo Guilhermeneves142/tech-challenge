@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Eye, EyeOff } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface PasswordInputProps {
-  id: string
-  placeholder?: string
-  autoComplete?: string
-  value?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  className?: string
-  "aria-invalid"?: boolean
+  id: string;
+  placeholder?: string;
+  autoComplete?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  "aria-invalid"?: boolean;
 }
 
 export function PasswordInput({
@@ -23,7 +23,7 @@ export function PasswordInput({
   className,
   "aria-invalid": ariaInvalid,
 }: PasswordInputProps) {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   return (
     <div className="relative">
@@ -34,7 +34,7 @@ export function PasswordInput({
         autoComplete={autoComplete}
         value={value}
         onChange={onChange}
-        className={`h-10 bg-background pr-10 ${className ?? ""}`}
+        className={`h-9 pr-10 ${className ?? ""}`}
         aria-invalid={ariaInvalid}
       />
       <button
@@ -46,5 +46,5 @@ export function PasswordInput({
         {show ? <EyeOff size={16} /> : <Eye size={16} />}
       </button>
     </div>
-  )
+  );
 }

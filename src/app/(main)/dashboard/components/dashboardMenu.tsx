@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react"
+import { Home, CreditCard } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 
 export default function DashboardMenu() {
 
@@ -16,13 +18,13 @@ export default function DashboardMenu() {
 			<DashboardMenuItem
 				name="Home"
 				route="/dashboard"
-				icon="home"
+				icon={Home}
 				selected={checkSelected("home")}
 				onSelect={() => setSelectedMenu("home")}
 			/>
 			<DashboardMenuItem
 				name="Relatórios Financeiros"
-				icon="credit_card"
+				icon={CreditCard}
 				route="/em-construcao"
 				selected={checkSelected("em-construcao")}
 				onSelect={() => setSelectedMenu("em-construcao")}
@@ -35,25 +37,25 @@ type DashboardMenuItemProps = {
 	name: string;
 	route: string;
 	selected: boolean;
-	icon: string;
+	icon: LucideIcon;
 	onSelect: () => void;
 }
 
-function DashboardMenuItem({name, route, selected, onSelect, icon}: DashboardMenuItemProps) {
+function DashboardMenuItem({name, route, selected, onSelect, icon: Icon}: DashboardMenuItemProps) {
 	const itemClass = selected
 		? "text-white bg-brand-tertiary hover:opacity-90"
 		: "text-text-secondary hover:bg-gray-100"
 
 	return (
 			<Link
-				className={["px-4 py-3  rounded-md flex items-center gap-2", itemClass].join(" ")}
+				className={["px-4 py-3 rounded-md flex items-center gap-2", itemClass].join(" ")}
 				onClick={onSelect}
 				role="button"
 				tabIndex={0}
 				aria-label={name}
 				href={route}
 			>
-				<span className="font-medium text-[14px] material-symbols-outlined">{icon}</span>
+				<Icon size={18} />
 				<span className="font-medium text-[14px]">{name}</span>
 			</Link>
 	)

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Plus } from "lucide-react";
 import { TransactionModal } from "@/components/transactions";
 import { api } from "@/lib/api";
 import type { Category } from "@/lib/api";
@@ -27,8 +28,8 @@ export default function NewTransactionAction({ className }: Props) {
           className,
         ].join(" ")}
       >
-        <span className="material-symbols-outlined bg-brand-secondary text-brand-primary p-3 rounded-full">
-          add_2
+        <span className="bg-brand-secondary text-brand-primary p-3 rounded-full flex items-center justify-center">
+          <Plus size={24} />
         </span>
         <span className="text-[18px] font-medium pt-2">Transação</span>
       </button>
