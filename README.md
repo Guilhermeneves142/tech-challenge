@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+`PÓS TECH: FRONT-END ENGINEERING/2026`
+<h1>
+  <img src="https://github.com/user-attachments/assets/e807ec28-4044-40e6-a245-731a244d5882" width="30" style="vertical-align: middle;" />
+  Projeto FinanceApp
+</h1>
 
-## Getting Started
+Aplicação de gerenciamento financeiro, com o objetivo de oferecer uma interface intuitiva que permita aos usuários controlar e gerenciar suas transações financeiras de forma eficiente.
 
-First, run the development server:
+<br>
 
+## Integrantes
+* [Gisele Cardoso](https://github.com/Gisele-Cardoso)
+* [Guilherme Neves Trindade](https://github.com/Guilhermeneves142)
+* [Tayane Milagres](https://github.com/taymilagres)
+* [Vandrei de Lima](https://github.com/vandreilima)
+
+<br>
+
+##  Composição geral
+* Login
+* Cadastro
+* Home
+* Listagem de transações
+* Modais de adição, edição e remoção de registros de transações
+
+<br>
+
+## Tecnologias utilizadas
+
+* **Desenvolvimento:** Next.js, JavaScript, React, Shadow/cn, Tailwind
+* **Dados:** API fake com mock
+* **Design System:** Figma
+* **Deploy:** Vercel
+
+<br>
+
+## Arquitetura de pastas
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+TECH-CHALLENGE/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   │   ├── ...
+│   │   │   └── layout.tsx
+│   │   ├── (main)/
+│   │   │   ├── ...
+│   │   │   └── layout.tsx
+│   │   ├── favicon.ico
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   └── ...
+│   ├── lib/
+│   │   └── ...
+│   ├── shared/
+│   │   └── ...
+│   └── styles/
+│       └── ...
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##  Demonstração
+🔗 **Vídeo de demonstração:** [Add link da vercel] 
+<br>
+🔗 **Design System:** [Figma](https://www.figma.com/design/3U3w8niWGklunFZzrSCGto/Tech-Chalenger?node-id=52-1791&t=ZNWD9qu4LBWp7f2j-0)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<br>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Formas de acessar o projeto
+### 1. Via deploy:
+🔗 **Deploy:** [Add link da vercel]
 
-## Learn More
+<br>
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Via instalação local
+#### _Pré-requisitos:_
+* Node.js >=6.9.0
+* npm ou yarn
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Clone o repositório na IDE de sua preferência
+git clone https://github.com/Guilhermeneves142/tech-challenge.git
 
-## Deploy on Vercel
+# Entre na pasta
+cd tech-challenge
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Instale as dependências
+npm install 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Rode o projeto
+npm run dev
+
+# Abra o link disponibilizado no terminal (Ctrl + clique)
+http://localhost:3000
+
+```
