@@ -127,25 +127,32 @@ server.post("/api/auth/login", (req, res) => {
 server.get("/api/dashboard", (req, res) => {
   const db = router.db;
   const user = db.get("user").value();
-  const balance = db.get("balance").value();
-  const transactions = db
+  const all = db.get("transactions").value();
+  const recentTransactions = db
     .get("transactions")
     .orderBy("date", "desc")
     .take(5)
     .value();
 
-  res.json({ user, balance, recentTransactions: transactions });
+  const current = all.reduce((sum, t) => sum + t.amount, 0);
+  const balance = {
+    current,
+    variation: 0,
+    variationLabel: "+0% este mês",
+  };
+
+  res.json({ user, balance, recentTransactions });
 });
 
 /**
  * GET /api/transactions/summary
- * Totais de crédito, débito e saldo líquido.
+ * Receitas, despesas, saldo atual (até hoje) e lançamentos futuros.
+ * Aceita os mesmos filtros de /api/transactions.
  */
 server.get("/api/transactions/summary", (req, res) => {
   const db = router.db;
   let transactions = db.get("transactions").value();
 
-  // aplica os mesmos filtros
   if (req.query.type) {
     transactions = transactions.filter((t) => t.type === req.query.type);
   }
@@ -158,19 +165,33 @@ server.get("/api/transactions/summary", (req, res) => {
     );
   }
 
-  const totalCredit = transactions
+  if (req.query.date_gte) {
+    transactions = transactions.filter((t) => t.date >= req.query.date_gte);
+  }
+
+  if (req.query.date_lte) {
+    transactions = transactions.filter((t) => t.date <= req.query.date_lte);
+  }
+
+  const now = new Date().toISOString();
+
+  const income = transactions
     .filter((t) => t.type === "credit")
     .reduce((sum, t) => sum + t.amount, 0);
 
-  const totalDebit = transactions
+  const expense = transactions
     .filter((t) => t.type === "debit")
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
+  const future = transactions
+    .filter((t) => t.date > now)
+    .reduce((sum, t) => sum + t.amount, 0);
+
   res.json({
-    totalCredit,
-    totalDebit,
-    net: totalCredit - totalDebit,
-    count: transactions.length,
+    income,
+    expense,
+    currentBalance: income - expense,
+    future,
   });
 });
 

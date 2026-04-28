@@ -1,86 +1,75 @@
 import Link from "next/link";
+import { ShoppingBag } from "lucide-react";
+import type { Transaction } from "@/lib/api";
 
-export default function TransferTable() {
+type TransferTableProps = {
+  transactions: Transaction[];
+};
 
-	const itemsTable = [
-		{
-			icon: "local_mall",
-			description: "Supermercado Pão de Açúcar",
-			date: "Hoje, 14:30",
-			value: 10
-		},
-		{
-			icon: "local_mall",
-			description: "Supermercado Pão de Açúcar",
-			date: "Hoje, 14:30",
-			value: -120
-		},
-		{
-			icon: "local_mall",
-			description: "Supermercado Pão de Açúcar",
-			date: "Hoje, 14:30",
-			value: 90
-		},
-		{
-			icon: "local_mall",
-			description: "Supermercado Pão de Açúcar",
-			date: "Hoje, 14:30",
-			value: -340
-		}
-	]
-	return (
-		<table className="w-full">
-			<thead className="">
-				<tr>
-					<th className="text-[20px] font-medium text-start mb-4 pl-6">Extrato Recente</th>
-					<th className="text-primary text-end mb-4 cursor-pointer pr-6">
-						<Link href="/transferences" className="hover:bg-secondary w-fit px-3 py-2 rounded-full">Ver tudo</Link>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{
-					itemsTable.map((item, index) => {
-						return (
-							<TransferTableItem key={index} {...item} />
-						)
-					})
-				}
-			</tbody>
-		</table>
-	)
+export default function TransferTable({ transactions }: TransferTableProps) {
+  return (
+    <table className="w-full">
+      <thead>
+        <tr>
+          <th className="mb-4 pl-6 text-start text-[20px] font-medium">
+            Extrato Recente
+          </th>
+          <th className="text-primary mb-4 cursor-pointer pr-6 text-end">
+            <Link
+              href="/transacoes"
+              className="w-fit rounded-full px-3 py-2 hover:bg-secondary"
+            >
+              Ver tudo
+            </Link>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {transactions.map((item) => (
+          <TransferTableItem
+            key={item.id}
+            description={item.description}
+            date={item.dateLabel}
+            value={item.amount}
+          />
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 type TransferTableItemProps = {
-	icon: string;
-	description: string;
-	date: string;
-	value: number;
-}
+  description: string;
+  date: string;
+  value: number;
+};
 
-function TransferTableItem({icon, description, date, value}: TransferTableItemProps) {
+function TransferTableItem({ description, date, value }: TransferTableItemProps) {
+  const classColorValue =
+    value < 0 ? "text-feedback-error" : "text-feedback-success";
+  const valueFormatted = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
 
-
-	const classColorValue = value < 0 ? "text-feedback-error" : "text-feedback-success"
-	const valueFormatted = new Intl.NumberFormat('pt-BR', {
-		style: 'currency',
-		currency: 'BRL',
-	}).format(value);
-
-	return (
-		<tr className="hover:bg-gray-100">
-			<td className="flex py-4 pl-6">
-				<span className="p-2 rounded-full material-symbols-outlined text-brand-primary bg-brand-secondary">{icon}</span>
-				<article className="flex flex-col ml-3">
-					<strong className="text-text-primary font-medium text-[16px]">{description}</strong>
-					<span className="text-text-secondary text-[12px]">{date}</span>
-				</article>
-			</td>
-			<td className="text-end pr-6">
-				<span className={["font-bold text-[16px]",classColorValue].join(" ")}>
-					{valueFormatted}
-				</span>
-			</td>
-		</tr>
-	)
+  return (
+    <tr className="hover:bg-gray-100">
+      <td className="flex py-4 pl-6">
+        <span className="flex items-center justify-center rounded-full bg-brand-secondary p-2 text-brand-primary">
+          <ShoppingBag className="size-5 shrink-0" aria-hidden />
+        </span>
+        <article className="ml-3 flex flex-col">
+          <strong className="text-[16px] font-medium text-text-primary">
+            {description}
+          </strong>
+          <span className="text-[12px] text-text-secondary">{date}</span>
+        </article>
+      </td>
+      <td className="pr-6 text-end">
+        <span className={["text-[16px] font-bold", classColorValue].join(" ")}>
+          {valueFormatted}
+        </span>
+      </td>
+    </tr>
+  );
 }

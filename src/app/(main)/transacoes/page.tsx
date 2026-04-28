@@ -1,13 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { ColumnDef } from "@tanstack/react-table";
-import { CalendarIcon, Plus, Search, X } from "lucide-react";
-import { DeleteIcon } from "@/components/icons/delete.icon";
-import { EditIcon } from "@/components/icons/edit-icon";
 import Headline from "@/components/layout/default/headLine";
+import type { TransactionFormState } from "@/components/transactions";
+import { DeleteTransactionModal, TransactionModal } from "@/components/transactions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -23,21 +18,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TransactionModal } from "@/components/transactions";
-import type { TransactionFormState } from "@/components/transactions";
+import type { Category, Transaction, TransactionParams, TransactionSummary } from "@/lib/api";
 import { api } from "@/lib/api";
-import type { Category, Transaction, TransactionParams } from "@/lib/api";
+import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon, Pencil, Plus, Search, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
+import { useDebounce } from "use-debounce";
 
 export default function TransactionsPage() {
   const [filterDescription, setFilterDescription] = useState("");
+  const [debouncedDescription] = useDebounce(filterDescription, 300);
   const [filterType, setFilterType] = useState("");
   const [filterRange, setFilterRange] = useState<DateRange | undefined>();
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deletingTransaction, setDeletingTransaction] = useState<Transaction | undefined>();
   const [editingTransaction, setEditingTransaction] = useState<
     Partial<TransactionFormState> | undefined
   >();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [summary, setSummary] = useState<TransactionSummary | undefined>();
   const [categories, setCategories] = useState<Category[]>([]);
   const [editingId, setEditingId] = useState<number | undefined>();
   const [refresh, setRefresh] = useState(0);
@@ -47,16 +50,18 @@ export default function TransactionsPage() {
   }, []);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const params: TransactionParams = {};
-      if (filterDescription) params.description_like = filterDescription;
-      if (filterType) params.type = filterType as "credit" | "debit";
-      if (filterRange?.from) params.date_gte = format(filterRange.from, "yyyy-MM-dd") + "T00:00:00.000Z";
-      if (filterRange?.to) params.date_lte = format(filterRange.to, "yyyy-MM-dd") + "T23:59:59.999Z";
-      api.getTransactions(params).then(setTransactions).catch(console.error);
-    }, 300);
-    return () => clearTimeout(timeout);
-  }, [filterDescription, filterType, filterRange, refresh]);
+    const params: TransactionParams = {};
+    if (debouncedDescription) params.descriptionLike = debouncedDescription;
+    if (filterType) params.type = filterType as "credit" | "debit";
+    if (filterRange?.from) params.dateGte = format(filterRange.from, "yyyy-MM-dd") + "T00:00:00.000Z";
+    if (filterRange?.to) params.dateLte = format(filterRange.to, "yyyy-MM-dd") + "T23:59:59.999Z";
+    api.getTransactions(params).then(setTransactions).catch(console.error);
+    api.getTransactionsSummary(params).then(setSummary).catch(console.error);
+  }, [debouncedDescription, filterType, filterRange, refresh]);
+
+  function formatCurrency(value: number) {
+    return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
 
   function handleEdit(row: Transaction) {
     setEditingId(row.id);
@@ -74,6 +79,11 @@ export default function TransactionsPage() {
     setEditingId(undefined);
     setEditingTransaction(undefined);
     setModalOpen(true);
+  }
+
+  function handleDelete(row: Transaction) {
+    setDeletingTransaction(row);
+    setDeleteModalOpen(true);
   }
 
   const columns: ColumnDef<Transaction>[] = [
@@ -134,14 +144,14 @@ export default function TransactionsPage() {
             size="icon"
             onClick={() => handleEdit(row.original)}
           >
-            <EditIcon className="size-5" />
+            <Pencil className="size-4"/>
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => console.log("delete", row.original.id)}
+            onClick={() => handleDelete(row.original)}
           >
-            <DeleteIcon className="size-5" />
+            <Trash2 className="size-4"/>
           </Button>
         </div>
       ),
@@ -152,7 +162,7 @@ export default function TransactionsPage() {
     <>
       <Headline title="Transações" subTitle="Veja as suas transações" />
 
-      <Card className="flex flex-col sm:flex-row items-end gap-3 py-6 px-6 mb-6 flex-wrap">
+      <Card className="flex flex-col sm:flex-row items-end gap-5 py-6 px-6 flex-wrap">
         <div className="flex flex-col gap-1 w-full sm:w-auto">
           <Label className="text-label">Período</Label>
           <div className="flex items-center gap-1">
@@ -210,7 +220,9 @@ export default function TransactionsPage() {
           <Label className="text-label">Tipo</Label>
           <Select value={filterType} onValueChange={(v) => setFilterType(!v || v === "all" ? "" : v)}>
             <SelectTrigger className="w-full cursor-pointer">
-              <SelectValue placeholder="Todos os tipos" />
+              <SelectValue placeholder="Todos os tipos">
+                {(v) => (v === "credit" ? "Receita" : v === "debit" ? "Despesa" : "Todos os tipos")}
+              </SelectValue>
             </SelectTrigger>
             <SelectContent side="bottom" className="p-1" sideOffset={6} align="start" alignItemWithTrigger={false}>
               <SelectItem className="cursor-pointer" value="all">Todos os tipos</SelectItem>
@@ -229,22 +241,18 @@ export default function TransactionsPage() {
         </Button>
       </Card>
 
-      <section className="mx-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 mb-6">
+      <section className="mx-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
         <Card className="p-6 bg-brand-secondary text-primary">
           <h4>Receitas</h4>
-          <h2 className="pe-4 -mt-3">R$ 8.500,00</h2>
+          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.income ?? 0)}</h2>
         </Card>
         <Card className="p-6 bg-feedback-error text-card">
           <h4>Despesas</h4>
-          <h2 className="pe-4 -mt-3">R$ 5.246,00</h2>
+          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.expense ?? 0)}</h2>
         </Card>
         <Card className="p-6 bg-brand-tertiary text-card">
           <h4>Seu Saldo Atual</h4>
-          <h2 className="pe-4 -mt-3">R$ 3.254,00</h2>
-        </Card>
-        <Card className="p-6 bg-card text-card-foreground">
-          <h4>Lançamentos Futuros</h4>
-          <h2 className="pe-4 -mt-3">R$ 3.254,00</h2>
+          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.currentBalance ?? 0)}</h2>
         </Card>
       </section>
 
@@ -258,6 +266,13 @@ export default function TransactionsPage() {
         mode={editingTransaction ? "edit" : "create"}
         initialData={editingTransaction}
         transactionId={editingId}
+        onSuccess={() => setRefresh((r) => r + 1)}
+      />
+
+      <DeleteTransactionModal
+        open={deleteModalOpen}
+        onOpenChange={setDeleteModalOpen}
+        transaction={deletingTransaction}
         onSuccess={() => setRefresh((r) => r + 1)}
       />
     </>
