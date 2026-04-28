@@ -183,42 +183,42 @@
     {
       "id": "alimentacao",
       "label": "Alimentação",
-      "icon": "utensils"
+      "icon": "ShoppingBag"
     },
     {
       "id": "transporte",
       "label": "Transporte",
-      "icon": "car"
+      "icon": "CarFront"
     },
     {
       "id": "moradia",
       "label": "Moradia",
-      "icon": "home"
+      "icon": "Home"
     },
     {
       "id": "renda",
       "label": "Renda",
-      "icon": "trending-up"
+      "icon": "Banknote"
     },
     {
       "id": "transferencia",
       "label": "Transferência",
-      "icon": "arrow-right-left"
+      "icon": "CornerUpRigth"
     },
     {
       "id": "lazer",
       "label": "Lazer",
-      "icon": "tv"
+      "icon": "FerrisWhell"
     },
     {
       "id": "saude",
       "label": "Saúde",
-      "icon": "heart-pulse"
+      "icon": "HeartPulse"
     },
     {
       "id": "educacao",
       "label": "Educação",
-      "icon": "book-open"
+      "icon": "GraduationCap"
     }
   ],
   "budgets": [
