@@ -16,7 +16,11 @@ import { Card } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/dataTable";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -24,10 +28,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TransactionModal, DeleteTransactionModal } from "@/components/transactions";
+import {
+  TransactionModal,
+  DeleteTransactionModal,
+} from "@/components/transactions";
 import type { TransactionFormState } from "@/components/transactions";
 import { api } from "@/lib/api";
-import type { Category, Transaction, TransactionParams, TransactionSummary } from "@/lib/api";
+import type {
+  Category,
+  Transaction,
+  TransactionParams,
+  TransactionSummary,
+} from "@/lib/api";
 import type { DateRange } from "react-day-picker";
 
 export default function TransactionsPage() {
@@ -37,7 +49,9 @@ export default function TransactionsPage() {
   const [filterRange, setFilterRange] = useState<DateRange | undefined>();
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deletingTransaction, setDeletingTransaction] = useState<Transaction | undefined>();
+  const [deletingTransaction, setDeletingTransaction] = useState<
+    Transaction | undefined
+  >();
   const [editingTransaction, setEditingTransaction] = useState<
     Partial<TransactionFormState> | undefined
   >();
@@ -55,14 +69,20 @@ export default function TransactionsPage() {
     const params: TransactionParams = {};
     if (debouncedDescription) params.descriptionLike = debouncedDescription;
     if (filterType) params.type = filterType as "credit" | "debit";
-    if (filterRange?.from) params.dateGte = format(filterRange.from, "yyyy-MM-dd") + "T00:00:00.000Z";
-    if (filterRange?.to) params.dateLte = format(filterRange.to, "yyyy-MM-dd") + "T23:59:59.999Z";
+    if (filterRange?.from)
+      params.dateGte =
+        format(filterRange.from, "yyyy-MM-dd") + "T00:00:00.000Z";
+    if (filterRange?.to)
+      params.dateLte = format(filterRange.to, "yyyy-MM-dd") + "T23:59:59.999Z";
     api.getTransactions(params).then(setTransactions).catch(console.error);
     api.getTransactionsSummary(params).then(setSummary).catch(console.error);
   }, [debouncedDescription, filterType, filterRange, refresh]);
 
   function formatCurrency(value: number) {
-    return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    return value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
   }
 
   function handleEdit(row: Transaction) {
@@ -92,6 +112,7 @@ export default function TransactionsPage() {
     {
       id: "id",
       accessorKey: "description",
+      meta: { width: "60%" },
       header: () => (
         <p className="text-label text-card-foreground">DESCRIÇÃO</p>
       ),
@@ -138,6 +159,7 @@ export default function TransactionsPage() {
     },
     {
       id: "actions",
+      meta: { width: 120 },
       header: () => <p className="text-label text-card-foreground">AÇÕES</p>,
       cell: ({ row }) => (
         <div className="flex gap-1">
@@ -185,7 +207,9 @@ export default function TransactionsPage() {
                     format(filterRange.from, "dd/MM/yyyy")
                   )
                 ) : (
-                  <span className="text-muted-foreground">dd/mm/aaaa - dd/mm/aaaa</span>
+                  <span className="text-muted-foreground">
+                    dd/mm/aaaa - dd/mm/aaaa
+                  </span>
                 )}
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -199,7 +223,12 @@ export default function TransactionsPage() {
               </PopoverContent>
             </Popover>
             {filterRange && (
-              <Button variant="ghost" size="icon" className="size-8 shrink-0" onClick={() => setFilterRange(undefined)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-8 shrink-0"
+                onClick={() => setFilterRange(undefined)}
+              >
                 <X className="size-4" />
               </Button>
             )}
@@ -220,16 +249,37 @@ export default function TransactionsPage() {
         </div>
         <div className="flex flex-col gap-1 w-full sm:w-48">
           <Label className="text-label">Tipo</Label>
-          <Select value={filterType} onValueChange={(v) => setFilterType(!v || v === "all" ? "" : v)}>
+          <Select
+            value={filterType}
+            onValueChange={(v) => setFilterType(!v || v === "all" ? "" : v)}
+          >
             <SelectTrigger className="w-full cursor-pointer">
               <SelectValue placeholder="Todos os tipos">
-                {(v) => (v === "credit" ? "Receita" : v === "debit" ? "Despesa" : "Todos os tipos")}
+                {(v) =>
+                  v === "credit"
+                    ? "Receita"
+                    : v === "debit"
+                      ? "Despesa"
+                      : "Todos os tipos"
+                }
               </SelectValue>
             </SelectTrigger>
-            <SelectContent side="bottom" className="p-1" sideOffset={6} align="start" alignItemWithTrigger={false}>
-              <SelectItem className="cursor-pointer" value="all">Todos os tipos</SelectItem>
-              <SelectItem className="cursor-pointer" value="credit">Receita</SelectItem>
-              <SelectItem className="cursor-pointer" value="debit">Despesa</SelectItem>
+            <SelectContent
+              side="bottom"
+              className="p-1"
+              sideOffset={6}
+              align="start"
+              alignItemWithTrigger={false}
+            >
+              <SelectItem className="cursor-pointer" value="all">
+                Todos os tipos
+              </SelectItem>
+              <SelectItem className="cursor-pointer" value="credit">
+                Receita
+              </SelectItem>
+              <SelectItem className="cursor-pointer" value="debit">
+                Despesa
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -250,11 +300,15 @@ export default function TransactionsPage() {
         </Card>
         <Card className="p-6 bg-feedback-error text-card">
           <h4>Despesas</h4>
-          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.expense ?? 0)}</h2>
+          <h2 className="pe-4 -mt-3">
+            {formatCurrency(summary?.expense ?? 0)}
+          </h2>
         </Card>
         <Card className="p-6 bg-brand-tertiary text-card">
           <h4>Seu Saldo Atual</h4>
-          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.currentBalance ?? 0)}</h2>
+          <h2 className="pe-4 -mt-3">
+            {formatCurrency(summary?.currentBalance ?? 0)}
+          </h2>
         </Card>
         <Card className="p-6 bg-card text-card-foreground">
           <h4>Lançamentos Futuros</h4>

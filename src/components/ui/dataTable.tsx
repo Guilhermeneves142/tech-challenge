@@ -82,13 +82,13 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="overflow-hidden rounded-md flex flex-col min-h-105">
-        <Table className="flex-1">
+        <Table className="flex-1 table-fixed">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="pt-4 pb-4 px-6">
+                    <TableHead key={header.id} className="pt-4 pb-4 px-6" style={(() => { const w = (header.column.columnDef.meta as any)?.width; return w ? { width: typeof w === "number" ? `${w}px` : w } : undefined; })()}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

@@ -8,33 +8,29 @@ type TransferTableProps = {
 
 export default function TransferTable({ transactions }: TransferTableProps) {
   return (
-    <table className="w-full">
-      <thead>
-        <tr>
-          <th className="mb-4 pl-6 text-start text-[20px] font-medium">
-            Extrato Recente
-          </th>
-          <th className="text-primary mb-4 cursor-pointer pr-6 text-end">
-            <Link
-              href="/transacoes"
-              className="w-fit rounded-full px-3 py-2 hover:bg-secondary"
-            >
-              Ver tudo
-            </Link>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {transactions.map((item) => (
-          <TransferTableItem
-            key={item.id}
-            description={item.description}
-            date={item.dateLabel}
-            value={item.amount}
-          />
-        ))}
-      </tbody>
-    </table>
+    <div className="w-full">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(6,96,32,0.05)]">
+        <h4 className="text-text-primary">Extrato Recente</h4>
+        <Link
+          href="/transacoes"
+          className="text-[14px] font-bold text-feedback-success hover:opacity-75 transition-opacity"
+        >
+          Ver tudo
+        </Link>
+      </div>
+      <table className="w-full">
+        <tbody>
+          {transactions.map((item) => (
+            <TransferTableItem
+              key={item.id}
+              description={item.description}
+              date={item.dateLabel}
+              value={item.amount}
+            />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

@@ -72,7 +72,7 @@ export default function DashboardPage() {
           </div>
         </article>
 
-        <section className="col-span-12 overflow-x-auto rounded-md bg-white pt-6 shadow lg:col-span-9">
+        <section className="col-span-12 overflow-x-auto rounded-md bg-white shadow lg:col-span-9">
           <TransferTable transactions={dashboard?.recentTransactions ?? []} />
         </section>
         <section className="col-span-12 lg:col-span-3">
