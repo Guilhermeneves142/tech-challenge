@@ -12,7 +12,7 @@ export default function DashboardLayout({
       </aside>
 
       <section className="flex-1 px-6 py-2">
-        <main className="py-6">{children}</main>
+        <main>{children}</main>
         <footer className="text-center">
           <span className="text-[12px] text-text-tertiary">
             © 2023 FinanceApp - Sua Gestão Financeira Profissional.
