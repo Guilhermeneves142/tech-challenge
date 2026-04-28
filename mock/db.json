@@ -44,6 +44,15 @@
       "initials": "GS",
       "plan": "Plano Grátis",
       "avatar": null
+    },
+    {
+      "id": 5,
+      "name": "Vandrei.lima",
+      "email": "vandreilm@gmail.com",
+      "password": "12345678",
+      "initials": "V",
+      "plan": "Plano Grátis",
+      "avatar": null
     }
   ],
   "balance": {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LogOut, Lock } from "lucide-react";
+import { LogOut, Lock, Menu, ClosedCaption, DoorClosed, X } from "lucide-react";
 import { DashboardIcon } from "@/components/icons/dashboard-icon";
 import { ProfileIcon } from "@/components/icons/profile-icon";
 import { TransactionsIcon } from "@/components/icons/transactions-icon";
