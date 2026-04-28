@@ -2,13 +2,22 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LogOut, Lock } from "lucide-react";
 import { DashboardIcon } from "@/components/icons/dashboard-icon";
 import { ProfileIcon } from "@/components/icons/profile-icon";
 import { TransactionsIcon } from "@/components/icons/transactions-icon";
 import { PlanningIcon } from "@/components/icons/planning-icon";
 import { LogoIcon } from "@/components/icons/logo-icon";
+
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  initials?: string;
+  plan?: string;
+  avatar?: string | null;
+};
 
 const menuItems = [
   {
@@ -35,20 +44,57 @@ const menuItems = [
   },
 ];
 
+function getInitials(name: string) {
+  return name
+    .trim()
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const storedUser = localStorage.getItem("finance-app-user");
+
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      }
+
+      setIsMounted(true);
+    };
+
+    fetchUser();
+  }, []);
 
   function handleLogout() {
+    localStorage.removeItem("finance-app-token");
+    localStorage.removeItem("finance-app-user");
     setOpenLogoutModal(false);
     router.push("/login");
   }
+
+  const userName = user?.name || "Usuário";
+  const userInitials =
+    user?.initials || (user?.name ? getInitials(user.name) : "U");
+  const userPlan = user?.plan || "Plano Grátis";
 
   return (
     <>
       <div className="flex h-full min-h-screen flex-col justify-between bg-[var(--color-brand-tertiary)] px-4 py-5 text-white">
         <div>
+          {/* LOGO */}
           <div className="mb-8 flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
               <LogoIcon className="h-5 w-5 text-[var(--color-brand-primary)]" />
@@ -112,16 +158,16 @@ export default function Sidebar() {
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[14px] font-semibold text-[var(--color-brand-primary)]">
-              JS
+              {isMounted ? userInitials : "U"}
             </div>
 
             <div className="flex flex-col">
               <span className="text-[14px] font-semibold leading-[18px]">
-                João Silva
+                {isMounted ? userName : "Usuário"}
               </span>
 
               <span className="text-[11px] font-medium leading-[14px] text-white/75">
-                Plano Profissional
+                {isMounted ? userPlan : "Plano Grátis"}
               </span>
             </div>
           </div>

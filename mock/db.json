@@ -8,6 +8,53 @@
     "plan": "Plano Profissional",
     "avatar": null
   },
+  "users": [
+    {
+      "id": 1,
+      "name": "João Silva",
+      "email": "joao@financeapp.com",
+      "password": "123456",
+      "initials": "JS",
+      "plan": "Plano Profissional",
+      "avatar": null
+    },
+    {
+      "id": 2,
+      "name": "Pedro Augusto",
+      "email": "pedro@email.com",
+      "password": "123456",
+      "initials": "PA",
+      "plan": "Plano Grátis",
+      "avatar": null
+    },
+    {
+      "id": 3,
+      "name": "Ana Beatriz",
+      "email": "ana@gmail.com",
+      "password": "12345",
+      "initials": "AB",
+      "plan": "Plano Grátis",
+      "avatar": null
+    },
+    {
+      "id": 4,
+      "name": "Gabriela Santos",
+      "email": "gabriela@gmail.com",
+      "password": "12345@",
+      "initials": "GS",
+      "plan": "Plano Grátis",
+      "avatar": null
+    },
+    {
+      "id": 5,
+      "name": "Joana Silva",
+      "email": "joana@gmail.com",
+      "password": "1234",
+      "initials": "JS",
+      "plan": "Plano Grátis",
+      "avatar": null
+    }
+  ],
   "balance": {
     "current": 0,
     "variation": 0,
@@ -109,9 +156,18 @@
       "description": "Restaurante Sushi",
       "category": "alimentacao",
       "amount": -95,
-      "date": "2026-05-12T20:45:00Z",
+      "date": "2025-05-12T20:45:00Z",
       "dateLabel": "12 Mai, 20:45",
       "type": "debit"
+    },
+    {
+      "description": "Mercado",
+      "amount": 10,
+      "category": "alimentacao",
+      "date": "2026-04-23T00:00:00.000Z",
+      "dateLabel": "23 abr, 20:36",
+      "type": "credit",
+      "id": 13
     }
   ],
   "categories": [
