@@ -23,10 +23,22 @@ import { api } from "@/lib/api";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CalendarIcon, Pencil, Plus, Search, Trash2, X } from "lucide-react";
+import { CalendarIcon, Pencil, Plus, Search, Trash2, X, ShoppingBag, CarFront, Home, Banknote, CornerUpRight, 
+  FerrisWheel, HeartPulse, GraduationCap, LucideIcon  } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { useDebounce } from "use-debounce";
+
+const categoryIconMap: Record<string, LucideIcon> = {
+    "ShoppingBag": ShoppingBag,
+    "CarFront": CarFront,
+    "Home": Home,
+    "Banknote": Banknote,       
+    "CornerUpRigth": CornerUpRight, 
+    "FerrisWhell": FerrisWheel,    
+    "HeartPulse": HeartPulse,
+    "GraduationCap": GraduationCap,
+};
 
 export default function TransactionsPage() {
   const [filterDescription, setFilterDescription] = useState("");
@@ -44,6 +56,7 @@ export default function TransactionsPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [editingId, setEditingId] = useState<number | undefined>();
   const [refresh, setRefresh] = useState(0);
+
 
   useEffect(() => {
     api.getCategories().then(setCategories).catch(console.error);
@@ -86,6 +99,11 @@ export default function TransactionsPage() {
     setDeleteModalOpen(true);
   }
 
+  function getCategoryIcon(categoryId: string): LucideIcon {
+    const category = categories.find((c) => c.id === categoryId);
+    return categoryIconMap[category?.icon ?? "ShoppingBag"] ?? ShoppingBag;
+  }
+
   const columns: ColumnDef<Transaction>[] = [
     {
       id: "id",
@@ -95,10 +113,12 @@ export default function TransactionsPage() {
       ),
       cell: ({ row }) => {
         const { dateLabel, description } = row.original;
+        const Icon = getCategoryIcon(row.original.category);
+
         return (
           <div className="flex flex-row gap-4">
-            <span className="p-2 rounded-full material-symbols-outlined text-brand-primary bg-brand-secondary">
-              local_mall
+            <span className="p-2 rounded-full text-brand-primary bg-brand-secondary">
+               <Icon className="size-5" />
             </span>
             <div className="flex flex-col">
               <h6>{description}</h6>
@@ -144,14 +164,14 @@ export default function TransactionsPage() {
             size="icon"
             onClick={() => handleEdit(row.original)}
           >
-            <Pencil className="size-4"/>
+            <Pencil className="size-4" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => handleDelete(row.original)}
           >
-            <Trash2 className="size-4"/>
+            <Trash2 className="size-4" />
           </Button>
         </div>
       ),
