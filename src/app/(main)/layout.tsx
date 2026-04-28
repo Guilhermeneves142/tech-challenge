@@ -11,8 +11,8 @@ export default function DashboardLayout({
         <Sidebar />
       </aside>
 
-      <section className="flex flex-col flex-1 px-6 py-2">
-        <main className="py-6">{children}</main>
+      <section className="flex flex-col flex-1 px-6">
+        <main className="py-4">{children}</main>
         <footer className="text-center mt-auto">
           <span className="text-[12px] text-text-tertiary">
             © 2023 FinanceApp - Sua Gestão Financeira Profissional.

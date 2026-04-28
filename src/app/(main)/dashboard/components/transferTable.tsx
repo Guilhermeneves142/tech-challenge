@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
-import type { Transaction } from "@/lib/api";
+import type { Category, Transaction } from "@/lib/api";
+import { getCategoryIcon } from "@/lib/categoryIcons";
 
 type TransferTableProps = {
   transactions: Transaction[];
+  categories: Category[];
 };
 
-export default function TransferTable({ transactions }: TransferTableProps) {
+export default function TransferTable({ transactions, categories }: TransferTableProps) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(6,96,32,0.05)]">
@@ -26,6 +27,7 @@ export default function TransferTable({ transactions }: TransferTableProps) {
               description={item.description}
               date={item.dateLabel}
               value={item.amount}
+              categoryIcon={getCategoryIcon(categories, item.category)}
             />
           ))}
         </tbody>
@@ -38,12 +40,14 @@ type TransferTableItemProps = {
   description: string;
   date: string;
   value: number;
+  categoryIcon: React.ElementType;
 };
 
 function TransferTableItem({
   description,
   date,
   value,
+  categoryIcon: Icon,
 }: TransferTableItemProps) {
   const classColorValue =
     value < 0 ? "text-feedback-error" : "text-feedback-success";
@@ -56,13 +60,11 @@ function TransferTableItem({
     <tr className="hover:bg-gray-100">
       <td className="flex py-4 pl-6">
         <span className="flex items-center justify-center rounded-full bg-brand-secondary p-2 text-brand-primary">
-          <ShoppingBag className="size-5 shrink-0" aria-hidden />
+          <Icon className="size-5 shrink-0" aria-hidden />
         </span>
         <article className="ml-3 flex flex-col">
-          <strong className="text-[16px] font-medium text-text-primary">
-            {description}
-          </strong>
-          <span className="text-[12px] text-text-secondary">{date}</span>
+          <h6 className="text-text-primary">{description}</h6>
+          <span className="text-caption text-text-tertiary">{date}</span>
         </article>
       </td>
       <td className="pr-6 text-end">
