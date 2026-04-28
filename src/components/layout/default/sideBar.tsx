@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LogOut, Lock, Menu, ClosedCaption, DoorClosed, X } from "lucide-react";
-import { DashboardIcon } from "@/components/icons/dashboard-icon";
-import { ProfileIcon } from "@/components/icons/profile-icon";
-import { TransactionsIcon } from "@/components/icons/transactions-icon";
-import { PlanningIcon } from "@/components/icons/planning-icon";
-import { LogoIcon } from "@/components/icons/logo-icon";
+import { LogOut, Lock, Menu, Disc, List, X, LayoutDashboard, User, Wallet } from "lucide-react";
 
 type User = {
   id: number;
@@ -23,23 +18,23 @@ const menuItems = [
   {
     label: "Dashboard",
     href: "/dashboard",
-    icon: <DashboardIcon className="h-5 w-5 shrink-0" />,
+    icon: <LayoutDashboard className="h-5 w-5 shrink-0" />,
   },
   {
     label: "Transações",
     href: "/transacoes",
-    icon: <TransactionsIcon className="h-5 w-5 shrink-0" />,
+    icon: <List className="h-5 w-5 shrink-0" />,
   },
   {
     label: "Planejamento",
     href: "/planejamento",
-    icon: <PlanningIcon className="h-5 w-5 shrink-0" />,
+    icon: <Disc className="h-5 w-5 shrink-0" />,
     disabled: true,
   },
   {
     label: "Perfil",
     href: "/perfil",
-    icon: <ProfileIcon className="h-5 w-5 shrink-0" />,
+    icon: <User className="h-5 w-5 shrink-0" />,
     disabled: true,
   },
 ];
@@ -98,7 +93,7 @@ export default function Sidebar() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
-              <LogoIcon className="h-5 w-5 text-[var(--color-brand-primary)]" />
+              <Wallet className="h-5 w-5 text-[var(--color-brand-primary)]" />
             </div>
 
             <span className="text-[20px] font-semibold leading-[24px]">
@@ -212,7 +207,7 @@ export default function Sidebar() {
           {/* LOGO */}
           <div className="mb-8 flex items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
-              <LogoIcon className="h-5 w-5 text-[var(--color-brand-primary)]" />
+              <Wallet className="h-5 w-5 text-[var(--color-brand-primary)]" />
             </div>
 
             <span className="text-[20px] font-semibold leading-[24px]">
