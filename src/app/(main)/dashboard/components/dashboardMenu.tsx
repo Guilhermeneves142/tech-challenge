@@ -53,9 +53,10 @@ function DashboardMenuItem({
 
   return (
     <Link
-      className={["flex items-center gap-2 rounded-md px-4 py-3", itemClass].join(
-        " ",
-      )}
+      className={[
+        "flex items-center gap-2 rounded-md px-4 py-3",
+        itemClass,
+      ].join(" ")}
       onClick={onSelect}
       role="button"
       tabIndex={0}

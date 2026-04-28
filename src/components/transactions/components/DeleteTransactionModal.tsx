@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ShoppingBag } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -62,8 +63,8 @@ export function DeleteTransactionModal({
           {transaction && (
             <div className="flex items-center justify-between py-3">
               <div className="flex items-center gap-2">
-                <span className="p-2 rounded-full material-symbols-outlined text-brand-primary bg-brand-secondary">
-                  local_mall
+                <span className="p-2 rounded-full flex items-center justify-center text-brand-primary bg-brand-secondary">
+                  <ShoppingBag size={20} />
                 </span>
                 <h6>{transaction.description}</h6>
               </div>

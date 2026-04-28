@@ -9,9 +9,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <aside className="hidden lg:flex lg:w-[480px] xl:w-[520px] flex-col justify-between relative overflow-hidden bg-[var(--color-brand-tertiary)] shrink-0">
         {/* Padrão decorativo de fundo */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-white/5" />
-          <div className="absolute top-1/3 -right-32 w-80 h-80 rounded-full bg-white/5" />
-          <div className="absolute -bottom-16 left-16 w-64 h-64 rounded-full bg-white/5" />
           <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">

@@ -71,7 +71,7 @@ export function CadastroForm() {
           type="text"
           placeholder="João Silva"
           autoComplete="name"
-          className="h-10 bg-background"
+          className="h-9"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -88,7 +88,7 @@ export function CadastroForm() {
           type="email"
           placeholder="seu@email.com"
           autoComplete="email"
-          className="h-10 bg-background"
+          className="h-9"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -115,7 +115,10 @@ export function CadastroForm() {
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="confirm" className="text-sm font-medium text-foreground">
+        <Label
+          htmlFor="confirm"
+          className="text-sm font-medium text-foreground"
+        >
           Confirmar senha
         </Label>
 
@@ -125,6 +128,12 @@ export function CadastroForm() {
           autoComplete="new-password"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
+          aria-invalid={passwordMismatch}
+          className={
+            passwordMismatch
+              ? "border-destructive focus-visible:ring-destructive/20"
+              : ""
+          }
         />
 
         {passwordMismatch && (
@@ -144,7 +153,10 @@ export function CadastroForm() {
 
       <p className="text-center text-sm text-muted-foreground">
         Já tem uma conta?{" "}
-        <Link href="/login" className="text-primary font-semibold hover:underline">
+        <Link
+          href="/login"
+          className="text-primary font-semibold hover:underline"
+        >
           Entrar
         </Link>
       </p>

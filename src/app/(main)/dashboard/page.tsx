@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeftRight, Zap, QrCode, TrendingUp } from "lucide-react";
+import { Zap, TrendingUp, ArrowLeftRight, QrCode } from "lucide-react";
 import DashboardMenu from "./components/dashboardMenu";
 import ActionButton from "./components/actionButton";
 import NewTransactionAction from "./components/newTransactionAction";
 import TransferTable from "./components/transferTable";
 import Headline from "@/components/layout/default/headLine";
 import { api } from "@/lib/api";
-import type { Dashboard } from "@/lib/api";
+import type { Category, Dashboard } from "@/lib/api";
 
 export default function DashboardPage() {
   const [dashboard, setDashboard] = useState<Dashboard | undefined>();
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     api.getDashboard().then(setDashboard).catch(console.error);
+    api.getCategories().then(setCategories).catch(console.error);
   }, []);
 
   const balance = dashboard?.balance;
@@ -72,8 +74,8 @@ export default function DashboardPage() {
           </div>
         </article>
 
-        <section className="col-span-12 overflow-x-auto rounded-md bg-white pt-6 shadow lg:col-span-9">
-          <TransferTable transactions={dashboard?.recentTransactions ?? []} />
+        <section className="col-span-12 overflow-x-auto rounded-md bg-white shadow lg:col-span-9">
+          <TransferTable transactions={dashboard?.recentTransactions ?? []} categories={categories} />
         </section>
         <section className="col-span-12 lg:col-span-3">
           <DashboardMenu />

@@ -14,7 +14,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=add_2,bolt,credit_card,home,local_mall,qr_code,sync_alt,trending_up&display=block"
         />
       </head>
-      <body className="min-h-screen bg-gray-50 pt-[88px] lg:pt-0">
+      <body className="min-h-screen bg-background pt-[88px] lg:pt-0">
         {children}
         {/* </aside> */}
       </body>
