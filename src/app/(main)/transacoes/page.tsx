@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { ColumnDef } from "@tanstack/react-table";
-import { CalendarIcon, Plus, Search, X } from "lucide-react";
-import { DeleteIcon } from "@/components/icons/delete.icon";
-import { EditIcon } from "@/components/icons/edit-icon";
 import Headline from "@/components/layout/default/headLine";
+import type { TransactionFormState } from "@/components/transactions";
+import { DeleteTransactionModal, TransactionModal } from "@/components/transactions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -24,11 +18,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TransactionModal, DeleteTransactionModal } from "@/components/transactions";
-import type { TransactionFormState } from "@/components/transactions";
-import { api } from "@/lib/api";
 import type { Category, Transaction, TransactionParams, TransactionSummary } from "@/lib/api";
+import { api } from "@/lib/api";
+import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon, Pencil, Plus, Search, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
+import { useDebounce } from "use-debounce";
 
 export default function TransactionsPage() {
   const [filterDescription, setFilterDescription] = useState("");
@@ -146,14 +144,14 @@ export default function TransactionsPage() {
             size="icon"
             onClick={() => handleEdit(row.original)}
           >
-            <EditIcon className="size-5" />
+            <Pencil className="size-4"/>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => handleDelete(row.original)}
           >
-            <DeleteIcon className="size-5" />
+            <Trash2 className="size-4"/>
           </Button>
         </div>
       ),
