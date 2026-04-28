@@ -162,7 +162,7 @@ export default function TransactionsPage() {
     <>
       <Headline title="Transações" subTitle="Veja as suas transações" />
 
-      <Card className="flex flex-col sm:flex-row items-end gap-3 py-6 px-6 mb-6 flex-wrap">
+      <Card className="flex flex-col sm:flex-row items-end gap-5 py-6 px-6 flex-wrap">
         <div className="flex flex-col gap-1 w-full sm:w-auto">
           <Label className="text-label">Período</Label>
           <div className="flex items-center gap-1">
@@ -241,7 +241,7 @@ export default function TransactionsPage() {
         </Button>
       </Card>
 
-      <section className="mx-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 mb-6">
+      <section className="mx-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
         <Card className="p-6 bg-brand-secondary text-primary">
           <h4>Receitas</h4>
           <h2 className="pe-4 -mt-3">{formatCurrency(summary?.income ?? 0)}</h2>
@@ -253,10 +253,6 @@ export default function TransactionsPage() {
         <Card className="p-6 bg-brand-tertiary text-card">
           <h4>Seu Saldo Atual</h4>
           <h2 className="pe-4 -mt-3">{formatCurrency(summary?.currentBalance ?? 0)}</h2>
-        </Card>
-        <Card className="p-6 bg-card text-card-foreground">
-          <h4>Lançamentos Futuros</h4>
-          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.future ?? 0)}</h2>
         </Card>
       </section>
 
