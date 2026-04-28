@@ -1,14 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { ColumnDef } from "@tanstack/react-table";
-import { CalendarIcon, Plus, Search, X } from "lucide-react";
-import { DeleteIcon } from "@/components/icons/delete.icon";
-import { EditIcon } from "@/components/icons/edit-icon";
 import Headline from "@/components/layout/default/headLine";
+import type { TransactionFormState } from "@/components/transactions";
+import { DeleteTransactionModal, TransactionModal } from "@/components/transactions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -24,11 +18,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TransactionModal, DeleteTransactionModal } from "@/components/transactions";
-import type { TransactionFormState } from "@/components/transactions";
-import { api } from "@/lib/api";
 import type { Category, Transaction, TransactionParams, TransactionSummary } from "@/lib/api";
+import { api } from "@/lib/api";
+import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon, Pencil, Plus, Search, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
+import { useDebounce } from "use-debounce";
 
 export default function TransactionsPage() {
   const [filterDescription, setFilterDescription] = useState("");
@@ -146,14 +144,14 @@ export default function TransactionsPage() {
             size="icon"
             onClick={() => handleEdit(row.original)}
           >
-            <EditIcon className="size-5" />
+            <Pencil className="size-4"/>
           </Button>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => handleDelete(row.original)}
           >
-            <DeleteIcon className="size-5" />
+            <Trash2 className="size-4"/>
           </Button>
         </div>
       ),
@@ -164,7 +162,7 @@ export default function TransactionsPage() {
     <>
       <Headline title="Transações" subTitle="Veja as suas transações" />
 
-      <Card className="flex flex-col sm:flex-row items-end gap-3 py-6 px-6 mb-6 flex-wrap">
+      <Card className="flex flex-col sm:flex-row items-end gap-5 py-6 px-6 flex-wrap">
         <div className="flex flex-col gap-1 w-full sm:w-auto">
           <Label className="text-label">Período</Label>
           <div className="flex items-center gap-1">
@@ -243,7 +241,7 @@ export default function TransactionsPage() {
         </Button>
       </Card>
 
-      <section className="mx-6 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-10 mb-6">
+      <section className="mx-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
         <Card className="p-6 bg-brand-secondary text-primary">
           <h4>Receitas</h4>
           <h2 className="pe-4 -mt-3">{formatCurrency(summary?.income ?? 0)}</h2>
@@ -255,10 +253,6 @@ export default function TransactionsPage() {
         <Card className="p-6 bg-brand-tertiary text-card">
           <h4>Seu Saldo Atual</h4>
           <h2 className="pe-4 -mt-3">{formatCurrency(summary?.currentBalance ?? 0)}</h2>
-        </Card>
-        <Card className="p-6 bg-card text-card-foreground">
-          <h4>Lançamentos Futuros</h4>
-          <h2 className="pe-4 -mt-3">{formatCurrency(summary?.future ?? 0)}</h2>
         </Card>
       </section>
 
