@@ -109,6 +109,14 @@ export default function TransactionsPage() {
     setDeleteModalOpen(true);
   }
 
+  function truncateText(text: string, limit: number) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.slice(0, limit) + "..."
+    }
+  }
+
   const columns: ColumnDef<Transaction>[] = [
     {
       id: "id",
