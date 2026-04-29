@@ -7,8 +7,10 @@ export default function DashboardLayout({
 }>) {
   return (
     <div className="flex min-h-screen">
-      <aside className="w-[255px]">
-        <Sidebar />
+      <aside className="w-0 lg:w-[255px] shrink-0">
+        <div className="fixed left-0 top-0 h-screen w-[255px] flex flex-col justify-between">
+          <Sidebar />
+        </div>
       </aside>
 
       <section className="flex flex-col flex-1 px-6">
