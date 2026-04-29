@@ -10,7 +10,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { api } from "@/lib/api";
 import type { Transaction } from "@/lib/api";
 

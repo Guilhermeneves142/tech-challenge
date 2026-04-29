@@ -6,11 +6,11 @@ import {
   DeleteTransactionModal,
   TransactionModal,
 } from "@/components/transactions";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Card } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/dataTable";
+import { Badge } from "@/components/ui/badge/badge";
+import { Button } from "@/components/ui/button/button";
+import { Calendar } from "@/components/ui/calendar/calendar";
+import { Card } from "@/components/ui/card/card";
+import { DataTable } from "@/components/ui/dataTable/dataTable";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
