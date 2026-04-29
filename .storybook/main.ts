@@ -9,7 +9,9 @@ const __dirname = path.dirname(__filename);
 const config: StorybookConfig = {
   stories: [
     "../src/**/*.mdx",
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../stories/**/*.mdx",
+    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     "@chromatic-com/storybook",
@@ -19,7 +21,7 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding"
   ],
   framework: "@storybook/nextjs-vite",
-  staticDirs: ["..\\public"],
+  staticDirs: ["../public"],
   async viteFinal(config) {
     return mergeConfig(config, {
       resolve: {

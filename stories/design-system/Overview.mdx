@@ -1,0 +1,22 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design System/Visão geral" />
+
+# Design system
+
+Visão geral da **linguagem visual** e dos **tokens** da aplicação: paleta orgânica (verdes e neutros quentes), tipografia legível e escala consistente de espaçamento e cantos. Tudo flui em **variáveis CSS** consumidas pela app e pelos componentes em `src/components/ui`.
+
+## Fundações (documentação)
+
+Na sidebar, em **Design System → tokens**, encontras o detalhe de cada fundação:
+
+- **Cores** — paleta semântica (primária, feedback, texto, superfície, marca)
+- **Tipografia** — tamanhos, pesos e uso da família **Roboto**
+- **Espaçamentos** — escala `--spacing-*` e exemplos de ritmo vertical / `gap`
+- **Radius** — `--radius-*` para cartões, inputs e elementos arredondados
+
+## Boas práticas
+
+- Preferir **`var(--nome-do-token)`** em CSS ou estilos inline em vez de hex ou `px` repetidos à mão.
+- Para **cores de interface**, usar tokens semânticos (`--color-primary`, `--color-muted-foreground`, …), não só cores de marca isoladas.
+- Ao **adicionar ou alterar um token**, atualizar `globals.css` ou `typography.css` **e** a página MDX correspondente nesta pasta, para o Storybook continuar alinhado com o código.
