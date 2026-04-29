@@ -98,6 +98,7 @@ export function TransactionModal({
               className="rounded-lg h-11"
               value={form.description}
               onChange={(e) => setField("description", e.target.value)}
+              maxLength={20}
             />
           </div>
 
