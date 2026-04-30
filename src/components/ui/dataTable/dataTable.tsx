@@ -124,7 +124,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <div className="mt-auto border-t bg-card flex justify-between items-center px-6 py-3 text-(--color-text-tertiary) rounded-bl-xl  rounded-br-xl" style={{ borderTopColor: "var(--color-brand-secondary)" }}>
+        <div className="flex-col sm:flex-row gap-3 mt-auto border-t bg-card flex justify-between items-center px-6 py-3 text-(--color-text-tertiary) rounded-bl-xl  rounded-br-xl" style={{ borderTopColor: "var(--color-brand-secondary)" }}>
           <div className="text-caption">
             Mostrando {table.getRowModel().rows.length} de {data.length} transações
           </div>

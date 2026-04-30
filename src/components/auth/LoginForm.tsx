@@ -58,8 +58,7 @@ export function LoginForm() {
           id="email"
           type="email"
           placeholder="seu@email.com"
-          autoComplete="email"
-          className="h-9"
+          autoComplete="email"         
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

@@ -95,9 +95,10 @@ export function TransactionModal({
             <Input
               id="tx-description"
               placeholder="Descrição da transação"
-              className="rounded-lg h-11"
+              className="rounded-lg"
               value={form.description}
               onChange={(e) => setField("description", e.target.value)}
+              maxLength={20}
             />
           </div>
 
@@ -109,7 +110,7 @@ export function TransactionModal({
               id="tx-amount"
               placeholder="Valor da transação"
               inputMode="decimal"
-              className="rounded-lg h-11"
+              className="rounded-lg"
               value={form.amount}
               onChange={(e) => setField("amount", e.target.value)}
             />
@@ -123,7 +124,7 @@ export function TransactionModal({
               value={form.category}
               onValueChange={(v) => v && setField("category", v)}
             >
-              <SelectTrigger id="tx-category" className="rounded-lg h-11">
+              <SelectTrigger id="tx-category" className="rounded-md">
                 <SelectValue placeholder="Seleciona a Categoria" />
               </SelectTrigger>
               <SelectContent>
@@ -145,7 +146,7 @@ export function TransactionModal({
                 render={
                   <Button
                     variant="outline"
-                    className="w-full h-11 rounded-lg justify-start gap-2 font-normal text-left !border-primary"
+                    className="w-full rounded-md justify-start gap-2 font-normal text-left !border-primary"
                   />
                 }
               >

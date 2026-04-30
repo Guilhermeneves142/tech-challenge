@@ -109,75 +109,97 @@ export default function TransactionsPage() {
     setDeleteModalOpen(true);
   }
 
+  function truncateText(text: string, limit: number) {
+    if (text.length <= limit) {
+      return text;
+    } else {
+      return text.slice(0, limit) + "..."
+    }
+  }
+
   const columns: ColumnDef<Transaction>[] = [
     {
       id: "id",
       accessorKey: "description",
-      meta: { width: "60%" },
+      meta: { width: "40%" },
       header: () => (
         <p className="text-label text-card-foreground">DESCRIÇÃO</p>
       ),
       cell: ({ row }) => {
-        const { dateLabel, description } = row.original;
+        const { dateLabel, description, amount } = row.original;
         const Icon = getCategoryIcon(categories, row.original.category);
+        const formatted = `R$ ${Math.abs(amount).toFixed(2).replace(".", ",")}`;
 
         return (
-          <div className="flex flex-row gap-4">
-            <span className="p-2 rounded-full text-brand-primary bg-brand-secondary">
-               <Icon className="size-5" />
-            </span>
-            <div className="flex flex-col">
-              <h6>{description}</h6>
-              <p className="text-caption text-(--color-text-tertiary)">
-                {dateLabel}
-              </p>
+          <>
+            {/* desktop */}
+            <div className="hidden sm:flex flex-row gap-4 items-center">
+              <span className="p-2 rounded-full text-brand-primary bg-brand-secondary shrink-0">
+                <Icon className="size-5" />
+              </span>
+              <div className="flex flex-col">
+                <h6>{description}</h6>
+                <p className="text-caption text-(--color-text-tertiary)">{dateLabel}</p>
+              </div>
             </div>
-          </div>
+
+            {/* mobile */}
+            <div className="flex sm:hidden flex-row items-center gap-3">
+              <span className="p-2 rounded-full text-brand-primary bg-brand-secondary shrink-0">
+                <Icon className="size-5" />
+              </span>
+              <div className="flex flex-col min-w-0 flex-1 gap-1">
+                <h6>{truncateText(description, 20)}</h6>
+                <p className="text-caption text-(--color-text-tertiary)">{dateLabel}</p>
+                <span className={`text-sm font-medium ${amount < 0 ? "text-feedback-error" : "text-primary"}`}>
+                  {amount < 0 ? `- ${formatted}` : `+ ${formatted}`}
+                </span>
+              </div>
+            </div>
+          </>
         );
       },
     },
     {
       accessorKey: "category",
+      meta: { width: "25%" },
       header: () => (
-        <p className="text-label text-card-foreground">CATEGORIA</p>
+        <p className="text-label text-card-foreground hidden sm:block">CATEGORIA</p>
       ),
       cell: ({ row }) => {
         const id = row.getValue("category") as string;
         const label = categories.find((c) => c.id === id)?.label ?? id;
-        return <Badge variant="outline">{label}</Badge>;
+        return <Badge className="hidden sm:inline-flex" variant="outline">{label}</Badge>;
       },
     },
     {
       accessorKey: "amount",
-      header: () => <p className="text-label text-card-foreground">VALOR</p>,
+      meta: { width: "20%" },
+      header: () => (
+        <p className="text-label text-card-foreground hidden sm:block text-right">VALOR</p>
+      ),
       cell: ({ row }) => {
         const amount = row.original.amount;
         const formatted = `R$ ${Math.abs(amount).toFixed(2).replace(".", ",")}`;
         return amount < 0 ? (
-          <h6 className="text-feedback-error text-right">- {formatted}</h6>
+          <h6 className="text-feedback-error text-right hidden sm:block">- {formatted}</h6>
         ) : (
-          <h6 className="text-primary text-right">+ {formatted}</h6>
+          <h6 className="text-primary text-right hidden sm:block">+ {formatted}</h6>
         );
       },
     },
     {
       id: "actions",
       meta: { width: 120 },
-      header: () => <p className="text-label text-card-foreground">AÇÕES</p>,
+      header: () => (
+        <p className="text-label text-card-foreground w-full text-right">AÇÕES</p>
+      ),
       cell: ({ row }) => (
-        <div className="flex gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => handleEdit(row.original)}
-          >
+        <div className="flex gap-1 justify-end">
+          <Button variant="ghost" size="icon" onClick={() => handleEdit(row.original)}>
             <Pencil className="size-4" />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => handleDelete(row.original)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => handleDelete(row.original)}>
             <Trash2 className="size-4" />
           </Button>
         </div>
@@ -237,18 +259,17 @@ export default function TransactionsPage() {
             )}
           </div>
         </div>
-        <div className="relative flex flex-col gap-1 w-full sm:flex-1">
-          <Label className="text-label">Buscar</Label>
-          <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-primary" />
+        <div className="flex flex-col gap-1 w-full sm:flex-1">
+          <Label className="text-label">Buscar</Label>            
             <Input
               type="search"
               placeholder="Descrição"
-              className="pl-8 w-full"
+              className="w-full min-w-24"
               value={filterDescription}
               onChange={(e) => setFilterDescription(e.target.value)}
+              icon={<Search className="size-4 text-primary" />}
+              iconSide="left"
             />
-          </div>
         </div>
         <div className="flex flex-col gap-1 w-full sm:w-48">
           <Label className="text-label">Tipo</Label>
@@ -296,7 +317,7 @@ export default function TransactionsPage() {
         </Button>
       </Card>
 
-      <section className="mx-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
+      <section className="grid grid-cols-1 sm:mx-10 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
         <Card className="p-6 bg-brand-secondary text-primary">
           <h4>Receitas</h4>
           <h2 className="pe-4 -mt-3">{formatCurrency(summary?.income ?? 0)}</h2>
@@ -307,7 +328,7 @@ export default function TransactionsPage() {
             {formatCurrency(summary?.expense ?? 0)}
           </h2>
         </Card>
-        <Card className="p-6 bg-brand-tertiary text-card">
+        <Card className="p-6 bg-brand-tertiary text-card sm:col-span-2 xl:col-span-1">
           <h4>Seu Saldo Atual</h4>
           <h2 className="pe-4 -mt-3">
             {formatCurrency(summary?.currentBalance ?? 0)}

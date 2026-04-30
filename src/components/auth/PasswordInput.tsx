@@ -34,7 +34,7 @@ export function PasswordInput({
         autoComplete={autoComplete}
         value={value}
         onChange={onChange}
-        className={`h-9 pr-10 ${className ?? ""}`}
+        className={`pr-10 ${className ?? ""}`}
         aria-invalid={ariaInvalid}
       />
       <button
