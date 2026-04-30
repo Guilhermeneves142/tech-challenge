@@ -317,7 +317,7 @@ export default function TransactionsPage() {
         </Button>
       </Card>
 
-      <section className="mx-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
+      <section className="grid grid-cols-1 sm:mx-10 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 xl:gap-10 my-6">
         <Card className="p-6 bg-brand-secondary text-primary">
           <h4>Receitas</h4>
           <h2 className="pe-4 -mt-3">{formatCurrency(summary?.income ?? 0)}</h2>
