@@ -264,7 +264,7 @@ export default function TransactionsPage() {
             <Input
               type="search"
               placeholder="Descrição"
-              className="w-full"
+              className="w-full min-w-24"
               value={filterDescription}
               onChange={(e) => setFilterDescription(e.target.value)}
               icon={<Search className="size-4 text-primary" />}
