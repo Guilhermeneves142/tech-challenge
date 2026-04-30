@@ -35,7 +35,8 @@ export function Input({ className, type, icon, iconSide = "left", style, ...prop
         data-slot="input"
         className={cn(
           "rounded-md",
-          "h-full w-full bg-transparent py-1 text-base md:text-sm transition-colors outline-none",
+          "h-9",
+          "h-full w-full bg-transparent  text-base md:text-sm transition-colors outline-none",
           "file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
           "placeholder:text-muted-foreground",
           "disabled:bg-input/50 dark:disabled:bg-input/80",
