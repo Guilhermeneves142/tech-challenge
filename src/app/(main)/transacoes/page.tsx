@@ -259,18 +259,17 @@ export default function TransactionsPage() {
             )}
           </div>
         </div>
-        <div className="relative flex flex-col gap-1 w-full sm:flex-1">
-          <Label className="text-label">Buscar</Label>
-          <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-primary" />
+        <div className="flex flex-col gap-1 w-full sm:flex-1">
+          <Label className="text-label">Buscar</Label>            
             <Input
               type="search"
               placeholder="Descrição"
-              className="pl-8 w-full"
+              className="w-full"
               value={filterDescription}
               onChange={(e) => setFilterDescription(e.target.value)}
+              icon={<Search className="size-4 text-primary" />}
+              iconSide="left"
             />
-          </div>
         </div>
         <div className="flex flex-col gap-1 w-full sm:w-48">
           <Label className="text-label">Tipo</Label>
