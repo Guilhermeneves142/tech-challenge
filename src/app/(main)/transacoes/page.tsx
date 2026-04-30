@@ -329,7 +329,7 @@ export default function TransactionsPage() {
             {formatCurrency(summary?.expense ?? 0)}
           </h2>
         </Card>
-        <Card className="p-6 bg-brand-tertiary text-card">
+        <Card className="p-6 bg-brand-tertiary text-card sm:col-span-2 xl:col-span-1">
           <h4>Seu Saldo Atual</h4>
           <h2 className="pe-4 -mt-3">
             {formatCurrency(summary?.currentBalance ?? 0)}
