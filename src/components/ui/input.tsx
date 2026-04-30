@@ -11,7 +11,7 @@ export function Input({ className, type, icon, iconSide = "left", style, ...prop
   return (
     <label
       className={cn(
-
+        "overflow-hidden rounded-md",
         "inline-grid items-center",
         !icon && "grid-cols-[1fr]",
         icon && iconSide === "left" && "grid-cols-[auto_1fr]",
@@ -34,6 +34,7 @@ export function Input({ className, type, icon, iconSide = "left", style, ...prop
         type={type}
         data-slot="input"
         className={cn(
+          "rounded-md",
           "h-full w-full bg-transparent py-1 text-base md:text-sm transition-colors outline-none",
           "file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
           "placeholder:text-muted-foreground",
