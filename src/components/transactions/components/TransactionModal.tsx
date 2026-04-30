@@ -10,10 +10,10 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialogModal/dialog";
 import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input/input";
+import { Label } from "@/components/ui/label/label";
 import { Calendar } from "@/components/ui/calendar/calendar";
 import {
   Popover,
