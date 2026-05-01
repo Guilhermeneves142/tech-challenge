@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Button } from './button';
+import { Plus } from 'lucide-react';
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -31,6 +32,15 @@ export const Default: Story = {
   },
 };
 
+export const WithIcon: Story = {
+  render: () => (
+    <Button>
+      <Plus data-icon="inline-start" />
+      Adicionar
+    </Button>
+  ),
+}
+
 export const Secondary: Story = {
   args: {
     children: "Secondary Button",
@@ -52,43 +62,10 @@ export const Ghost: Story = {
   },
 };
 
-export const Destructive: Story = {
-  args: {
-    children: "Destructive Button",
-    variant: "destructive",
-  },
-};
-
-
 
 export const Link: Story = {
   args: {
     children: "Link Button",
     variant: "link",
-  },
-};
-
-
-export const ButtonSizeXs: Story = {
-  args: {
-    children: "Size xs",
-    variant: "default",
-    size: "xs"
-  },
-};
-
-export const ButtonSizeSm: Story = {
-  args: {
-    children: "Size sm",
-    variant: "default",
-    size: "sm"
-  },
-};
-
-export const ButtonSizeLg: Story = {
-  args: {
-    children: "Size lg",
-    variant: "default",
-    size: "lg"
   },
 };
