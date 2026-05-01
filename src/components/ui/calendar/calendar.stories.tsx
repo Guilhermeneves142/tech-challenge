@@ -70,38 +70,6 @@ export const RangeSelection: Story = {
   },
 }
 
-export const WithWeekNumbers: Story = {
-  render: (args) => {
-    const [date, setDate] = useState<Date | undefined>()
-    return (
-      <Calendar
-        {...args}
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        showWeekNumber
-        showOutsideDays
-      />
-    )
-  },
-}
-
-export const MultipleMonths: Story = {
-  render: (args) => {
-    const [date, setDate] = useState<Date | undefined>()
-    return (
-      <Calendar
-        {...args}
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        numberOfMonths={2}
-        showOutsideDays
-      />
-    )
-  },
-}
-
 export const WithDisabledDates: Story = {
   render: (args) => {
     const [date, setDate] = useState<Date | undefined>()
