@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button/button"
-import { Input } from "@/components/ui/input/input"
+import { Input } from "@/components/ui/inputs/input"
 import { Label } from "@/components/ui/label/label"
 import { RecuperarSenhaSuccess } from "@/components/auth/RecuperarSenhaSuccess"
 
