@@ -54,12 +54,3 @@ export const Destructive: Story = {
     variant: "destructive",
   },
 };
-
-
-
-export const Link: Story = {
-  args: {
-    children: "Link Badge",
-    variant: "link",
-  },
-};
