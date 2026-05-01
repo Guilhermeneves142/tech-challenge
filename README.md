@@ -30,6 +30,7 @@ Aplicação de gerenciamento financeiro, com o objetivo de oferecer uma interfac
 * **Desenvolvimento:** Next.js, JavaScript, React, Shadow/cn, Tailwind
 * **Dados:** API fake com mock
 * **Design System:** Figma
+* **Documentação de componentes:** Storybook
 * **Deploy:** Vercel
 
 <br>
@@ -98,3 +99,19 @@ npm run dev
 http://localhost:3000
 
 ```
+<br>
+
+## Formas de acessar o Storybook dos componentes
+#### _Pré-requisitos:_
+* Ter o repositório clonado na sua máquina
+* Todas as dependencias do projeto instaladas _(conforme citado acima)_
+
+```bash
+
+# Abra o terminal e rode o comando abaixo
+npm run storybook
+
+# Abra o link disponibilizado no terminal (Ctrl + clique)
+
+```
+
