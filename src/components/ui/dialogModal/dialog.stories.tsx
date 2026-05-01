@@ -14,11 +14,11 @@ import { Button } from "@/components/ui/button/button"
 const meta: Meta<typeof DialogContent> = {
   title: "Components/Dialog",
   component: DialogContent,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },
 }
-
 export default meta
 type Story = StoryObj<typeof DialogContent>
 

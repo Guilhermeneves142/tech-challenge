@@ -5,6 +5,7 @@ import { Snowflake } from 'lucide-react'
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
   component: Input,
+  tags: ["autodocs"], 
   args: {
     placeholder: "Digite algo...",
   },
