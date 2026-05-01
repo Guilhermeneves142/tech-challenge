@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -23,11 +22,11 @@ export default meta
 type Story = StoryObj<typeof Table>
  
 const invoices = [
-  { id: "INV-001", status: "Paid", method: "Credit Card", amount: "R$ 250,00" },
-  { id: "INV-002", status: "Pending", method: "PayPal", amount: "R$ 150,00" },
-  { id: "INV-003", status: "Unpaid", method: "Bank Transfer", amount: "R$ 350,00" },
-  { id: "INV-004", status: "Paid", method: "Credit Card", amount: "R$ 450,00" },
-  { id: "INV-005", status: "Pending", method: "PayPal", amount: "R$ 550,00" },
+  { id: "INV-001", status: "Pago", método: "Crédito", valor: "R$ 250,00" },
+  { id: "INV-002", status: "Pendente", método: "Dinheiro", valor: "R$ 150,00" },
+  { id: "INV-003", status: "Processando", método: "Pix", valor: "R$ 350,00" },
+  { id: "INV-004", status: "Pago", método: "Crédito", valor: "R$ 450,00" },
+  { id: "INV-005", status: "Pendente", método: "Dinheiro", valor: "R$ 550,00" },
 ]
  
 export const Default: Story = {
@@ -36,10 +35,10 @@ export const Default: Story = {
       <TableCaption>Lista de faturas recentes.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Invoice</TableHead>
+          <TableHead>Nota fiscal</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>método</TableHead>
+          <TableHead className="text-right">valor</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -47,8 +46,8 @@ export const Default: Story = {
           <TableRow key={invoice.id}>
             <TableCell className="font-medium">{invoice.id}</TableCell>
             <TableCell>{invoice.status}</TableCell>
-            <TableCell>{invoice.method}</TableCell>
-            <TableCell className="text-right">{invoice.amount}</TableCell>
+            <TableCell>{invoice.método}</TableCell>
+            <TableCell className="text-right">{invoice.valor}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -57,15 +56,14 @@ export const Default: Story = {
 }
  
 export const Empty: Story = {
-  name: "Estado vazio",
   render: () => (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Invoice</TableHead>
+          <TableHead>Nota fiscal</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>método</TableHead>
+          <TableHead className="text-right">valor</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

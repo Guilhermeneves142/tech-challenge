@@ -27,13 +27,13 @@ export const Default: Story = {
   render: () => (
     <Select>
       <SelectTrigger className="w-48">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue placeholder="Selececione uma fruta" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="apple">Apple</SelectItem>
-        <SelectItem value="banana">Banana</SelectItem>
-        <SelectItem value="orange">Orange</SelectItem>
-        <SelectItem value="grape">Grape</SelectItem>
+        <SelectItem value="Pessego">Pessego</SelectItem>
+        <SelectItem value="Banana">Banana</SelectItem>
+        <SelectItem value="Pitaya">Pitaya</SelectItem>
+        <SelectItem value="Graviola">Graviola</SelectItem>
       </SelectContent>
     </Select>
   ),

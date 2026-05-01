@@ -16,19 +16,19 @@ const triggerCn = "flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text
 
 export const Default: Story = {
   render: () => (
-    <Tabs defaultValue="account" className="w-96">
+    <Tabs defaultValue="Conta" className="w-96">
       <TabsList className={listCn}>
-        <TabsTrigger value="account" className={triggerCn}>Account</TabsTrigger>
-        <TabsTrigger value="password" className={triggerCn}>Password</TabsTrigger>
-        <TabsTrigger value="settings" className={triggerCn}>Settings</TabsTrigger>
+        <TabsTrigger value="Conta" className={triggerCn}>Conta</TabsTrigger>
+        <TabsTrigger value="Senha" className={triggerCn}>Senha</TabsTrigger>
+        <TabsTrigger value="Configurações" className={triggerCn}>Configurações</TabsTrigger>
       </TabsList>
-      <TabsContent value="account">
+      <TabsContent value="Conta">
         <p className="text-muted-foreground">Gerencie as informações da sua conta.</p>
       </TabsContent>
-      <TabsContent value="password">
+      <TabsContent value="Senha">
         <p className="text-muted-foreground">Altere sua senha aqui.</p>
       </TabsContent>
-      <TabsContent value="settings">
+      <TabsContent value="Configurações">
         <p className="text-muted-foreground">Ajuste suas preferências.</p>
       </TabsContent>
     </Tabs>
@@ -36,7 +36,6 @@ export const Default: Story = {
 }
 
 export const WithDisabled: Story = {
-  name: "Com tab desabilitada",
   render: () => (
     <Tabs defaultValue="active" className="w-96">
       <TabsList className={listCn}>

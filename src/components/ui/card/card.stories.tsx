@@ -42,24 +42,6 @@ export const Default: Story = {
   ),
 }
 
-export const Small: Story = {
-  args: { size: 'sm' },
-  render: (args) => (
-    <Card {...args}>
-      <CardHeader>
-        <CardTitle>Card Pequeno</CardTitle>
-        <CardDescription>Versão compacta.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>Conteúdo compacto.</p>
-      </CardContent>
-      <CardFooter>
-        <p>Rodapé</p>
-      </CardFooter>
-    </Card>
-  ),
-}
-
 export const WithAction: Story = {
   args: { size: 'default' },
   render: (args) => (
@@ -70,26 +52,6 @@ export const WithAction: Story = {
         <CardAction>
           <button className="text-xs text-primary">Ver mais</button>
         </CardAction>
-      </CardHeader>
-      <CardContent>
-        <p>Conteúdo do card.</p>
-      </CardContent>
-    </Card>
-  ),
-}
-
-export const WithImage: Story = {
-  args: { size: 'default' },
-  render: (args) => (
-    <Card {...args}>
-      <img
-        src="https://placehold.co/600x200"
-        alt="placeholder"
-        className="w-full object-cover"
-      />
-      <CardHeader>
-        <CardTitle>Card com Imagem</CardTitle>
-        <CardDescription>Imagem no topo arredonda automaticamente.</CardDescription>
       </CardHeader>
       <CardContent>
         <p>Conteúdo do card.</p>

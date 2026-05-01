@@ -19,7 +19,6 @@ export const Default: Story = {
 }
  
 export const WithLabel: Story = {
-  name: "Com label",
   render: () => (
     <div className="flex flex-col gap-1.5 w-80">
       <Label htmlFor="message">Mensagem</Label>
@@ -29,7 +28,6 @@ export const WithLabel: Story = {
 }
  
 export const Disabled: Story = {
-  name: "Desabilitado",
   render: () => (
     <Textarea
       className="w-80"

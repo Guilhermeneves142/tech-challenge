@@ -36,7 +36,6 @@ export const Default: Story = {
 }
  
 export const WithoutHeader: Story = {
-  name: "Sem header — só conteúdo",
   render: () => (
     <Popover>
       <PopoverTrigger render={<Button variant="outline">Open</Button>} />

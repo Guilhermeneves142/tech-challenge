@@ -34,7 +34,6 @@ export const Default: Story = {
 }
  
 export const Disabled: Story = {
-  name: "Disabled — item desabilitado",
   render: () => (
     <RadioGroup defaultValue="option-1">
       <div className="flex items-center gap-2">
@@ -63,7 +62,6 @@ export const Disabled: Story = {
 }
  
 export const Invalid: Story = {
-  name: "Invalid — estado de erro",
   render: () => (
     <RadioGroup>
       <div className="flex items-center gap-2">
