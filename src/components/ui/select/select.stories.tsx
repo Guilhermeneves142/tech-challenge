@@ -1,14 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Label } from "@/components/ui/label/label"
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
-  SelectSeparator,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "./select"
  
 const meta: Meta<typeof Select> = {
