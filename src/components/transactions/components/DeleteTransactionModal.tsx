@@ -9,8 +9,8 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/dialogModal/dialog";
+import { Button } from "@/components/ui/button/button";
 import { api } from "@/lib/api";
 import type { Transaction } from "@/lib/api";
 

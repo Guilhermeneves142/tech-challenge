@@ -2,8 +2,8 @@
 
 import { ArrowLeft, Construction } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button/button";
+import { Card } from "@/components/ui/card/card";
 
 export default function UnderConstruction() {
   const router = useRouter();

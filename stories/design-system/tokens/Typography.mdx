@@ -1,0 +1,124 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+export const SizeRow = ({ varName, label }) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "minmax(200px, 1fr) 1fr",
+      gap: "16px",
+      alignItems: "center",
+      padding: "12px 0",
+      borderBottom: "1px solid var(--color-border)",
+    }}
+  >
+    <div>
+      <code style={{ fontSize: "12px", color: "var(--color-text-secondary)" }}>{varName}</code>
+      {label ? (
+        <div style={{ fontSize: "11px", color: "var(--color-text-tertiary)", marginTop: "4px" }}>{label}</div>
+      ) : null}
+    </div>
+    <span style={{ fontSize: `var(${varName})`, fontFamily: "var(--font-family)" }}>Aa texto exemplo 123</span>
+  </div>
+);
+
+export const WeightRow = ({ varName, label }) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "minmax(200px, 1fr) 1fr",
+      gap: "16px",
+      alignItems: "center",
+      padding: "12px 0",
+      borderBottom: "1px solid var(--color-border)",
+      fontSize: "var(--size-body)",
+      fontFamily: "var(--font-family)",
+    }}
+  >
+    <code style={{ fontSize: "12px", color: "var(--color-text-secondary)" }}>{varName}</code>
+    <span style={{ fontWeight: `var(${varName})` }}>{label}</span>
+  </div>
+);
+
+export const LhRow = ({ varName, label }) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "minmax(200px, 1fr) 1fr",
+      gap: "16px",
+      alignItems: "start",
+      padding: "12px 0",
+      borderBottom: "1px solid var(--color-border)",
+      fontSize: "var(--size-body-sm)",
+      fontFamily: "var(--font-family)",
+    }}
+  >
+    <code style={{ fontSize: "12px", color: "var(--color-text-secondary)" }}>{varName}</code>
+    <span style={{ lineHeight: `var(${varName})` }}>{label}</span>
+  </div>
+);
+
+<Meta title="Design System/Tokens/Tipografia" />
+
+# Tipografia
+
+Definições em **`src/styles/typography.css`**. Família: **Roboto** (import Google Fonts no mesmo ficheiro). Classes utilitárias (`.text-body`, `.text-label`, …) aplicam tamanho, peso e `line-height` de uma vez.
+
+## Tamanhos (`--size-*`)
+
+<div className="ds-typo" style={{ marginTop: "16px" }}>
+  <SizeRow varName="--size-display" label="48px — hero / display" />
+  <SizeRow varName="--size-h1" label="40px" />
+  <SizeRow varName="--size-h2" label="32px" />
+  <SizeRow varName="--size-h3" label="24px" />
+  <SizeRow varName="--size-h4" label="20px" />
+  <SizeRow varName="--size-h5" label="18px" />
+  <SizeRow varName="--size-h6" label="16px" />
+  <SizeRow varName="--size-body-lg" label="18px" />
+  <SizeRow varName="--size-body" label="16px" />
+  <SizeRow varName="--size-body-sm" label="14px" />
+  <SizeRow varName="--size-label-lg" label="16px" />
+  <SizeRow varName="--size-label" label="14px" />
+  <SizeRow varName="--size-label-sm" label="12px" />
+  <SizeRow varName="--size-caption" label="12px" />
+  <SizeRow varName="--size-overline" label="12px" />
+</div>
+
+## Pesos (`--fw-*`)
+
+<div style={{ marginTop: "16px" }}>
+  <WeightRow varName="--fw-regular" label="Regular — texto corrido" />
+  <WeightRow varName="--fw-medium" label="Medium" />
+  <WeightRow varName="--fw-semibold" label="Semibold — labels" />
+  <WeightRow varName="--fw-bold" label="Bold — títulos" />
+</div>
+
+## Altura de linha (`--lh-*`)
+
+<div style={{ marginTop: "16px" }}>
+  <LhRow varName="--lh-display" label="Display — bloco curto com line-height 1.2." />
+  <LhRow varName="--lh-body" label="Corpo 16px — ritmo confortável (1.6)." />
+  <LhRow varName="--lh-body-lg" label="Corpo grande." />
+  <LhRow varName="--lh-body-sm" label="Corpo pequeno (1.5)." />
+  <LhRow varName="--lh-label" label="Labels." />
+  <LhRow varName="--lh-label-sm" label="Label pequeno." />
+  <LhRow varName="--lh-label-lg" label="Label grande." />
+  <LhRow varName="--lh-caption" label="Legendas e notas." />
+  <LhRow varName="--lh-overline" label="Overline." />
+</div>
+
+## Família
+
+<p style={{ marginTop: "20px", fontSize: "var(--size-body-sm)", color: "var(--color-text-secondary)" }}>
+  Token: <code>--font-family</code>
+  <br />
+  <span style={{ fontFamily: "var(--font-family)", fontSize: "var(--size-h4)", display: "inline-block", marginTop: "8px" }}>
+    Roboto — visível no Storybook via import em <code>.storybook/preview.ts</code>
+  </span>
+</p>
+
+<style>{`
+  .ds-typo {
+    max-width: 720px;
+    padding: 8px 0 32px;
+  }
+`}</style>
