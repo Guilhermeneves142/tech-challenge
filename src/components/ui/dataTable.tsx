@@ -1,13 +1,20 @@
 "use client"
 
 import {
-  ColumnDef,
+  type ColumnDef,
   flexRender,
   getCoreRowModel,
-
   getPaginationRowModel,
-  useReactTable
+  useReactTable,
+  type RowData,
 } from "@tanstack/react-table"
+
+declare module "@tanstack/react-table" {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends RowData, TValue> {
+    width?: number | string;
+  }
+}
 
 import { Button } from "@/components/ui/button"
 import {
@@ -88,7 +95,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="pt-4 pb-4 px-6" style={(() => { const w = (header.column.columnDef.meta as any)?.width; return w ? { width: typeof w === "number" ? `${w}px` : w } : undefined; })()}>
+                    <TableHead key={header.id} className="pt-4 pb-4 px-6" style={(() => { const w = header.column.columnDef.meta?.width; return w ? { width: typeof w === "number" ? `${w}px` : w } : undefined; })()}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(

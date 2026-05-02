@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Zap, TrendingUp, ArrowLeftRight, QrCode } from "lucide-react";
 import DashboardMenu from "./components/dashboardMenu";
 import ActionButton from "./components/actionButton";
@@ -8,16 +5,12 @@ import NewTransactionAction from "./components/newTransactionAction";
 import TransferTable from "./components/transferTable";
 import Headline from "@/components/layout/default/headLine";
 import { api } from "@/lib/api";
-import type { Category, Dashboard } from "@/lib/api";
 
-export default function DashboardPage() {
-  const [dashboard, setDashboard] = useState<Dashboard | undefined>();
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    api.getDashboard().then(setDashboard).catch(console.error);
-    api.getCategories().then(setCategories).catch(console.error);
-  }, []);
+export default async function DashboardPage() {
+  const [dashboard, categories] = await Promise.all([
+    api.getDashboard().catch(() => undefined),
+    api.getCategories().catch(() => []),
+  ]);
 
   const balance = dashboard?.balance;
   const currentBalance = (balance?.current ?? 0).toLocaleString("pt-BR", {
@@ -40,7 +33,10 @@ export default function DashboardPage() {
             </h2>
           </article>
           <section className="grid grid-cols-12 gap-3">
-            <NewTransactionAction className="col-span-12 sm:col-span-6 lg:col-span-3" />
+            <NewTransactionAction
+              className="col-span-12 sm:col-span-6 lg:col-span-3"
+              categories={categories}
+            />
             <ActionButton
               className="col-span-12 sm:col-span-6 lg:col-span-3"
               text="Transferir"
@@ -75,7 +71,10 @@ export default function DashboardPage() {
         </article>
 
         <section className="col-span-12 overflow-x-auto rounded-md bg-white shadow lg:col-span-9">
-          <TransferTable transactions={dashboard?.recentTransactions ?? []} categories={categories} />
+          <TransferTable
+            transactions={dashboard?.recentTransactions ?? []}
+            categories={categories}
+          />
         </section>
         <section className="col-span-12 lg:col-span-3">
           <DashboardMenu />
