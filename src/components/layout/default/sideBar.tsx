@@ -4,6 +4,17 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LogOut, Lock, Menu, Disc, List, X, LayoutDashboard, User, Wallet } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { clearAuth } from "@/lib/auth-storage";
 
 type User = {
   id: number;
@@ -75,8 +86,7 @@ export default function Sidebar() {
   }, []);
 
   function handleLogout() {
-    localStorage.removeItem("finance-app-token");
-    localStorage.removeItem("finance-app-user");
+    clearAuth();
     setOpenLogoutModal(false);
     setOpenMobileMenu(false);
     router.push("/login");
@@ -292,37 +302,24 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {openLogoutModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
-            <h2 className="text-[20px] font-semibold text-[var(--color-brand-primary)]">
-              Deseja sair?
-            </h2>
-
-            <p className="mt-2 text-[14px] leading-[20px] text-gray-600">
-              Você será redirecionada para a tela de login.
-            </p>
-
-            <div className="mt-6 flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setOpenLogoutModal(false)}
-                className="rounded-lg border border-gray-300 px-4 py-2 text-[14px] font-medium text-gray-700 transition hover:bg-gray-100"
-              >
-                Cancelar
-              </button>
-
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded-lg bg-[var(--color-brand-primary)] px-4 py-2 text-[14px] font-medium text-white transition hover:opacity-90"
-              >
-                Sair
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <Dialog open={openLogoutModal} onOpenChange={setOpenLogoutModal}>
+        <DialogContent className="sm:max-w-sm" showCloseButton={false}>
+          <DialogHeader>
+            <DialogTitle>Deseja sair?</DialogTitle>
+            <DialogDescription>
+              Você será redirecionado para a tela de login.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>
+              Cancelar
+            </DialogClose>
+            <Button onClick={handleLogout}>
+              Sair
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
