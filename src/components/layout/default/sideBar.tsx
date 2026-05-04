@@ -12,8 +12,8 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/dialogModal/dialog";
+import { Button } from "@/components/ui/button/button";
 import { clearAuth } from "@/lib/auth-storage";
 
 type User = {
