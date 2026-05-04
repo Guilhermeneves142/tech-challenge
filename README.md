@@ -69,7 +69,7 @@ TECH-CHALLENGE/
 
 <br>
 
-## Formas de acessar o 
+## Como acessar o projeto
 
 #### _Pré-requisitos:_
 * Node.js >=22.14
@@ -96,7 +96,7 @@ http://localhost:3000
 ```
 <br>
 
-## Formas de acessar o Storybook dos componentes
+## Como acessar o Storybook dos componentes
 #### _Pré-requisitos:_
 * Ter o repositório clonado na sua máquina
 * Todas as dependencias do projeto instaladas _(conforme citado acima)_
