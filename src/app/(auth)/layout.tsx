@@ -1,5 +1,5 @@
+import { Wallet } from "lucide-react";
 import type { ReactNode } from "react";
-import { Clock } from "lucide-react";
 import { authFeatures } from "./_data/features";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         <div className="relative z-10 flex flex-col h-full p-10 xl:p-12">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center backdrop-blur-sm border border-white/20 text-white">
-              <Clock size={22} />
+               <Wallet size={22} />
             </div>
             <span className="text-white font-bold text-xl tracking-tight">
               FinanceApp
@@ -90,7 +90,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <main className="flex-1 flex flex-col items-center justify-center p-6 sm:p-10 min-h-screen">
         <div className="flex lg:hidden items-center gap-2 mb-8">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
-            <Clock size={18} />
+            <Wallet size={18} />
           </div>
           <span className="text-foreground font-bold text-lg tracking-tight">
             FinanceApp
