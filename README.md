@@ -70,12 +70,7 @@ TECH-CHALLENGE/
 <br>
 
 ## Formas de acessar o projeto
-### 1. Via deploy:
-🔗 **Deploy:** [Add link da vercel]
-
-<br>
-
-### 2. Via instalação local
+### 1. Via instalação local
 #### _Pré-requisitos:_
 * Node.js >=22.14
 * npm ou yarn
