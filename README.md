@@ -31,7 +31,6 @@ Aplicação de gerenciamento financeiro, com o objetivo de oferecer uma interfac
 * **Dados:** API fake com mock
 * **Design System:** Figma
 * **Documentação de componentes:** Storybook
-* **Deploy:** Vercel
 
 <br>
 
