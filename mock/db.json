@@ -53,6 +53,15 @@
       "initials": "V",
       "plan": "Plano Grátis",
       "avatar": null
+    },
+    {
+      "id": 6,
+      "name": "admin",
+      "email": "admin@teste.com",
+      "password": "12345678",
+      "initials": "A",
+      "plan": "Plano Grátis",
+      "avatar": null
     }
   ],
   "balance": {

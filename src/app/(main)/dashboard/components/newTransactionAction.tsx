@@ -8,13 +8,15 @@ import type { Category } from "@/lib/api";
 
 type Props = {
   className?: string;
+  categories?: Category[];
 };
 
-export default function NewTransactionAction({ className }: Props) {
+export default function NewTransactionAction({ className, categories: categoriesProp }: Props) {
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(categoriesProp ?? []);
 
   useEffect(() => {
+    if (categoriesProp && categoriesProp.length > 0) return;
     api.getCategories().then(setCategories).catch(console.error);
   }, []);
 

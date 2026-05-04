@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authApi } from "@/lib/auth-api";
+import { saveAuth } from "@/lib/auth-storage";
 import { Button } from "@/components/ui/button/button";
 import { Input } from "@/components/ui/inputs/input";
 import { Label } from "@/components/ui/label/label";
@@ -48,8 +49,7 @@ export function CadastroForm() {
         password,
       });
 
-      localStorage.setItem("finance-app-token", response.token);
-      localStorage.setItem("finance-app-user", JSON.stringify(response.user));
+      saveAuth(response.token, response.user);
 
       router.push("/dashboard");
     } catch {

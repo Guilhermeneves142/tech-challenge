@@ -20,6 +20,13 @@ export default function TransferTable({ transactions, categories }: TransferTabl
         </Link>
       </div>
       <table className="w-full">
+        <caption className="sr-only">Extrato recente de transações</caption>
+        <thead>
+          <tr className="sr-only">
+            <th scope="col">Descrição e data</th>
+            <th scope="col">Valor</th>
+          </tr>
+        </thead>
         <tbody>
           {transactions.map((item) => (
             <TransferTableItem
