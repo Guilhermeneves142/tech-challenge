@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card/card"
 import { CadastroForm } from "@/components/auth/CadastroForm"
 
 export default function CadastroPage() {

@@ -16,14 +16,14 @@ declare module "@tanstack/react-table" {
   }
 }
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button/button"
 import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
   PaginationLink
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination/pagination"
 
 import {
   Table,
@@ -32,7 +32,7 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "@/components/ui/table"
+} from "@/components/ui/table/table"
 import { useState } from "react"
 
 

@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card/card"
 import { RecuperarSenhaForm } from "@/components/auth/RecuperarSenhaForm"
 
 export default function RecuperarSenhaPage() {
