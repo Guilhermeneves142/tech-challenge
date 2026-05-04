@@ -69,8 +69,8 @@ TECH-CHALLENGE/
 
 <br>
 
-## Formas de acessar o projeto
-### 1. Via instalação local
+## Formas de acessar o 
+
 #### _Pré-requisitos:_
 * Node.js >=22.14
 * npm ou yarn
