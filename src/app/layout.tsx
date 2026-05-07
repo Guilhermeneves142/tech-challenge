@@ -1,4 +1,5 @@
-import "./globals.css";
+import "@/styles/globals.css";
+import "@/styles/typography.css";
 
 export default function RootLayout({
   children,
@@ -6,24 +7,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="pt-br"
-    >
-      {/* Criar componente do menu lateral e colocar no lugar dessa tag */}
-      {/* <aside> */}
-        <div>
-          <h2 className="text-brand-primary">FinanceApp</h2>
-        </div>
-      {/* </aside> */}
-      <body className="min-h-full flex flex-col">
-        <div>
-          <h1>DASHBOARD</h1>
-          <span>Veja o seu resumo financeiro</span>
-        </div>
+    <html lang="pt-br">
+      <body className="min-h-screen bg-background pt-[88px] lg:pt-0">
         {children}
-        <footer>
-          <span>© 2023 FinanceApp - Sua Gestão Financeira Profissional.</span>
-        </footer>
+        {/* </aside> */}
       </body>
     </html>
   );

@@ -1,0 +1,67 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+export const RadiusCard = ({ varName, px }) => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "10px",
+    }}
+  >
+    <div
+      style={{
+        width: "88px",
+        height: "88px",
+        backgroundColor: "var(--color-primary)",
+        borderRadius: `var(${varName})`,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+      }}
+      title={`${varName} — ${px}`}
+    />
+    <code style={{ fontSize: "11px", textAlign: "center", color: "var(--color-text-secondary)" }}>{varName}</code>
+    <span style={{ fontSize: "11px", color: "var(--color-text-tertiary)", fontFamily: "monospace" }}>{px}</span>
+  </div>
+);
+
+<Meta title="Design System/Tokens/Radius" />
+
+# Radius (border-radius)
+
+Tokens definidos em **`src/styles/globals.css`** (`@theme inline`).
+
+<div className="ds-radius" style={{ padding: "8px 0 32px" }}>
+
+<div
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "var(--spacing-8)",
+    alignItems: "flex-end",
+    marginTop: "16px",
+    padding: "var(--spacing-6)",
+    border: "1px solid var(--color-border)",
+    borderRadius: "var(--radius-lg)",
+  }}
+>
+  <RadiusCard varName="--radius-none" px="0" />
+  <RadiusCard varName="--radius-sm" px="4px" />
+  <RadiusCard varName="--radius-md" px="8px" />
+  <RadiusCard varName="--radius-lg" px="12px" />
+  <RadiusCard varName="--radius-xl" px="16px" />
+  <RadiusCard varName="--radius-2xl" px="24px" />
+  <RadiusCard varName="--radius-full" px="9999px (pill)" />
+</div>
+
+## Uso típico
+
+<ul style={{ marginTop: "20px", fontSize: "var(--size-body-sm)", color: "var(--color-text-secondary)", lineHeight: "var(--lh-body)", maxWidth: "520px" }}>
+  <li><code>--radius-none</code> — cantos rectos</li>
+  <li><code>--radius-sm</code> — inputs, chips, elementos pequenos</li>
+  <li><code>--radius-md</code> — botões, cartões compactos</li>
+  <li><code>--radius-lg</code> — cartões, painéis</li>
+  <li><code>--radius-xl</code> / <code>--radius-2xl</code> — modais, destaques</li>
+  <li><code>--radius-full</code> — avatares, pills</li>
+</ul>
+
+</div>

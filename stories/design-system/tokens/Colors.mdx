@@ -1,0 +1,114 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+export const Swatch = ({ token, hex, label }) => (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+      marginBottom: "14px",
+    }}
+  >
+    <div
+      title={hex}
+      style={{
+        width: "56px",
+        height: "56px",
+        borderRadius: "var(--radius-md)",
+        backgroundColor: `var(${token})`,
+        border: "1px solid var(--color-border)",
+        flexShrink: 0,
+        boxSizing: "border-box",
+      }}
+    />
+    <div>
+      <code style={{ fontSize: "13px", fontWeight: 600 }}>{token}</code>
+      {label ? (
+        <div style={{ fontSize: "12px", color: "var(--color-text-secondary)", marginTop: "2px" }}>{label}</div>
+      ) : null}
+      <div style={{ fontSize: "12px", color: "var(--color-text-tertiary)", fontFamily: "monospace" }}>{hex}</div>
+    </div>
+  </div>
+);
+
+export const Section = ({ title, children }) => (
+  <section style={{ marginBottom: "32px" }}>
+    <h2 style={{ fontSize: "18px", marginBottom: "16px", borderBottom: "1px solid var(--color-border)", paddingBottom: "8px" }}>
+      {title}
+    </h2>
+    {children}
+  </section>
+);
+
+<Meta title="Design System/Tokens/Cores" />
+
+# Paleta de cores
+
+Tokens definidos em **`src/styles/globals.css`** (`@theme inline`, `:root` e `.dark`). Usa sempre `var(--color-…)` ou os aliases shadcn (`var(--primary)`, `var(--background)`, …) conforme o contexto.
+
+<div className="ds-doc">
+  <Section title="Brand">
+    <Swatch token="--color-brand-primary" hex="#3b783a" label="Primária da marca" />
+    <Swatch token="--color-brand-secondary" hex="#c3db99" />
+    <Swatch token="--color-brand-tertiary" hex="#3a5a40" />
+    <Swatch token="--color-brand-background" hex="#f8f6f0" label="Fundo institucional / app clara" />
+  </Section>
+
+  <Section title="Texto">
+    <Swatch token="--color-text-primary" hex="#171717" label="Equivale ao foreground em :root" />
+    <Swatch token="--color-text-secondary" hex="#404040" />
+    <Swatch token="--color-text-tertiary" hex="#737373" />
+    <Swatch token="--color-text-disabled" hex="#a3a3a3" />
+    <Swatch token="--color-text-on-primary" hex="#ffffff" />
+    <Swatch token="--color-text-on-dark" hex="#dad7cd" />
+  </Section>
+
+  <Section title="Superfícies">
+    <Swatch token="--color-surface-default" hex="#ffffff" />
+    <Swatch token="--color-surface-subtle" hex="#dad7cd" />
+    <Swatch token="--color-surface-primary" hex="#588157" />
+    <Swatch token="--color-surface-dark" hex="#3a5a40" />
+    <Swatch token="--color-surface-strong" hex="#737373" />
+  </Section>
+
+  <Section title="Bordas">
+    <Swatch token="--color-border-default" hex="#d4d4d4" />
+  </Section>
+
+  <Section title="Feedback">
+    <Swatch token="--color-feedback-success" hex="#198754" />
+    <Swatch token="--color-feedback-success-light" hex="#d4edda" />
+    <Swatch token="--color-feedback-error" hex="#dc3545" />
+    <Swatch token="--color-feedback-error-light" hex="#f8d7da" />
+    <Swatch token="--color-feedback-warning" hex="#fd7e14" />
+    <Swatch token="--color-feedback-warning-light" hex="#fff3cd" />
+    <Swatch token="--color-feedback-info" hex="#0d6efd" />
+    <Swatch token="--color-feedback-info-light" hex="#cfe2ff" />
+  </Section>
+
+  <Section title="Escala neutra (cinzas)">
+    <Swatch token="--color-gray-100" hex="#f5f5f5" />
+    <Swatch token="--color-gray-200" hex="#e5e5e5" />
+    <Swatch token="--color-gray-300" hex="#d4d4d4" />
+    <Swatch token="--color-gray-400" hex="#a3a3a3" />
+    <Swatch token="--color-gray-500" hex="#737373" />
+    <Swatch token="--color-gray-600" hex="#525252" />
+    <Swatch token="--color-gray-700" hex="#404040" />
+    <Swatch token="--color-gray-800" hex="#262626" />
+    <Swatch token="--color-gray-900" hex="#171717" />
+  </Section>
+</div>
+
+<p style={{ fontSize: "var(--size-body-sm)", color: "var(--color-text-secondary)", maxWidth: "640px" }}>
+  O tema <strong>.dark</strong> em <code>globals.css</code> redefine estes tokens para modo escuro (valores distintos para marca, texto, superfície e feedback).
+</p>
+
+<style>{`
+  .ds-doc {
+    max-width: 640px;
+    padding: 8px 0 32px;
+  }
+  .ds-doc h1 {
+    margin-bottom: 8px;
+  }
+`}</style>

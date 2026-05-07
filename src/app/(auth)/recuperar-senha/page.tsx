@@ -1,0 +1,26 @@
+import { Mail } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card/card"
+import { RecuperarSenhaForm } from "@/components/auth/RecuperarSenhaForm"
+
+export default function RecuperarSenhaPage() {
+  return (
+    <Card className="w-full max-w-[420px] shadow-md ring-0">
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0 text-[var(--color-brand-tertiary)]">
+            <Mail size={20} />
+          </div>
+          <CardTitle className="text-2xl font-bold text-foreground tracking-tight">
+            Recuperar senha
+          </CardTitle>
+        </div>
+        <CardDescription className="text-muted-foreground text-sm mt-1">
+          Informe seu e-mail e enviaremos um link para redefinir sua senha
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="pt-4">
+        <RecuperarSenhaForm />
+      </CardContent>
+    </Card>
+  )
+}
