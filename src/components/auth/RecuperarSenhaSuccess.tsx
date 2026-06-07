@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { CheckCircle } from "lucide-react"
-import { Button } from "@/components/ui/button/button"
+import { Button } from "@vandrei/finance-ui"
 
 interface RecuperarSenhaSuccessProps {
   email: string

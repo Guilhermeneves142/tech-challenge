@@ -10,24 +10,22 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialogModal/dialog";
-import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/inputs/input";
-import { Label } from "@/components/ui/label/label";
-import { Calendar } from "@/components/ui/calendar/calendar";
-import {
+  Button,
+  Input,
+  Label,
+  Calendar,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select/select";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs/tabs";
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@vandrei/finance-ui";
 import { TransactionFormType, TransactionModalProps } from "@/components/transactions/types";
 import { useTransactionForm } from "@/components/transactions/hooks/useTransactionForm";
 

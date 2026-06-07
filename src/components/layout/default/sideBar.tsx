@@ -12,8 +12,8 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialogModal/dialog";
-import { Button } from "@/components/ui/button/button";
+  Button,
+} from "@vandrei/finance-ui";
 import { clearAuth } from "@/lib/auth-storage";
 
 type User = {
@@ -212,7 +212,7 @@ export default function Sidebar() {
         </>
       )}
 
-      <div className="hidden h-full min-h-screen flex-col justify-between bg-[var(--color-brand-tertiary)] px-4 py-5 text-white lg:flex">
+      <div className="max-lg:hidden flex h-full min-h-screen flex-col justify-between bg-[var(--color-brand-tertiary)] px-4 py-5 text-white">
         <div>
           {/* LOGO */}
           <div className="mb-8 flex items-center gap-3">

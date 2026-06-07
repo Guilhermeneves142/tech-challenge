@@ -5,9 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authApi } from "@/lib/auth-api";
 import { saveAuth } from "@/lib/auth-storage";
-import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/inputs/input";
-import { Label } from "@/components/ui/label/label";
+import { Button, Input, Label } from "@vandrei/finance-ui";
 import { PasswordInput } from "@/components/auth/PasswordInput";
 
 export function LoginForm() {
