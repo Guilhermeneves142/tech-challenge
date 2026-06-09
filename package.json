@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently -n \"next,mock,mfe-auth,mfe-tx\" -c \"cyan,green,yellow,magenta\" \"next dev\" \"node mock/server.mjs\" \"npm --prefix ../mfe-auth run dev\" \"npm --prefix ../mfe-transactions run dev\"",
+    "dev": "concurrently -n \"next,mock,mf-auth,mf-tx\" -c \"cyan,green,yellow,magenta\" \"next dev\" \"node mock/server.mjs\" \"npm --prefix ../mf-auth run dev\" \"npm --prefix ../mf-transactions run dev\"",
     "dev:next": "next dev",
     "dev:mock": "node mock/server.mjs",
     "build": "next build",

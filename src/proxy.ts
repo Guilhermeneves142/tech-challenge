@@ -1,22 +1,16 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Prefixo das zonas públicas (MFE de autenticação via multizone).
-const PUBLIC_PREFIX = "/auth";
+const PUBLIC_ROUTES = ["/login", "/cadastro", "/recuperar-senha"];
 
 export default function proxy(request: NextRequest) {
+  const token = request.cookies.get("finance-app-token")?.value;
   const { pathname } = request.nextUrl;
 
-  // Deixa os assets dos MFEs (/auth/_next/...) passarem direto para o rewrite.
-  if (pathname.includes("/_next/")) {
-    return NextResponse.next();
-  }
-
-  const token = request.cookies.get("finance-app-token")?.value;
-  const isPublic = pathname.startsWith(PUBLIC_PREFIX);
+  const isPublic = PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
 
   if (!token && !isPublic) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (token && isPublic) {
