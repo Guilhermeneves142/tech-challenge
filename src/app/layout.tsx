@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { Roboto } from "next/font/google";
-import { MfeEventListener } from "@/components/mfe/MfeEventListener";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -17,7 +16,6 @@ export default function RootLayout({
   return (
     <html lang="pt-br" className={roboto.variable}>
       <body className="min-h-screen bg-background">
-        <MfeEventListener />
         {children}
       </body>
     </html>

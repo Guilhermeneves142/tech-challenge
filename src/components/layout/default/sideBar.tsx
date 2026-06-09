@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LogOut, Lock, Menu, Disc, List, X, LayoutDashboard, User, Wallet } from "lucide-react";
 import {
@@ -63,7 +62,6 @@ function getInitials(name: string) {
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const router = useRouter();
 
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
@@ -89,7 +87,8 @@ export default function Sidebar() {
     clearAuth();
     setOpenLogoutModal(false);
     setOpenMobileMenu(false);
-    router.push("/login");
+    // Navegação entre zonas (host -> auth) precisa ser hard navigation.
+    window.location.href = "/auth/login";
   }
 
   const userName = user?.name || "Usuário";
@@ -162,7 +161,7 @@ export default function Sidebar() {
                 }
 
                 return (
-                  <Link
+                  <a
                     key={item.label}
                     href={item.href}
                     onClick={() => setOpenMobileMenu(false)}
@@ -173,7 +172,7 @@ export default function Sidebar() {
                     <span className="text-[16px] font-medium leading-[20px]">
                       {item.label}
                     </span>
-                  </Link>
+                  </a>
                 );
               })}
             </nav>
@@ -259,7 +258,7 @@ export default function Sidebar() {
               }
 
               return (
-                <Link
+                <a
                   key={item.label}
                   href={item.href}
                   className={`${baseClass} ${activeClass}`}
@@ -269,7 +268,7 @@ export default function Sidebar() {
                   <span className="text-[16px] font-medium leading-[20px]">
                     {item.label}
                   </span>
-                </Link>
+                </a>
               );
             })}
           </nav>

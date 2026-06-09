@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Category, Transaction } from "@/lib/api";
 import { getCategoryIcon } from "@/lib/categoryIcons";
 
@@ -12,12 +11,12 @@ export default function TransferTable({ transactions, categories }: TransferTabl
     <div className="w-full">
       <div className="flex items-center justify-between px-6 py-4 border-b border-[rgba(6,96,32,0.05)]">
         <h4 className="text-text-primary">Extrato Recente</h4>
-        <Link
+        <a
           href="/transacoes"
           className="text-[14px] font-bold text-feedback-success hover:opacity-75 transition-opacity"
         >
           Ver tudo
-        </Link>
+        </a>
       </div>
       <table className="w-full">
         <caption className="sr-only">Extrato recente de transações</caption>
