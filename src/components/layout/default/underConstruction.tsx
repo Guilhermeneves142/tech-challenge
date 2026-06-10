@@ -2,8 +2,7 @@
 
 import { ArrowLeft, Construction } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button/button";
-import { Card } from "@/components/ui/card/card";
+import { Button, Card } from "@vandrei/finance-ui";
 
 export default function UnderConstruction() {
   const router = useRouter();

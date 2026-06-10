@@ -6,8 +6,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-0 lg:w-[255px] shrink-0">
+    <div className="flex min-h-screen max-lg:pt-[88px]">
+      <aside className="max-lg:w-0 w-[255px] shrink-0">
         <div className="fixed left-0 top-0 h-screen w-[255px] flex flex-col justify-between">
           <Sidebar />
         </div>

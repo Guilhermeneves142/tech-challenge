@@ -16,7 +16,7 @@ const server = jsonServer.create();
 const router = jsonServer.router(join(__dirname, "db.json"));
 const middlewares = jsonServer.defaults({ nolog: false });
 
-const PORT = process.env.MOCK_PORT || 3001;
+const PORT = process.env.MOCK_PORT || 3099;
 
 
 // ── Middlewares padrão (logger, cors) ──
