@@ -1,28 +1,26 @@
-import { Zap, TrendingUp, ArrowLeftRight, QrCode } from "lucide-react";
-import DashboardMenu from "./components/dashboardMenu";
+import { Zap, ArrowLeftRight, QrCode } from "lucide-react";
 import ActionButton from "./components/actionButton";
 import NewTransactionAction from "./components/newTransactionAction";
-import TransferTable from "./components/transferTable";
 import Headline from "@/components/layout/default/headLine";
+import { WidgetsBoard } from "@/features/dashboard-widgets";
 import { api } from "@/lib/api";
 
-export default async function DashboardPage() {
-  const [dashboard, categories] = await Promise.all([
-    api.getDashboard().catch(() => undefined),
-    api.getCategories().catch(() => []),
-  ]);
+// Dados financeiros são por usuário e mudam a cada transação —
+// a página precisa de SSR por request, não de prerender estático
+export const dynamic = "force-dynamic";
 
-  const balance = dashboard?.balance;
-  const currentBalance = (balance?.current ?? 0).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
+export default async function DashboardPage() {
+  const [categories, widgets, transactions] = await Promise.all([
+    api.getCategories().catch(() => []),
+    api.getDashboardWidgets().catch(() => []),
+    api.getTransactions().catch(() => []),
+  ]);
 
   return (
     <>
       <Headline title="Dashboard" subTitle="Veja o seu resumo financeiro" />
-      <section className="grid grid-cols-12 gap-3">
-        <section className="col-span-12 lg:col-span-9 min-[1400px]:col-span-9">
+      <section className="flex flex-col gap-4">
+        <section>
           <article className="flex flex-wrap items-center gap-2 pb-4">
             <Zap
               className="size-6 shrink-0 text-brand-tertiary max-lg:size-5"
@@ -45,7 +43,7 @@ export default async function DashboardPage() {
               route="/em-construcao"
             />
             <ActionButton
-              className="col-span-12 lg:col-span-3"
+              className="col-span-12 sm:col-span-6 lg:col-span-3"
               text="Pagar Conta"
               icon={QrCode}
               disabled
@@ -53,32 +51,11 @@ export default async function DashboardPage() {
             />
           </section>
         </section>
-        <article className="col-span-12 flex flex-col justify-between gap-4 rounded-md bg-brand-tertiary p-6 max-lg:min-h-[160px] lg:col-span-3 lg:p-8">
-          <div className="min-w-0">
-            <strong className="text-[24px] font-bold text-white max-lg:text-base">
-              Seu Saldo atual
-            </strong>
-            <h2 className="wrap-break-word text-[48px] font-bold leading-tight text-white max-lg:text-3xl max-sm:text-2xl">
-              {currentBalance}
-            </h2>
-          </div>
-          <div className="flex w-fit max-w-full items-center gap-1 rounded-full bg-secondary px-3 py-1 text-brand-primary">
-            <TrendingUp className="size-3.5 shrink-0" aria-hidden />
-            <span className="min-w-0 truncate text-sm">
-              {balance?.variationLabel ?? "+0% este mês"}
-            </span>
-          </div>
-        </article>
-
-        <section className="col-span-12 overflow-x-auto rounded-md bg-white shadow lg:col-span-9">
-          <TransferTable
-            transactions={dashboard?.recentTransactions ?? []}
-            categories={categories}
-          />
-        </section>
-        <section className="col-span-12 lg:col-span-3">
-          <DashboardMenu />
-        </section>
+        <WidgetsBoard
+          initialWidgets={widgets}
+          transactions={transactions}
+          categories={categories}
+        />
       </section>
     </>
   );

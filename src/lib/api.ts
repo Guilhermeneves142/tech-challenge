@@ -67,6 +67,31 @@ export interface Dashboard {
   recentTransactions: Transaction[];
 }
 
+export type WidgetChartType = "kpi" | "bar" | "line" | "area" | "pie" | "list";
+export type WidgetMetric =
+  | "income"
+  | "expense"
+  | "balance"
+  | "count"
+  | "comparison";
+export type WidgetDimension = "month" | "category" | "type";
+
+export interface WidgetLayout {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface DashboardWidget {
+  id: number;
+  title: string;
+  chartType: WidgetChartType;
+  metric: WidgetMetric;
+  dimension: WidgetDimension;
+  layout: WidgetLayout;
+}
+
 export interface TransactionParams {
   _sort?: keyof Transaction;
   _order?: "asc" | "desc";
@@ -162,4 +187,29 @@ export const api = {
   /** Remove uma transação */
   deleteTransaction: (id: number) =>
     request<void>(`/transactions/${id}`, { method: "DELETE" }),
+
+  /** Widgets do dashboard customizável */
+  getDashboardWidgets: () =>
+    request<DashboardWidget[]>("/dashboardWidgets"),
+
+  /** Cria um widget no dashboard */
+  createDashboardWidget: (body: Omit<DashboardWidget, "id">) =>
+    request<DashboardWidget>("/dashboardWidgets", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+
+  /** Atualiza um widget (config ou posição/tamanho) */
+  updateDashboardWidget: (
+    id: number,
+    body: Partial<Omit<DashboardWidget, "id">>
+  ) =>
+    request<DashboardWidget>(`/dashboardWidgets/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    }),
+
+  /** Remove um widget do dashboard */
+  deleteDashboardWidget: (id: number) =>
+    request<void>(`/dashboardWidgets/${id}`, { method: "DELETE" }),
 };
