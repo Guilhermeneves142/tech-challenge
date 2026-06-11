@@ -266,5 +266,55 @@
       "income": 0,
       "expenses": 0
     }
+  ],
+  "dashboardWidgets": [
+    {
+      "id": 1,
+      "title": "Saldo atual",
+      "chartType": "kpi",
+      "metric": "balance",
+      "dimension": "month",
+      "layout": { "x": 0, "y": 0, "w": 4, "h": 3 }
+    },
+    {
+      "id": 2,
+      "title": "Receitas",
+      "chartType": "kpi",
+      "metric": "income",
+      "dimension": "month",
+      "layout": { "x": 4, "y": 0, "w": 4, "h": 3 }
+    },
+    {
+      "id": 3,
+      "title": "Despesas",
+      "chartType": "kpi",
+      "metric": "expense",
+      "dimension": "month",
+      "layout": { "x": 8, "y": 0, "w": 4, "h": 3 }
+    },
+    {
+      "id": 4,
+      "title": "Receitas × Despesas por mês",
+      "chartType": "bar",
+      "metric": "comparison",
+      "dimension": "month",
+      "layout": { "x": 0, "y": 3, "w": 8, "h": 8 }
+    },
+    {
+      "id": 5,
+      "title": "Despesas por categoria",
+      "chartType": "pie",
+      "metric": "expense",
+      "dimension": "category",
+      "layout": { "x": 8, "y": 3, "w": 4, "h": 8 }
+    },
+    {
+      "id": 6,
+      "title": "Extrato Recente",
+      "chartType": "list",
+      "metric": "count",
+      "dimension": "month",
+      "layout": { "x": 0, "y": 11, "w": 8, "h": 8 }
+    }
   ]
 }
