@@ -17,8 +17,12 @@ export function resolveApiBaseUrl(): string {
   if (env && /^https?:\/\//.test(env)) return env; // já é absoluta
 
   const rel = env ?? "/api";
-  const origin = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+  // Na Vercel, usa a URL de PRODUÇÃO (pública). VERCEL_URL é a URL do deployment,
+  // que pode ter Deployment Protection e quebrar o self-fetch do SSR.
+  const vercelHost =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+  const origin = vercelHost
+    ? `https://${vercelHost}`
     : `http://localhost:${process.env.PORT ?? 3000}`;
 
   return `${origin}${rel.startsWith("/") ? rel : `/${rel}`}`;

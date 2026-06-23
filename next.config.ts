@@ -5,12 +5,19 @@ import type { NextConfig } from "next";
 // - Vercel: usa as URLs de produção por padrão (process.env.VERCEL = "1" no build),
 //   então funciona mesmo sem configurar env var. Pode sobrescrever via MFE_*_URL.
 const ON_VERCEL = !!process.env.VERCEL;
-const MFE_AUTH_URL =
+// Remove barra(s) no final — evita destino "//transacoes" quando a env var
+// vier com "/" no fim (causa 404 no proxy).
+const stripSlash = (u: string) => u.replace(/\/+$/, "");
+const MFE_AUTH_URL = stripSlash(
   process.env.MFE_AUTH_URL ??
-  (ON_VERCEL ? "https://finance-mfe-auth.vercel.app" : "http://localhost:4001");
-const MFE_TX_URL =
+    (ON_VERCEL ? "https://finance-mfe-auth.vercel.app" : "http://localhost:4001")
+);
+const MFE_TX_URL = stripSlash(
   process.env.MFE_TX_URL ??
-  (ON_VERCEL ? "https://finance-mfe-transactions.vercel.app" : "http://localhost:4002");
+    (ON_VERCEL
+      ? "https://finance-mfe-transactions.vercel.app"
+      : "http://localhost:4002")
+);
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
