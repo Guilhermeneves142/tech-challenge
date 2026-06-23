@@ -1,8 +1,16 @@
 import type { NextConfig } from "next";
 
-// URLs das zonas (MFEs). Em produção, apontar para os deploys.
-const MFE_AUTH_URL = process.env.MFE_AUTH_URL ?? "http://localhost:4001";
-const MFE_TX_URL = process.env.MFE_TX_URL ?? "http://localhost:4002";
+// URLs das zonas (MFEs).
+// - Local: localhost (dev/Docker).
+// - Vercel: usa as URLs de produção por padrão (process.env.VERCEL = "1" no build),
+//   então funciona mesmo sem configurar env var. Pode sobrescrever via MFE_*_URL.
+const ON_VERCEL = !!process.env.VERCEL;
+const MFE_AUTH_URL =
+  process.env.MFE_AUTH_URL ??
+  (ON_VERCEL ? "https://finance-mfe-auth.vercel.app" : "http://localhost:4001");
+const MFE_TX_URL =
+  process.env.MFE_TX_URL ??
+  (ON_VERCEL ? "https://finance-mfe-transactions.vercel.app" : "http://localhost:4002");
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
