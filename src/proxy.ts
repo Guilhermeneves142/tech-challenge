@@ -27,5 +27,7 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|em-construcao).*)"],
+  // Exclui /api (rotas de dados — não passam pelo auth guard, senão login/SSR
+  // são redirecionados pra /auth/login e recebem HTML em vez de JSON).
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|em-construcao).*)"],
 };

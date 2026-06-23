@@ -1,10 +1,10 @@
 // ─────────────────────────────────────────────
-//  API Client — aponta para o Mock Server
-//  Base URL configurável via variável de ambiente
+//  API Client — aponta para as Route Handlers em /api
+//  (navegador usa "/api"; SSR usa URL absoluta)
 // ─────────────────────────────────────────────
+import { resolveApiBaseUrl } from "@/lib/api-base";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3099/api";
+const BASE_URL = resolveApiBaseUrl();
 
 // ── Tipos ─────────────────────────────────────
 

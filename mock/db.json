@@ -74,9 +74,9 @@
       "id": 1,
       "description": "Boleto Faculdade",
       "category": "educacao",
-      "amount": -350,
-      "date": "2025-05-01T10:00:00Z",
-      "dateLabel": "01 Mai, 10:00",
+      "amount": -355,
+      "date": "2025-05-01T00:00:00.000Z",
+      "dateLabel": "01 mai, 21:44",
       "type": "debit"
     },
     {
@@ -274,7 +274,12 @@
       "chartType": "kpi",
       "metric": "balance",
       "dimension": "month",
-      "layout": { "x": 0, "y": 0, "w": 4, "h": 3 }
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      }
     },
     {
       "id": 2,
@@ -282,7 +287,12 @@
       "chartType": "kpi",
       "metric": "income",
       "dimension": "month",
-      "layout": { "x": 4, "y": 0, "w": 4, "h": 3 }
+      "layout": {
+        "x": 4,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      }
     },
     {
       "id": 3,
@@ -290,7 +300,12 @@
       "chartType": "kpi",
       "metric": "expense",
       "dimension": "month",
-      "layout": { "x": 8, "y": 0, "w": 4, "h": 3 }
+      "layout": {
+        "x": 8,
+        "y": 0,
+        "w": 4,
+        "h": 3
+      }
     },
     {
       "id": 4,
@@ -298,7 +313,12 @@
       "chartType": "bar",
       "metric": "comparison",
       "dimension": "month",
-      "layout": { "x": 0, "y": 3, "w": 8, "h": 8 }
+      "layout": {
+        "x": 0,
+        "y": 3,
+        "w": 8,
+        "h": 8
+      }
     },
     {
       "id": 5,
@@ -306,7 +326,12 @@
       "chartType": "pie",
       "metric": "expense",
       "dimension": "category",
-      "layout": { "x": 8, "y": 3, "w": 4, "h": 8 }
+      "layout": {
+        "x": 8,
+        "y": 3,
+        "w": 4,
+        "h": 8
+      }
     },
     {
       "id": 6,
@@ -314,7 +339,12 @@
       "chartType": "list",
       "metric": "count",
       "dimension": "month",
-      "layout": { "x": 0, "y": 11, "w": 8, "h": 8 }
+      "layout": {
+        "x": 0,
+        "y": 11,
+        "w": 8,
+        "h": 8
+      }
     }
   ]
 }

@@ -1,5 +1,6 @@
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3099/api";
+import { resolveApiBaseUrl } from "@/lib/api-base";
+
+const BASE_URL = resolveApiBaseUrl();
 
 export interface LoginBody {
   email: string;

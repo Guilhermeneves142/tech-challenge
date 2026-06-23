@@ -1,0 +1,23 @@
+# ──────────────────────────────────────────────────────────────
+#  FinanceApp — Multizone num container único (modo dev)
+#
+#  Uso:
+#    docker compose up --build      # builda e sobe
+#    abrir  http://localhost:3000
+#
+#  Por que o contexto é ".." (pasta-pai):
+#    os MFEs dependem de file:../tech-challenge, então os 3 repos
+#    precisam estar lado a lado dentro da imagem.
+# ──────────────────────────────────────────────────────────────
+services:
+  app:
+    container_name: financeapp
+    build:
+      # contexto = pasta que contém tech-challenge, mfe-auth e mfe-transactions
+      context: ..
+      dockerfile: tech-challenge/Dockerfile
+    ports:
+      - "3000:3000" # shell / host  -> abrir no navegador (a API está em /api)
+    # Mantém o container vivo no terminal com logs coloridos do concurrently
+    tty: true
+    restart: unless-stopped

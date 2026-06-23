@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently -n \"next,mock,mfe-auth,mfe-tx\" -c \"cyan,green,yellow,magenta\" \"next dev\" \"node mock/server.mjs\" \"npm --prefix ../mfe-auth run dev\" \"npm --prefix ../mfe-transactions run dev\"",
+    "dev": "concurrently -n \"next,mfe-auth,mfe-tx\" -c \"cyan,yellow,magenta\" \"next dev\" \"npm --prefix ../mfe-auth run dev\" \"npm --prefix ../mfe-transactions run dev\"",
+    "dev:docker": "concurrently -n \"next,mfe-auth,mfe-tx\" -c \"cyan,yellow,magenta\" \"next dev -H 0.0.0.0\" \"npm --prefix ../mfe-auth run dev\" \"npm --prefix ../mfe-transactions run dev\"",
     "dev:next": "next dev",
-    "dev:mock": "node mock/server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

@@ -16,7 +16,9 @@ const server = jsonServer.create();
 const router = jsonServer.router(join(__dirname, "db.json"));
 const middlewares = jsonServer.defaults({ nolog: false });
 
-const PORT = process.env.MOCK_PORT || 3099;
+// PORT: usado pela Vercel/Render em produção. MOCK_PORT: override local.
+// Fallback 3099 para dev/Docker (onde nenhum dos dois é definido).
+const PORT = process.env.PORT || process.env.MOCK_PORT || 3099;
 
 
 // ── Middlewares padrão (logger, cors) ──
