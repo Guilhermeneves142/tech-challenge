@@ -3,7 +3,11 @@ import ActionButton from "./components/actionButton";
 import NewTransactionAction from "./components/newTransactionAction";
 import Headline from "@/components/layout/default/headLine";
 import { WidgetsBoard } from "@/features/dashboard-widgets";
-import { api } from "@/lib/api";
+import {
+  getCategoriesServer,
+  getDashboardWidgetsServer,
+  getTransactionsServer,
+} from "@/server/data";
 
 // Dados financeiros são por usuário e mudam a cada transação —
 // a página precisa de SSR por request, não de prerender estático
@@ -11,9 +15,9 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const [categories, widgets, transactions] = await Promise.all([
-    api.getCategories().catch(() => []),
-    api.getDashboardWidgets().catch(() => []),
-    api.getTransactions().catch(() => []),
+    getCategoriesServer().catch(() => []),
+    getDashboardWidgetsServer().catch(() => []),
+    getTransactionsServer().catch(() => []),
   ]);
 
   return (
