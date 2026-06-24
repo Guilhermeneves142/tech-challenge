@@ -23,7 +23,7 @@ Nesta fase, a aplicação evoluiu para uma arquitetura de **Microfrontends** usa
 🔗 **Aplicação:** [tech-challenge-one.vercel.app](https://tech-challenge-one.vercel.app/)
 
 > **Credenciais de teste:** `joao@financeapp.com` / `123456`
-> _(a escrita de dados na nuvem é efêmera — é um ambiente de demonstração)_
+> _(a escrita de dados na nuvem é efêmera, é um ambiente de demonstração)_
 
 <br>
 
@@ -148,7 +148,36 @@ docker compose up --build
 http://localhost:3000
 ```
 
-📄 Passo a passo completo (e o deploy na Vercel) em **[DOCKER.md](./DOCKER.md)**.
+📄 Passo a passo completo em **[DOCKER.md](./DOCKER.md)**.
+
+<br>
+
+## ☁️ Deploy (Vercel)
+
+🔗 **No ar:** [tech-challenge-one.vercel.app](https://tech-challenge-one.vercel.app/)
+
+Como cada zona é independente, o deploy são **3 projetos na Vercel** (host + 2 MFEs).
+A Vercel faz o **build nativo do Next.js**, o Docker acima é só para rodar/testar
+local, **não** é usado no deploy.
+
+| Projeto | O que serve |
+|---|---|
+| **host** | a aplicação (ponto de entrada) + a API em `/api` |
+| **mfe-auth** | a zona `/auth` |
+| **mfe-transactions** | a zona `/transacoes` |
+
+No projeto do **host**, as URLs das zonas vêm das variáveis de ambiente (ou dos
+_defaults_ de produção no `next.config.ts` quando rodando na Vercel):
+
+```bash
+MFE_AUTH_URL = https://<seu-mfe-auth>.vercel.app
+MFE_TX_URL   = https://<seu-mfe-transactions>.vercel.app
+```
+
+O host lê essas variáveis nos `rewrites()` e faz o _proxy_ das zonas, por isso o
+usuário acessa **tudo pela URL do host**. A API _mock_ (`/api`) também roda no host
+(serverless), então **não precisa de serviço externo**. Passo a passo completo em
+**[DOCKER.md](./DOCKER.md)**.
 
 <br>
 

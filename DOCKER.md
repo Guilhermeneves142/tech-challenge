@@ -1,4 +1,4 @@
-# 🐳 Docker — FinanceApp (Multizone)
+# 🐳 Docker, FinanceApp (Multizone)
 
 Este guia explica como rodar o projeto inteiro (host + 2 microfrontends + API mock)
 dentro de **um único container Docker**, em modo desenvolvimento.
@@ -37,12 +37,12 @@ docker compose up --build
 ```
 
 Aguarde o build (na 1ª vez baixa a imagem do Node e instala as dependências dos 3
-projetos — pode levar alguns minutos). Quando aparecer o log do `next` pronto, abra:
+projetos, pode levar alguns minutos). Quando aparecer o log do `next` pronto, abra:
 
 👉 **http://localhost:3000** (a API fica em **http://localhost:3000/api**)
 
 O fluxo: você cai no shell (host), faz login/cadastro (servido pelo `mfe-auth` sob
-`/auth`) e acessa as transações (servido pelo `mfe-transactions` sob `/transacoes`) —
+`/auth`) e acessa as transações (servido pelo `mfe-transactions` sob `/transacoes`),
 tudo na mesma URL `localhost:3000`, porque o host faz **proxy** dos MFEs.
 
 Para parar: `Ctrl+C` e depois `docker compose down`.
@@ -67,18 +67,18 @@ Dentro do **mesmo** container rodam 3 processos (via `concurrently`):
 | Processo | Porta | Acesso |
 |---|---|---|
 | Host / shell (Next) + **API em `/api`** | `3000` | **publicada** → navegador |
-| `mfe-auth` (basePath `/auth`) | `4001` | interna — o host proxia via `localhost:4001` |
-| `mfe-transactions` (basePath `/transacoes`) | `4002` | interna — o host proxia via `localhost:4002` |
+| `mfe-auth` (basePath `/auth`) | `4001` | interna, o host proxia via `localhost:4001` |
+| `mfe-transactions` (basePath `/transacoes`) | `4002` | interna, o host proxia via `localhost:4002` |
 
 > **A API não é mais um `json-server` separado.** Ela virou Route Handlers do Next em
 > `src/app/api/[...path]` (um mini json-server). Os dados ficam em `mock/db.json` e são
-> lidos/gravados via filesystem — **persiste no local/Docker** e cai pra memória
+> lidos/gravados via filesystem, **persiste no local/Docker** e cai pra memória
 > (efêmero) só na Vercel.
 
 **Por que tudo "simplesmente funciona" num container só:** todos os processos
 compartilham o mesmo `localhost`, então o proxy do multizone (`localhost:4001/4002`)
 resolve sem configuração de rede. E como a API é `/api` (mesma origem do host), as
-chamadas do navegador caem direto no host — sem CORS, sem porta extra.
+chamadas do navegador caem direto no host, sem CORS, sem porta extra.
 
 O roteamento multizone está em [`next.config.ts`](./next.config.ts) (`rewrites`):
 `/auth/*` → mfe-auth, `/transacoes/*` → mfe-transactions.
@@ -99,10 +99,10 @@ docker compose build --no-cache  # rebuild limpo (se algo bugar no cache)
 ### Mudei o código, e agora?
 Esta imagem **copia** o código no build (não usa volume). Então, ao alterar arquivos,
 rode `docker compose up --build` de novo. _(Se quiser hot-reload com o código montado,
-dá pra adicionar `volumes:` no compose — peça que eu configuro.)_
+dá pra adicionar `volumes:` no compose, peça que eu configuro.)_
 
 ### Persistir os dados entre rebuilds
-A API (`/api`) grava em `mock/db.json` **dentro do container** — as mudanças persistem
+A API (`/api`) grava em `mock/db.json` **dentro do container**, as mudanças persistem
 enquanto o container vive, mas se perdem ao recriar a imagem. Para gravar direto no seu
 arquivo local (persistir entre rebuilds), adicione no `docker-compose.yml`:
 
@@ -122,13 +122,13 @@ arquivo local (persistir entre rebuilds), adicione no `docker-compose.yml`:
 
 ---
 
-## 7. Deploy na nuvem (Vercel) — trilha SEPARADA do Docker
+## 7. Deploy na nuvem (Vercel), trilha SEPARADA do Docker
 
 > ⚠️ **A Vercel NÃO roda o seu container Docker.** Ela faz o build nativo do Next.js.
 > O Docker acima é só o entregável de **containerização** (rodar/testar local). O deploy
 > de produção é feito nativamente, com **um projeto Vercel por repositório** (multizone).
 
-São **3 projetos Vercel** (host + 2 MFEs). **Não precisa mais de Render** — a API agora é
+São **3 projetos Vercel** (host + 2 MFEs). **Não precisa mais de Render**, a API agora é
 `/api` dentro do host, então roda nativo na Vercel (escrita é efêmera no serverless, ok p/ demo).
 
 **Ordem recomendada:**
@@ -154,5 +154,5 @@ São **3 projetos Vercel** (host + 2 MFEs). **Não precisa mais de Render** — 
 > - Escrita (cadastro novo) **não persiste** na Vercel (serverless). Leitura e login com
 >   usuários "seedados" no `mock/db.json` funcionam normalmente. Para persistência real,
 >   troque o `mock/db.json` por um banco gerenciado (Neon/Mongo Atlas).
-> - `mock/server.mjs` e `mock/package.json` ficaram como **legado** (json-server) — não
+> - `mock/server.mjs` e `mock/package.json` ficaram como **legado** (json-server), não
 >   são usados pelo app nem pelo deploy; pode ignorar ou remover.
