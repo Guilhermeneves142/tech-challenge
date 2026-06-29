@@ -257,7 +257,11 @@ export function WidgetModal({
             </div>
           </div>
 
-          {error && <p className="text-caption text-feedback-error">{error}</p>}
+          {error && (
+            <p role="alert" className="text-caption text-feedback-error">
+              {error}
+            </p>
+          )}
         </form>
 
         <DialogFooter className="mt-4 bg-white border-none">

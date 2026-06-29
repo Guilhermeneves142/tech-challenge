@@ -66,6 +66,12 @@ const PIE_PALETTE = [
 const AXIS_TICK = { fontSize: 11, fill: "var(--color-text-tertiary)" };
 const GRID_STROKE = "var(--color-gray-200)";
 
+function kpiColorClass(metric: WidgetMetric, negative: boolean) {
+  if (metric === "expense" || negative) return "text-feedback-error";
+  if (metric === "count") return "text-text-secondary";
+  return "text-brand-primary";
+}
+
 export function WidgetChart({
   chartType,
   metric,
@@ -76,12 +82,7 @@ export function WidgetChart({
   if (chartType === "kpi") {
     const value = metricValue(transactions, metric);
     const negative = metric === "balance" && value < 0;
-    const color =
-      metric === "expense" || negative
-        ? "text-feedback-error"
-        : metric === "count"
-          ? "text-text-secondary"
-          : "text-brand-primary";
+    const color = kpiColorClass(metric, negative);
 
     return (
       <div className="flex h-full flex-col items-start justify-center gap-1 px-2">
