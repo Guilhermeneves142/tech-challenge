@@ -53,14 +53,14 @@ const INCOME_COLOR = "var(--color-brand-primary)";
 const EXPENSE_COLOR = "var(--color-feedback-error)";
 
 const PIE_PALETTE = [
-  "var(--color-brand-primary)",
-  "var(--color-brand-secondary)",
-  "var(--color-brand-tertiary)",
-  "var(--color-surface-primary)",
-  "var(--color-feedback-warning)",
-  "var(--color-feedback-info)",
-  "var(--color-gray-400)",
-  "var(--color-feedback-error)",
+  "var(--color-brand-tertiary)",   
+  "var(--color-surface-primary)", 
+  "var(--color-brand-primary)",   
+  "var(--color-text-secondary)",   
+  "var(--color-feedback-error)",   
+  "var(--color-feedback-info)",    
+  "var(--color-feedback-warning)", 
+  "var(--color-text-tertiary)",   
 ];
 
 const AXIS_TICK = { fontSize: 11, fill: "var(--color-text-tertiary)" };

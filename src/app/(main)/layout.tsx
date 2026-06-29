@@ -16,7 +16,7 @@ export default function DashboardLayout({
       <section className="flex flex-col flex-1 px-6">
         <main className="py-4">{children}</main>
         <footer className="text-center mt-auto">
-          <span className="text-[12px] text-text-tertiary">
+          <span className="text-[12px] text-text-secondary">
             © 2023 FinanceApp - Sua Gestão Financeira Profissional.
           </span>
         </footer>
