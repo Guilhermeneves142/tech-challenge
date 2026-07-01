@@ -358,7 +358,7 @@ export default function Sidebar() {
         </>
       )}
 
-      {/* Sidebar desktop */}
+      {/* Sidebar desktop */ }
       <div className="flex h-full min-h-screen flex-col justify-between bg-[var(--color-brand-tertiary)] px-4 py-5 text-white max-lg:hidden">
         <div>
           <div className="mb-8 flex items-center gap-3">
