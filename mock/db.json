@@ -186,6 +186,15 @@
       "dateLabel": "23 abr, 20:36",
       "type": "credit",
       "id": 13
+    },
+    {
+      "id": 14,
+      "description": "Marcenaria",
+      "amount": -3000,
+      "category": "transferencia",
+      "date": "2026-07-01T00:00:00.000Z",
+      "dateLabel": "01 jul, 18:46",
+      "type": "debit"
     }
   ],
   "categories": [
