@@ -10,7 +10,7 @@ import {
   List,
   X,
   LayoutDashboard,
-  User,
+  User as UserIcon,
   Wallet,
 } from "lucide-react";
 import {
@@ -54,7 +54,7 @@ const menuItems = [
   {
     label: "Perfil",
     href: "/perfil",
-    icon: <User className="h-5 w-5 shrink-0" aria-hidden />,
+    icon: <UserIcon className="h-5 w-5 shrink-0" aria-hidden />,
     disabled: true,
   },
 ];
@@ -77,9 +77,14 @@ function Logo() {
   return (
     <div className="flex items-center gap-3">
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
-        <Wallet className="h-5 w-5 text-[var(--color-brand-primary)]" aria-hidden />
+        <Wallet
+          className="h-5 w-5 text-[var(--color-brand-primary)]"
+          aria-hidden
+        />
       </span>
-      <span className="text-[20px] font-semibold leading-[24px]">FinanceApp</span>
+      <span className="text-[20px] font-semibold leading-[24px]">
+        FinanceApp
+      </span>
     </div>
   );
 }
@@ -112,7 +117,9 @@ function NavMenu({
               <a
                 href={item.href}
                 onClick={onNavigate}
-                aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+                aria-current={
+                  pathname.startsWith(item.href) ? "page" : undefined
+                }
                 className={`${navItemClass} ${
                   pathname.startsWith(item.href)
                     ? "bg-[var(--color-brand-secondary)] text-[var(--color-brand-primary)]"
@@ -152,7 +159,9 @@ function UserBox({
           {initials}
         </span>
         <span className="flex flex-col">
-          <span className="text-[14px] font-semibold leading-[18px]">{name}</span>
+          <span className="text-[14px] font-semibold leading-[18px]">
+            {name}
+          </span>
           <span className="text-[11px] font-medium leading-[14px] text-white/75">
             {plan}
           </span>
@@ -180,29 +189,28 @@ export default function Sidebar() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    async function fetchUser() {
-    // Lido apenas no cliente para não divergir da hidratação do servidor.
-    const loadUser = async () => {
+    queueMicrotask(() => {
       const storedUser = localStorage.getItem("finance-app-user");
-      if (storedUser) setUser(JSON.parse(storedUser));
-      setIsMounted(true);
-    }
 
-    fetchUser();
-    };
-    loadUser();
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch {
+          setUser(null);
+        }
+      }
+
+      setIsMounted(true);
+    });
   }, []);
 
   function handleLogout() {
     clearAuth();
     setOpenLogoutModal(false);
     setOpenMobileMenu(false);
-    // Navegação entre zonas (host -> auth) precisa ser hard navigation.
     window.location.href = "/auth/login";
   }
 
-  // Antes de montar no cliente não temos o usuário do localStorage:
-  // mantemos os placeholders para evitar divergência de hidratação.
   const userName = isMounted ? user?.name || "Usuário" : "Usuário";
   const userInitials = isMounted
     ? user?.initials || (user?.name ? getInitials(user.name) : "U")
@@ -220,8 +228,7 @@ export default function Sidebar() {
       ? "bg-[var(--color-brand-secondary)] text-[var(--color-brand-tertiary)]"
       : "text-white hover:bg-[var(--color-brand-secondary)]/20";
 
-      const disabledClass =
-      "text-white cursor-not-allowed opacity-70";
+    const disabledClass = "text-white cursor-not-allowed opacity-70";
 
     if (item.disabled) {
       return (
@@ -285,13 +292,11 @@ export default function Sidebar() {
               FinanceApp
             </span>
           </div>
-          <Logo />
 
           <button
             type="button"
             aria-label={openMobileMenu ? "Fechar menu" : "Abrir menu"}
             onClick={() => setOpenMobileMenu((prev) => !prev)}
-            aria-label={openMobileMenu ? "Fechar menu" : "Abrir menu"}
             aria-expanded={openMobileMenu}
             aria-controls="mobile-menu"
             className="rounded-lg p-2 transition hover:bg-white/10"
@@ -300,9 +305,6 @@ export default function Sidebar() {
               <X aria-hidden="true" className="h-6 w-6 text-white" />
             ) : (
               <Menu aria-hidden="true" className="h-6 w-6 text-white" />
-              <X className="h-6 w-6 text-white" aria-hidden />
-            ) : (
-              <Menu className="h-6 w-6 text-white" aria-hidden />
             )}
           </button>
         </div>
@@ -311,7 +313,17 @@ export default function Sidebar() {
       {/* Drawer mobile */}
       {openMobileMenu && (
         <>
-          <div className="fixed left-0 top-[72px] z-50 w-full bg-[var(--color-brand-tertiary)] px-4 pb-5 text-white shadow-lg lg:hidden">
+          <button
+            type="button"
+            aria-label="Fechar menu"
+            onClick={() => setOpenMobileMenu(false)}
+            className="fixed inset-0 z-40 bg-black/30 lg:hidden"
+          />
+
+          <div
+            id="mobile-menu"
+            className="fixed left-0 top-[72px] z-50 w-full bg-[var(--color-brand-tertiary)] px-4 pb-5 text-white shadow-lg lg:hidden"
+          >
             <nav className="flex flex-col gap-2" aria-label="Menu mobile">
               {menuItems.map((item) => renderMenuItem(item, true))}
             </nav>
@@ -342,27 +354,7 @@ export default function Sidebar() {
                 <LogOut aria-hidden="true" className="h-5 w-5 text-white" />
               </button>
             </div>
-          <div
-            id="mobile-menu"
-            className="fixed left-0 top-[72px] z-50 w-full bg-[var(--color-brand-tertiary)] px-4 pb-5 text-white shadow-lg lg:hidden"
-          >
-            <NavMenu pathname={pathname} onNavigate={() => setOpenMobileMenu(false)} />
-
-            <UserBox
-              initials={userInitials}
-              name={userName}
-              plan={userPlan}
-              onLogout={() => setOpenLogoutModal(true)}
-              className="mt-4 border-t border-white/15 pt-4"
-            />
           </div>
-
-          <button
-            type="button"
-            aria-label="Fechar menu"
-            onClick={() => setOpenMobileMenu(false)}
-            className="fixed inset-0 z-40 bg-black/30 lg:hidden"
-          />
         </>
       )}
 
@@ -410,20 +402,7 @@ export default function Sidebar() {
             <LogOut aria-hidden="true" className="h-5 w-5 text-white" />
           </button>
         </div>
-          <div className="mb-8">
-            <Logo />
-          </div>
-
-          <NavMenu pathname={pathname} />
-        </div>
-
-        <UserBox
-          initials={userInitials}
-          name={userName}
-          plan={userPlan}
-          onLogout={() => setOpenLogoutModal(true)}
-        />
-      </div>
+              </div>
 
       <Dialog open={openLogoutModal} onOpenChange={setOpenLogoutModal}>
         <DialogContent className="sm:max-w-sm" showCloseButton={false}>
@@ -435,8 +414,9 @@ export default function Sidebar() {
           </DialogHeader>
 
           <DialogFooter>
-
-            <DialogClose render={<Button variant="outline" />}>Cancelar</DialogClose>
+            <DialogClose render={<Button variant="outline" />}>
+              Cancelar
+            </DialogClose>
             <Button onClick={handleLogout}>Sair</Button>
           </DialogFooter>
         </DialogContent>
