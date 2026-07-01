@@ -53,14 +53,14 @@ const INCOME_COLOR = "var(--color-brand-primary)";
 const EXPENSE_COLOR = "var(--color-feedback-error)";
 
 const PIE_PALETTE = [
-  "var(--color-brand-primary)",
-  "var(--color-brand-secondary)",
-  "var(--color-brand-tertiary)",
-  "var(--color-surface-primary)",
-  "var(--color-feedback-warning)",
-  "var(--color-feedback-info)",
-  "var(--color-gray-400)",
-  "var(--color-feedback-error)",
+  "var(--color-brand-tertiary)",   
+  "var(--color-surface-primary)", 
+  "var(--color-brand-primary)",   
+  "var(--color-text-secondary)",   
+  "var(--color-feedback-error)",   
+  "var(--color-feedback-info)",    
+  "var(--color-feedback-warning)", 
+  "var(--color-text-tertiary)",   
 ];
 
 const AXIS_TICK = { fontSize: 11, fill: "var(--color-text-tertiary)" };
@@ -81,19 +81,30 @@ export function WidgetChart({
 }: WidgetChartProps) {
   if (chartType === "kpi") {
     const value = metricValue(transactions, metric);
+    const metricText = `${METRIC_LABELS[metric]}: ${formatMetricValue(metric, value)}`;
     const negative = metric === "balance" && value < 0;
     const color = kpiColorClass(metric, negative);
 
-    return (
-      <div className="flex h-full flex-col items-start justify-center gap-1 px-2">
-        <strong className={`text-3xl font-bold leading-tight ${color}`}>
-          {formatMetricValue(metric, value)}
-        </strong>
-        <span className="text-sm text-text-tertiary">
-          {METRIC_LABELS[metric]}
-        </span>
-      </div>
-    );
+          return (
+            <div
+              tabIndex={0}
+              aria-label={metricText}
+              className="flex h-full flex-col items-start justify-center gap-1 px-2 outline-none focus:ring-2 focus:ring-brand-primary"
+            >
+              <span className="sr-only">{metricText}</span>
+          
+              <strong
+                aria-hidden="true"
+                className={`text-3xl font-bold leading-tight ${color}`}
+              >
+                {formatMetricValue(metric, value)}
+              </strong>
+          
+              <span aria-hidden="true" className="text-sm text-text-tertiary">
+                {METRIC_LABELS[metric]}
+              </span>
+            </div>
+          );
   }
 
   if (chartType === "list") {

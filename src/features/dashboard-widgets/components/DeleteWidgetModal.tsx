@@ -44,7 +44,10 @@ export function DeleteWidgetModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[420px] p-6 gap-0" showCloseButton>
+      <DialogContent className="sm:max-w-[420px] p-6 gap-0" 
+        showCloseButton 
+        aria-labelledby="delete-widget-title"
+        aria-describedby="delete-widget-description">
         <DialogHeader className="mb-2">
           <DialogTitle>Excluir Widget</DialogTitle>
         </DialogHeader>

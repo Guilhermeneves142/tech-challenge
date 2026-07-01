@@ -136,6 +136,49 @@ export function WidgetModal({
     }
   }
 
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value);
+
+  const totalReceitas = transactions
+    .filter((transaction) => transaction.type === "credit")
+    .reduce((total, transaction) => total + transaction.amount, 0);
+
+  const totalDespesas = transactions
+    .filter((transaction) => transaction.type === "debit")
+    .reduce((total, transaction) => total + transaction.amount, 0);
+
+    const getPreviewValue = () => {
+      if (form.metric === ("revenue" as WidgetMetric)) {
+        return formatCurrency(totalReceitas);
+      }
+    
+      if (form.metric === ("expenses" as WidgetMetric)) {
+        return formatCurrency(totalDespesas);
+      }
+    
+      if (form.metric === "balance") {
+        return formatCurrency(totalReceitas - totalDespesas);
+      }
+    
+      if (form.metric === "count") {
+        return `${transactions.length} transações`;
+      }
+    
+      if (form.metric === "comparison") {
+        const totalCredit = transactions.filter((t) => t.type === "credit").length;
+        const totalDebit = transactions.filter((t) => t.type === "debit").length;
+    
+        return `Comparação com ${totalCredit} receitas e ${totalDebit} despesas`;
+      }
+    
+      return "Gráfico disponível";
+    };
+
+  const previewText = `${METRIC_LABELS[form.metric] ?? "Indicador"}: ${getPreviewValue()}`;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[560px] p-6 gap-0" showCloseButton>
@@ -245,17 +288,28 @@ export function WidgetModal({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <span className="text-label">Pré-visualização</span>
-            <div className="h-52 rounded-md border border-gray-200 bg-white p-3">
-              <WidgetChart
-                chartType={form.chartType}
-                metric={form.metric}
-                dimension={form.dimension}
-                transactions={transactions}
-                categories={categories}
-              />
-            </div>
-          </div>
+  <span id="widget-preview-title" className="text-label">
+    Pré-visualização
+  </span>
+
+  <div
+    tabIndex={0}
+    aria-describedby="widget-preview-description"
+    className="h-52 rounded-md border border-gray-200 bg-white p-3 outline-none focus:ring-2 focus:ring-brand-primary"
+  >
+    <span id="widget-preview-description" className="sr-only">
+      {previewText}
+    </span>
+
+    <WidgetChart
+      chartType={form.chartType}
+      metric={form.metric}
+      dimension={form.dimension}
+      transactions={transactions}
+      categories={categories}
+    />
+  </div>
+</div>
 
           {error && (
             <p role="alert" className="text-caption text-feedback-error">

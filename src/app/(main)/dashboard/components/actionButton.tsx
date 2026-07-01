@@ -18,25 +18,23 @@ export default function ActionButton({
 }: Props) {
   const cardClass = [
     "flex flex-col items-center justify-center bg-white py-6 shadow",
-    disabled
-      ? "cursor-not-allowed opacity-60"
-      : "cursor-pointer hover:bg-gray-100",
+    disabled ? "cursor-not-allowed" : "cursor-pointer hover:bg-gray-100",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
-  const iconWrapClass = [
-    "flex items-center justify-center rounded-full p-3",
-    disabled
-      ? "bg-gray-200 text-text-disabled"
-      : "bg-brand-secondary text-brand-primary",
-  ].join(" ");
-
-  const labelClass = [
-    "pt-2 text-[18px] font-medium",
-    disabled ? "text-text-disabled" : "text-text-primary",
-  ].join(" ");
+    const iconWrapClass = [
+      "flex items-center justify-center rounded-full p-3",
+      disabled
+        ? "bg-gray-200 text-text-tertiary"
+        : "bg-brand-secondary text-brand-primary",
+    ].join(" ");
+    
+    const labelClass = [
+      "pt-2 text-[18px] font-medium",
+      disabled ? "text-text-tertiary" : "text-text-primary",
+    ].join(" ");
 
   const content = (
     <>

@@ -180,11 +180,15 @@ export default function Sidebar() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    async function fetchUser() {
     // Lido apenas no cliente para não divergir da hidratação do servidor.
     const loadUser = async () => {
       const storedUser = localStorage.getItem("finance-app-user");
       if (storedUser) setUser(JSON.parse(storedUser));
       setIsMounted(true);
+    }
+
+    fetchUser();
     };
     loadUser();
   }, []);
@@ -205,15 +209,87 @@ export default function Sidebar() {
     : "U";
   const userPlan = isMounted ? user?.plan || "Plano Grátis" : "Plano Grátis";
 
+  function renderMenuItem(item: (typeof menuItems)[number], mobile = false) {
+    const isActive =
+      pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+    const baseClass =
+      "flex h-12 items-center gap-3 rounded-lg px-4 transition-all duration-200";
+
+    const activeClass = isActive
+      ? "bg-[var(--color-brand-secondary)] text-[var(--color-brand-tertiary)]"
+      : "text-white hover:bg-[var(--color-brand-secondary)]/20";
+
+      const disabledClass =
+      "text-white cursor-not-allowed opacity-70";
+
+    if (item.disabled) {
+      return (
+        <div
+          key={item.label}
+          title="Disponível em breve"
+          className={`${baseClass} ${disabledClass}`}
+        >
+          <span aria-hidden="true">{item.icon}</span>
+
+          <span className="text-[16px] font-medium leading-[20px]">
+            {item.label}
+          </span>
+
+          <Lock aria-hidden="true" className="ml-auto h-4 w-4 opacity-70" />
+        </div>
+      );
+    }
+
+    return (
+      <a
+        key={item.label}
+        href={item.href}
+        onClick={mobile ? () => setOpenMobileMenu(false) : undefined}
+        aria-current={isActive ? "page" : undefined}
+        className={`${baseClass} ${activeClass}`}
+      >
+        <span
+          aria-hidden="true"
+          className={
+            isActive ? "text-[var(--color-brand-tertiary)]" : "text-white"
+          }
+        >
+          {item.icon}
+        </span>
+
+        <span
+          className={`text-[16px] leading-[20px] ${
+            isActive
+              ? "font-bold text-[var(--color-brand-tertiary)]"
+              : "font-medium text-white"
+          }`}
+        >
+          {item.label}
+        </span>
+      </a>
+    );
+  }
+
   return (
     <>
       {/* Topbar mobile */}
       <header className="fixed left-0 top-0 z-50 w-full bg-[var(--color-brand-tertiary)] px-4 py-4 text-white shadow-md lg:hidden">
         <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
+              <Wallet className="h-5 w-5 text-[var(--color-brand-tertiary)]" />
+            </div>
+
+            <span className="text-[20px] font-semibold leading-[24px]">
+              FinanceApp
+            </span>
+          </div>
           <Logo />
 
           <button
             type="button"
+            aria-label={openMobileMenu ? "Fechar menu" : "Abrir menu"}
             onClick={() => setOpenMobileMenu((prev) => !prev)}
             aria-label={openMobileMenu ? "Fechar menu" : "Abrir menu"}
             aria-expanded={openMobileMenu}
@@ -221,6 +297,9 @@ export default function Sidebar() {
             className="rounded-lg p-2 transition hover:bg-white/10"
           >
             {openMobileMenu ? (
+              <X aria-hidden="true" className="h-6 w-6 text-white" />
+            ) : (
+              <Menu aria-hidden="true" className="h-6 w-6 text-white" />
               <X className="h-6 w-6 text-white" aria-hidden />
             ) : (
               <Menu className="h-6 w-6 text-white" aria-hidden />
@@ -232,6 +311,37 @@ export default function Sidebar() {
       {/* Drawer mobile */}
       {openMobileMenu && (
         <>
+          <div className="fixed left-0 top-[72px] z-50 w-full bg-[var(--color-brand-tertiary)] px-4 pb-5 text-white shadow-lg lg:hidden">
+            <nav className="flex flex-col gap-2" aria-label="Menu mobile">
+              {menuItems.map((item) => renderMenuItem(item, true))}
+            </nav>
+
+            <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/15 pt-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[14px] font-semibold text-[var(--color-brand-tertiary)]">
+                  {isMounted ? userInitials : "U"}
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-semibold leading-[18px]">
+                    {isMounted ? userName : "Usuário"}
+                  </span>
+
+                  <span className="text-[11px] font-medium leading-[14px] text-white/75">
+                    {isMounted ? userPlan : "Plano Grátis"}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                aria-label="Sair"
+                onClick={() => setOpenLogoutModal(true)}
+                className="rounded-lg p-2 transition hover:bg-white/10"
+              >
+                <LogOut aria-hidden="true" className="h-5 w-5 text-white" />
+              </button>
+            </div>
           <div
             id="mobile-menu"
             className="fixed left-0 top-[72px] z-50 w-full bg-[var(--color-brand-tertiary)] px-4 pb-5 text-white shadow-lg lg:hidden"
@@ -259,6 +369,47 @@ export default function Sidebar() {
       {/* Sidebar desktop */}
       <div className="flex h-full min-h-screen flex-col justify-between bg-[var(--color-brand-tertiary)] px-4 py-5 text-white max-lg:hidden">
         <div>
+          <div className="mb-8 flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white">
+              <Wallet className="h-5 w-5 text-[var(--color-brand-tertiary)]" />
+            </div>
+
+            <span className="text-[20px] font-semibold leading-[24px]">
+              FinanceApp
+            </span>
+          </div>
+
+          <nav className="flex flex-col gap-2" aria-label="Menu principal">
+            {menuItems.map((item) => renderMenuItem(item))}
+          </nav>
+        </div>
+
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[14px] font-semibold text-[var(--color-brand-tertiary)]">
+              {isMounted ? userInitials : "U"}
+            </div>
+
+            <div className="flex flex-col">
+              <span className="text-[14px] font-semibold leading-[18px]">
+                {isMounted ? userName : "Usuário"}
+              </span>
+
+              <span className="text-[11px] font-medium leading-[14px] text-white/75">
+                {isMounted ? userPlan : "Plano Grátis"}
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Sair"
+            onClick={() => setOpenLogoutModal(true)}
+            className="rounded-lg p-2 transition hover:bg-white/10"
+          >
+            <LogOut aria-hidden="true" className="h-5 w-5 text-white" />
+          </button>
+        </div>
           <div className="mb-8">
             <Logo />
           </div>
@@ -276,13 +427,15 @@ export default function Sidebar() {
 
       <Dialog open={openLogoutModal} onOpenChange={setOpenLogoutModal}>
         <DialogContent className="sm:max-w-sm" showCloseButton={false}>
-          <DialogHeader>
+          <DialogHeader tabIndex={0}>
             <DialogTitle>Deseja sair?</DialogTitle>
             <DialogDescription>
               Você será redirecionado para a tela de login.
             </DialogDescription>
           </DialogHeader>
+
           <DialogFooter>
+
             <DialogClose render={<Button variant="outline" />}>Cancelar</DialogClose>
             <Button onClick={handleLogout}>Sair</Button>
           </DialogFooter>
