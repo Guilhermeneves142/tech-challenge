@@ -29,6 +29,9 @@ import {
 import { TransactionFormType, TransactionModalProps } from "@/components/transactions/types";
 import { useTransactionForm } from "@/components/transactions/hooks/useTransactionForm";
 
+const tabTriggerClass =
+  "flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text-white hover:text-white hover:bg-white/10 data-active:bg-brand-secondary data-active:text-brand-primary data-active:shadow-sm data-active:hover:brightness-95 data-active:hover:bg-brand-secondary";
+
 export function TransactionModal({
   open,
   onOpenChange,
@@ -71,16 +74,10 @@ export function TransactionModal({
         >
           <Tabs value={form.type} onValueChange={(v) => setType(v as TransactionFormType)}>
             <TabsList className="w-full bg-brand-primary rounded-[10px] !h-[35px]">
-              <TabsTrigger
-                value="credit"
-                className="flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text-white hover:text-white hover:bg-white/10 data-active:bg-brand-secondary data-active:text-brand-primary data-active:shadow-sm data-active:hover:brightness-95 data-active:hover:bg-brand-secondary"
-              >
+              <TabsTrigger value="credit" className={tabTriggerClass}>
                 Receita
               </TabsTrigger>
-              <TabsTrigger
-                value="debit"
-                className="flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text-white hover:text-white hover:bg-white/10 data-active:bg-brand-secondary data-active:text-brand-primary data-active:shadow-sm data-active:hover:brightness-95 data-active:hover:bg-brand-secondary"
-              >
+              <TabsTrigger value="debit" className={tabTriggerClass}>
                 Despesa
               </TabsTrigger>
             </TabsList>
@@ -172,7 +169,11 @@ export function TransactionModal({
             </Popover>
           </div>
 
-          {error && <p className="text-caption text-feedback-error">{error}</p>}
+          {error && (
+            <p role="alert" className="text-caption text-feedback-error">
+              {error}
+            </p>
+          )}
         </form>
 
         <DialogFooter className="mt-4 bg-white border-none">

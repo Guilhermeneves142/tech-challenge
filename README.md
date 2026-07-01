@@ -101,6 +101,30 @@ TECH-CHALLENGE/
 
 <br>
 
+## ♿ Acessibilidade
+
+A interface segue boas práticas de acessibilidade (a11y) para funcionar bem com
+teclado e leitores de tela:
+
+* **HTML semântico:** uso de `header`, `nav`, `main`, `section`, `article` e
+  listas (`ul`/`li`) em vez de `div` genérica sempre que há significado estrutural.
+* **Navegação:** o menu lateral é uma lista de links dentro de `nav`, e o item da
+  rota atual é marcado com `aria-current="page"`.
+* **Controles interativos:** ações sempre usam `button`/`a` reais (nunca `div`
+  clicável). Itens desabilitados usam `<button disabled>`, mantendo o estado
+  acessível por teclado e leitores de tela.
+* **Ícones:** ícones decorativos recebem `aria-hidden`; botões só com ícone têm
+  `aria-label` descritivo (ex.: "Sair", "Abrir menu", "Editar widget").
+* **Formulários:** todo campo tem `<Label htmlFor>` associado; mensagens de erro
+  usam `role="alert"` para serem anunciadas por leitores de tela.
+* **Menu mobile:** o botão de abrir/fechar expõe `aria-expanded` e `aria-controls`.
+
+> Os componentes base vêm da lib `@vandrei/finance-ui` (modais com _focus trap_,
+> foco visível), e o Storybook inclui o addon `@storybook/addon-a11y` para
+> auditar componentes isoladamente.
+
+<br>
+
 ## ▶️ Como rodar localmente
 
 #### _Pré-requisitos:_

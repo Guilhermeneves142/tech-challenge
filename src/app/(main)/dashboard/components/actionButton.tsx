@@ -36,25 +36,26 @@ export default function ActionButton({
       disabled ? "text-text-tertiary" : "text-text-primary",
     ].join(" ");
 
-  const iconNode = (
-    <span className={iconWrapClass}>
-      <Icon className="size-6 shrink-0" aria-hidden />
-    </span>
+  const content = (
+    <>
+      <span className={iconWrapClass}>
+        <Icon className="size-6 shrink-0" aria-hidden />
+      </span>
+      <span className={labelClass}>{text}</span>
+    </>
   );
 
   if (disabled) {
     return (
-      <span className={cardClass} aria-disabled="true" tabIndex={-1}>
-        {iconNode}
-        <span className={labelClass}>{text}</span>
-      </span>
+      <button type="button" className={cardClass} disabled title="Disponível em breve">
+        {content}
+      </button>
     );
   }
 
   return (
     <Link href={route} className={cardClass}>
-      {iconNode}
-      <span className={labelClass}>{text}</span>
+      {content}
     </Link>
   );
 }
