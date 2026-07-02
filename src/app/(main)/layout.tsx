@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-screen max-lg:pt-[88px]">
       <aside className="max-lg:w-0 w-[255px] shrink-0">
-        <div className="fixed left-0 top-0 h-screen w-[255px] flex flex-col justify-between">
+        <div className="fixed left-0 top-0 z-50 h-screen w-[255px] flex flex-col justify-between">
           <Sidebar />
         </div>
       </aside>
