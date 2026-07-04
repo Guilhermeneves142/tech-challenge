@@ -42,7 +42,10 @@ export function WidgetsBoard({
   const removeWidget = useWidgetsStore((s) => s.removeWidget);
   const applyLayouts = useWidgetsStore((s) => s.applyLayouts);
 
-  const [modal, setModal] = useState<ModalState>({ open: false, mode: "create" });
+  const [modal, setModal] = useState<ModalState>({
+    open: false,
+    mode: "create",
+  });
   const [deleting, setDeleting] = useState<DashboardWidget | undefined>();
 
   useEffect(() => {
@@ -50,19 +53,40 @@ export function WidgetsBoard({
   }, [hydrate, initialWidgets]);
 
   const list = hydrated ? widgets : initialWidgets;
+  const isMobile = width < 640;
 
-  const layout: Layout = list.map((w) => ({
-    i: String(w.id),
-    ...w.layout,
-    ...WIDGET_MIN_SIZE,
-  }));
+  const layout: Layout = list.map((w, index) => {
+    const base = {
+      i: String(w.id),
+      ...w.layout,
+      ...WIDGET_MIN_SIZE,
+    };
+
+    if (isMobile) {
+      return {
+        ...base,
+        x: 0,
+        y: index * 8,
+        w: 12,
+        h: Math.max(base.h - 1, 4)
+      };
+    }
+
+    return base;
+  });
 
   function handleLayoutChange(next: Layout) {
-    if (!hydrated) return;
+    if (!hydrated || isMobile) return;
+
     applyLayouts(
       next.map((item) => ({
         id: Number(item.i),
-        layout: { x: item.x, y: item.y, w: item.w, h: item.h },
+        layout: {
+          x: item.x,
+          y: item.y,
+          w: item.w,
+          h: item.h,
+        },
       }))
     );
   }
@@ -72,31 +96,38 @@ export function WidgetsBoard({
       await updateWidget(modal.widget.id, values);
       return;
     }
+
     const bottom = list.reduce(
       (max, w) => Math.max(max, w.layout.y + w.layout.h),
       0
     );
+
     await addWidget({
       ...values,
-      layout: { x: 0, y: bottom, ...defaultSizeFor(values.chartType) },
+      layout: {
+        x: 0,
+        y: bottom,
+        ...defaultSizeFor(values.chartType),
+      },
     });
   }
 
   return (
-    <section aria-label="Análises financeiras">
+    <section aria-label="Análises financeiras" className="w-full overflow-hidden">
       <header className="flex flex-wrap items-center justify-between gap-2 pb-4 pt-2">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <ChartNoAxesCombined
             className="size-6 shrink-0 text-brand-tertiary max-lg:size-5"
             aria-hidden
           />
-          <h2 className="text-[24px] font-bold max-lg:text-lg">
+          <h2 className="truncate text-[24px] font-bold max-lg:text-lg">
             Análises financeiras
           </h2>
         </div>
+
         <Button
           onClick={() => setModal({ open: true, mode: "create" })}
-          className="gap-1.5"
+          className="gap-1.5 max-sm:w-full"
         >
           <Plus className="size-4" aria-hidden />
           Adicionar widget
@@ -109,13 +140,14 @@ export function WidgetsBoard({
         </p>
       )}
 
-      <div ref={containerRef}>
+      <div ref={containerRef} className="w-full overflow-hidden">
         {list.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 rounded-md border-2 border-dashed border-gray-300 bg-white/50 px-6 py-12 text-center">
             <p className="text-base text-text-tertiary">
               Seu dashboard está vazio. Adicione um widget para começar a
               acompanhar suas finanças.
             </p>
+
             <Button onClick={() => setModal({ open: true, mode: "create" })}>
               <Plus className="size-4" aria-hidden />
               Adicionar widget
@@ -127,19 +159,28 @@ export function WidgetsBoard({
             <GridLayout
               layout={layout}
               width={width}
-              gridConfig={{ cols: 12, rowHeight: 36, margin: [12, 12] }}
-              dragConfig={{ enabled: true, handle: ".widget-drag-handle" }}
-              resizeConfig={{ enabled: true }}
+              gridConfig={{
+                cols: 12,
+                rowHeight: isMobile ? 42 : 36,
+                margin: isMobile ? [0, 16] : [12, 12],
+              }}
+              dragConfig={{
+                enabled: !isMobile,
+                handle: ".widget-drag-handle",
+              }}
+              resizeConfig={{ enabled: !isMobile }}
               onLayoutChange={handleLayoutChange}
-              className="-mx-3"
+              className={isMobile ? "mx-0" : "-mx-3"}
             >
               {list.map((widget) => (
-                <div key={String(widget.id)}>
+                <div key={String(widget.id)} className="min-w-0 overflow-hidden">
                   <WidgetCard
                     widget={widget}
                     transactions={transactions}
                     categories={categories}
-                    onEdit={(w) => setModal({ open: true, mode: "edit", widget: w })}
+                    onEdit={(w) =>
+                      setModal({ open: true, mode: "edit", widget: w })
+                    }
                     onDelete={(w) => setDeleting(w)}
                   />
                 </div>
