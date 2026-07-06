@@ -1,28 +1,48 @@
 import "server-only";
 import { promises as fs } from "fs";
 import path from "path";
-// Seed importado: garante que os dados existam no bundle da Vercel (FS read-only).
+import { Redis } from "@upstash/redis";
+// Seed usado para inicializar o banco (primeiro acesso no Redis / fallback local).
 import seed from "../../mock/db.json";
 
 export type Db = Record<string, unknown>;
 
 const DB_PATH = path.join(process.cwd(), "mock", "db.json");
+const DB_KEY = "finance:db";
 
-// Cache em memória do "banco". Em serverless (Vercel) é onde as mutações vivem
-// (efêmeras). Em local/Docker o arquivo é a fonte e este cache é só atalho.
+// Upstash Redis (produção/Vercel). Aceita tanto as env vars do console do
+// Upstash (UPSTASH_*) quanto as da integração Vercel Marketplace (KV_*).
+const REDIS_URL =
+  process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+const REDIS_TOKEN =
+  process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+const redis =
+  REDIS_URL && REDIS_TOKEN
+    ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN })
+    : null;
+
+// Cache em memória usado apenas no modo arquivo (local/Docker) como atalho.
 let cache: Db | null = null;
 
 /**
  * Lê o "banco".
- * - Local/Docker: lê `mock/db.json` (reflete escritas persistidas).
- * - Vercel: o FS é somente-leitura → usa o seed importado + mutações em memória.
+ * - Com Upstash configurado (produção): lê a chave no Redis; se não existir,
+ *   inicializa com o seed do `mock/db.json`.
+ * - Sem Upstash (local/Docker): lê `mock/db.json` do disco.
  */
 export async function getDb(): Promise<Db> {
+  if (redis) {
+    const stored = await redis.get<Db>(DB_KEY);
+    if (stored) return stored;
+    const initial = structuredClone(seed) as Db;
+    await redis.set(DB_KEY, initial);
+    return initial;
+  }
+
   try {
     const raw = await fs.readFile(DB_PATH, "utf8");
     cache = JSON.parse(raw) as Db;
   } catch {
-    // FS indisponível/somente-leitura (Vercel): mantém o cache atual ou usa o seed.
     if (!cache) cache = structuredClone(seed) as Db;
   }
   return cache;
@@ -30,14 +50,19 @@ export async function getDb(): Promise<Db> {
 
 /**
  * Grava o "banco".
- * - Local/Docker: escreve em `mock/db.json` (persiste de verdade).
- * - Vercel: a escrita falha (FS read-only) → fica só em memória (efêmero, ok p/ demo).
+ * - Com Upstash configurado (produção): persiste a chave no Redis.
+ * - Sem Upstash (local/Docker): escreve em `mock/db.json`.
  */
 export async function saveDb(db: Db): Promise<void> {
+  if (redis) {
+    await redis.set(DB_KEY, db);
+    return;
+  }
+
   cache = db;
   try {
     await fs.writeFile(DB_PATH, JSON.stringify(db, null, 2), "utf8");
   } catch {
-    // Serverless: ignora — o cache em memória já reflete a mudança.
+    // FS somente-leitura sem Redis configurado: mantém só em memória (efêmero).
   }
 }
