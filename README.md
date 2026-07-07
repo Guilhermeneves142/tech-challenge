@@ -23,7 +23,7 @@ Nesta fase, a aplicação evoluiu para uma arquitetura de **Microfrontends** usa
 🔗 **Aplicação:** [tech-challenge-one.vercel.app](https://tech-challenge-one.vercel.app/)
 
 > **Credenciais de teste:** `joao@financeapp.com` / `123456`
-> _(a escrita de dados na nuvem é efêmera, é um ambiente de demonstração)_
+> _(os dados na nuvem persistem em um Redis gerenciado — Upstash)_
 
 <br>
 
@@ -40,7 +40,7 @@ Nesta fase, a aplicação evoluiu para uma arquitetura de **Microfrontends** usa
 * **Desenvolvimento:** Next.js 16, React 19, TypeScript, Tailwind, shadcn/cn
 * **Microfrontends:** Next.js Multizones (proxy via `rewrites`)
 * **Gráficos:** Recharts
-* **Dados:** API _mock_ via Route Handlers do Next (`/api`)
+* **Dados:** API _mock_ via Route Handlers do Next (`/api`) · persistência em **Upstash Redis** (produção) ou `mock/db.json` (local/Docker)
 * **Containerização:** Docker + Docker Compose
 * **Design System:** Figma
 * **Documentação de componentes:** Storybook
@@ -69,14 +69,16 @@ flowchart LR
 
 > A API _mock_ deixou de ser um `json-server` externo e passou a viver no host como
 > Route Handlers em `src/app/api`. Em local/Docker ela persiste em `mock/db.json`;
-> na nuvem (serverless) a escrita é efêmera.
+> na nuvem (serverless) persiste no **Upstash Redis** (o FS da Vercel é somente
+> leitura, então o "banco" vive numa chave do Redis, inicializada com o seed).
 
 <br>
 
 ## Arquitetura de pastas (host)
 ```bash
 TECH-CHALLENGE/
-├── mock/                       # db.json (seed dos dados) + servidor legado
+├── mock/                       # db.json (seed dos dados / banco local)
+├── scripts/                    # seed-db.mjs (sobe o db.json p/ o Redis)
 ├── src/
 │   ├── app/
 │   │   ├── (main)/             # área autenticada (dashboard, etc.)
@@ -200,8 +202,21 @@ MFE_TX_URL   = https://<seu-mfe-transactions>.vercel.app
 
 O host lê essas variáveis nos `rewrites()` e faz o _proxy_ das zonas, por isso o
 usuário acessa **tudo pela URL do host**. A API _mock_ (`/api`) também roda no host
-(serverless), então **não precisa de serviço externo**. Passo a passo completo em
-**[DOCKER.md](./DOCKER.md)**.
+(serverless).
+
+Como o filesystem da Vercel é somente leitura, a persistência em produção usa o
+**[Upstash Redis](https://upstash.com/)** (free tier). No projeto do host, configure
+também:
+
+```bash
+UPSTASH_REDIS_REST_URL   = https://<seu-db>.upstash.io
+UPSTASH_REDIS_REST_TOKEN = <token da seção REST API do console Upstash>
+```
+
+Na primeira requisição, o banco é inicializado automaticamente com o seed do
+`mock/db.json`. Para resetar os dados de produção com o seed do repositório:
+`npm run db:seed` (requer as mesmas variáveis no `.env.local`). Passo a passo
+completo em **[DOCKER.md](./DOCKER.md)**.
 
 <br>
 

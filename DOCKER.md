@@ -71,9 +71,9 @@ Dentro do **mesmo** container rodam 3 processos (via `concurrently`):
 | `mfe-transactions` (basePath `/transacoes`) | `4002` | interna, o host proxia via `localhost:4002` |
 
 > **A API não é mais um `json-server` separado.** Ela virou Route Handlers do Next em
-> `src/app/api/[...path]` (um mini json-server). Os dados ficam em `mock/db.json` e são
-> lidos/gravados via filesystem, **persiste no local/Docker** e cai pra memória
-> (efêmero) só na Vercel.
+> `src/app/api/[...path]` (um mini json-server). Em local/Docker os dados ficam em
+> `mock/db.json` (lidos/gravados via filesystem); na Vercel a persistência é no
+> **Upstash Redis** (o FS de lá é somente leitura).
 
 **Por que tudo "simplesmente funciona" num container só:** todos os processos
 compartilham o mesmo `localhost`, então o proxy do multizone (`localhost:4001/4002`)
@@ -129,7 +129,7 @@ arquivo local (persistir entre rebuilds), adicione no `docker-compose.yml`:
 > de produção é feito nativamente, com **um projeto Vercel por repositório** (multizone).
 
 São **3 projetos Vercel** (host + 2 MFEs). **Não precisa mais de Render**, a API agora é
-`/api` dentro do host, então roda nativo na Vercel (escrita é efêmera no serverless, ok p/ demo).
+`/api` dentro do host, então roda nativo na Vercel (a persistência fica no **Upstash Redis**).
 
 **Ordem recomendada:**
 
@@ -141,9 +141,11 @@ São **3 projetos Vercel** (host + 2 MFEs). **Não precisa mais de Render**, a A
    - Resultado: `https://<mfe-transactions>.vercel.app/transacoes`.
 
 3. **host (tech-challenge)** → novo projeto na Vercel, root = repo `tech-challenge`.
-   Env vars (lidas no `next.config.ts` nos `rewrites()`):
-   - `MFE_AUTH_URL = https://<mfe-auth>.vercel.app`
-   - `MFE_TX_URL   = https://<mfe-transactions>.vercel.app`
+   Env vars:
+   - `MFE_AUTH_URL = https://<mfe-auth>.vercel.app` (lida nos `rewrites()` do `next.config.ts`)
+   - `MFE_TX_URL   = https://<mfe-transactions>.vercel.app` (idem)
+   - `UPSTASH_REDIS_REST_URL = https://<seu-db>.upstash.io` (persistência do banco mock)
+   - `UPSTASH_REDIS_REST_TOKEN = <token>` (seção **REST API** do console do Upstash)
 
    A API (`/api`) vive **neste** projeto. As chamadas do navegador (inclusive a partir
    das zonas `/auth` e `/transacoes`) caem no host porque o multizone mantém tudo na
@@ -151,8 +153,11 @@ São **3 projetos Vercel** (host + 2 MFEs). **Não precisa mais de Render**, a A
 
 > **Observações:**
 > - Abra sempre pela **URL do host** (é ela que faz o proxy das zonas).
-> - Escrita (cadastro novo) **não persiste** na Vercel (serverless). Leitura e login com
->   usuários "seedados" no `mock/db.json` funcionam normalmente. Para persistência real,
->   troque o `mock/db.json` por um banco gerenciado (Neon/Mongo Atlas).
+> - **Persistência na Vercel:** como o filesystem de lá é somente leitura, o "banco"
+>   (`src/server/mock-db.ts`) vive numa chave do **Upstash Redis** (free tier). Na
+>   primeira requisição, a chave é criada automaticamente com o seed do `mock/db.json`.
+>   Para resetar os dados de produção com o seed do repo: `npm run db:seed` (requer as
+>   env vars do Upstash no `.env.local`). Sem as env vars (local/Docker), o banco é o
+>   próprio `mock/db.json`.
 > - `mock/server.mjs` e `mock/package.json` ficaram como **legado** (json-server), não
 >   são usados pelo app nem pelo deploy; pode ignorar ou remover.
