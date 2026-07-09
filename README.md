@@ -137,20 +137,25 @@ teclado e leitores de tela:
 ```
 faculdade/
 ├── tech-challenge/            # este repositório (host)
-├── tech-challenge-mfe-auth/
-└── tech-challenge-mfe-transactions/
+├── mfe-auth/
+└── mfe-transactions/
 ```
 
+> ⚠️ **Os nomes das pastas importam!** Os scripts do host (`npm run dev`) e o
+> Docker procuram os MFEs em `../mfe-auth` e `../mfe-transactions`. Como os
+> repositórios no GitHub têm outro nome (`tech-challenge-mfe-*`), clone
+> passando o nome da pasta de destino, como abaixo.
+
 ```bash
-# Clone os 3 repositórios na mesma pasta
+# Clone os 3 repositórios na mesma pasta (repare no 2º argumento do clone)
 git clone https://github.com/Guilhermeneves142/tech-challenge.git
-git clone https://github.com/Guilhermeneves142/tech-challenge-mfe-auth.git
-git clone https://github.com/Guilhermeneves142/tech-challenge-mfe-transactions.git
+git clone https://github.com/Guilhermeneves142/tech-challenge-mfe-auth.git mfe-auth
+git clone https://github.com/Guilhermeneves142/tech-challenge-mfe-transactions.git mfe-transactions
 
 # Instale as dependências de cada um
 npm install --prefix tech-challenge
-npm install --prefix tech-challenge-mfe-auth
-npm install --prefix tech-challenge-mfe-transactions
+npm install --prefix mfe-auth
+npm install --prefix mfe-transactions
 
 # A partir do host, suba tudo (host + 2 MFEs) de uma vez
 cd tech-challenge

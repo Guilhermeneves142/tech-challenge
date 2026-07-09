@@ -26,6 +26,16 @@ dentro de **um único container Docker**, em modo desenvolvimento.
   > Isso é obrigatório: os MFEs declaram `"tech-challenger": "file:../tech-challenge"`,
   > então os 3 precisam estar irmãos. Por isso o build usa a **pasta-pai** como contexto.
 
+  > ⚠️ **Os nomes das pastas importam** (o `Dockerfile` copia `mfe-auth` e
+  > `mfe-transactions` pelo nome). Como os repositórios no GitHub se chamam
+  > `tech-challenge-mfe-*`, clone informando a pasta de destino:
+  >
+  > ```bash
+  > git clone https://github.com/Guilhermeneves142/tech-challenge.git
+  > git clone https://github.com/Guilhermeneves142/tech-challenge-mfe-auth.git mfe-auth
+  > git clone https://github.com/Guilhermeneves142/tech-challenge-mfe-transactions.git mfe-transactions
+  > ```
+
 ---
 
 ## 2. Como rodar
@@ -117,7 +127,7 @@ arquivo local (persistir entre rebuilds), adicione no `docker-compose.yml`:
 
 - **`docker: command not found`** → Docker Desktop não está instalado ou não está no PATH. Instale e reabra o terminal.
 - **Porta 3000 em uso** → feche o `npm run dev` local antes, ou mude o mapeamento no compose (ex.: `"3001:3000"`).
-- **Build falha em `npm ci`** → confirme que os 3 repos estão clonados lado a lado e que os `package-lock.json` estão commitados.
+- **Build falha em `npm ci`** → confirme que os 3 repos estão clonados lado a lado, com as pastas nomeadas `mfe-auth` e `mfe-transactions` (ver §1), e que os `package-lock.json` estão commitados.
 - **Página em branco / MFE não carrega** → veja `docker compose logs -f`; confira se os processos `mfe-auth` e `mfe-tx` subiram.
 
 ---
