@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { TransactionModal } from "@/components/transactions";
-import { api } from "@/lib/api";
+import { useCategories } from "@/lib/queries/transactions";
 import type { Category } from "@/lib/api";
 
 type Props = {
@@ -13,12 +13,13 @@ type Props = {
 
 export default function NewTransactionAction({ className, categories: categoriesProp }: Props) {
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState<Category[]>(categoriesProp ?? []);
-
-  useEffect(() => {
-    if (categoriesProp && categoriesProp.length > 0) return;
-    api.getCategories().then(setCategories).catch(console.error);
-  }, []);
+  const hasInitialCategories = !!categoriesProp && categoriesProp.length > 0;
+  const { data: fetchedCategories } = useCategories({
+    enabled: !hasInitialCategories,
+  });
+  const categories = hasInitialCategories
+    ? categoriesProp
+    : (fetchedCategories ?? []);
 
   return (
     <>

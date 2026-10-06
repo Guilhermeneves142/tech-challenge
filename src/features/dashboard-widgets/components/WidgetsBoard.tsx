@@ -3,13 +3,20 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GridLayout, { useContainerWidth } from "react-grid-layout";
 import type { Layout } from "react-grid-layout";
 import { ChartNoAxesCombined, Plus } from "lucide-react";
 import { Button } from "@vandrei/finance-ui";
-import type { Category, DashboardWidget, Transaction } from "@/lib/api";
-import { useWidgetsStore } from "../store";
+import { useQueryClient } from "@tanstack/react-query";
+import type { Category, DashboardWidget, Transaction, WidgetLayout } from "@/lib/api";
+import {
+  useCreateWidget,
+  useDashboardWidgets,
+  useDeleteWidget,
+  useUpdateWidget,
+  WIDGETS_QUERY_KEY,
+} from "@/lib/queries/widgets";
 import { defaultSizeFor, WIDGET_MIN_SIZE } from "../types";
 import { WidgetCard } from "./WidgetCard";
 import { DeleteWidgetModal } from "./DeleteWidgetModal";
@@ -27,20 +34,22 @@ interface ModalState {
   widget?: DashboardWidget;
 }
 
+function sameLayout(a: WidgetLayout, b: WidgetLayout): boolean {
+  return a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h;
+}
+
 export function WidgetsBoard({
   initialWidgets,
   transactions,
   categories,
 }: WidgetsBoardProps) {
   const { width, containerRef, mounted } = useContainerWidth();
-  const widgets = useWidgetsStore((s) => s.widgets);
-  const hydrated = useWidgetsStore((s) => s.hydrated);
-  const layoutError = useWidgetsStore((s) => s.error);
-  const hydrate = useWidgetsStore((s) => s.hydrate);
-  const addWidget = useWidgetsStore((s) => s.addWidget);
-  const updateWidget = useWidgetsStore((s) => s.updateWidget);
-  const removeWidget = useWidgetsStore((s) => s.removeWidget);
-  const applyLayouts = useWidgetsStore((s) => s.applyLayouts);
+  const queryClient = useQueryClient();
+  const { data: widgets } = useDashboardWidgets(initialWidgets);
+  const createWidget = useCreateWidget();
+  const updateWidget = useUpdateWidget();
+  const deleteWidget = useDeleteWidget();
+  const [layoutError, setLayoutError] = useState<string | null>(null);
 
   const [modal, setModal] = useState<ModalState>({
     open: false,
@@ -48,11 +57,7 @@ export function WidgetsBoard({
   });
   const [deleting, setDeleting] = useState<DashboardWidget | undefined>();
 
-  useEffect(() => {
-    hydrate(initialWidgets);
-  }, [hydrate, initialWidgets]);
-
-  const list = hydrated ? widgets : initialWidgets;
+  const list = widgets ?? initialWidgets;
   const isMobile = width < 640;
 
   const layout: Layout = list.map((w, index) => {
@@ -76,24 +81,44 @@ export function WidgetsBoard({
   });
 
   function handleLayoutChange(next: Layout) {
-    if (!hydrated || isMobile) return;
+    if (isMobile) return;
 
-    applyLayouts(
-      next.map((item) => ({
+    const layouts: Array<{ id: number; layout: WidgetLayout }> = next.map(
+      (item) => ({
         id: Number(item.i),
-        layout: {
-          x: item.x,
-          y: item.y,
-          w: item.w,
-          h: item.h,
-        },
-      }))
+        layout: { x: item.x, y: item.y, w: item.w, h: item.h },
+      })
     );
+
+    const changed = layouts.filter(({ id, layout }) => {
+      const widget = list.find((w) => w.id === id);
+      return widget && !sameLayout(widget.layout, layout);
+    });
+
+    if (changed.length === 0) return;
+
+    // Atualiza o cache localmente antes da persistência, para o drag parecer instantâneo
+    queryClient.setQueryData<DashboardWidget[]>(WIDGETS_QUERY_KEY, (prev) =>
+      (prev ?? list).map((w) => {
+        const next = changed.find((c) => c.id === w.id);
+        return next ? { ...w, layout: next.layout } : w;
+      })
+    );
+
+    Promise.all(
+      changed.map(({ id, layout }) =>
+        updateWidget.mutateAsync({ id, data: { layout } })
+      )
+    )
+      .then(() => setLayoutError(null))
+      .catch(() =>
+        setLayoutError("Não foi possível salvar a posição dos widgets.")
+      );
   }
 
   async function handleSubmit(values: WidgetFormValues) {
     if (modal.mode === "edit" && modal.widget) {
-      await updateWidget(modal.widget.id, values);
+      await updateWidget.mutateAsync({ id: modal.widget.id, data: values });
       return;
     }
 
@@ -102,7 +127,7 @@ export function WidgetsBoard({
       0
     );
 
-    await addWidget({
+    await createWidget.mutateAsync({
       ...values,
       layout: {
         x: 0,
@@ -204,7 +229,7 @@ export function WidgetsBoard({
         open={deleting !== undefined}
         onOpenChange={(open) => !open && setDeleting(undefined)}
         widget={deleting}
-        onConfirm={removeWidget}
+        onConfirm={(id) => deleteWidget.mutateAsync(id)}
       />
     </section>
   );
