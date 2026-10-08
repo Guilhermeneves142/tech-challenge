@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "FinanceApp",
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={roboto.variable}>
       <body className="min-h-screen bg-background">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

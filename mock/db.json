@@ -65,9 +65,9 @@
     }
   ],
   "balance": {
-    "current": 0,
-    "variation": 0,
-    "variationLabel": "+0% este mês"
+    "current": 13190.1,
+    "variation": 4.2,
+    "variationLabel": "+4.2% este mês"
   },
   "transactions": [
     {
@@ -195,6 +195,1446 @@
       "date": "2026-07-01T00:00:00.000Z",
       "dateLabel": "01 jul, 18:46",
       "type": "debit"
+    },
+    {
+      "id": 15,
+      "description": "Salário",
+      "category": "renda",
+      "amount": 6816,
+      "date": "2025-11-04T11:34:00.000Z",
+      "dateLabel": "04 nov, 08:34",
+      "type": "credit"
+    },
+    {
+      "id": 20,
+      "description": "Divisão de Conta",
+      "category": "transferencia",
+      "amount": -94,
+      "date": "2025-11-05T13:25:00.000Z",
+      "dateLabel": "05 nov, 10:25",
+      "type": "debit"
+    },
+    {
+      "id": 27,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -492,
+      "date": "2025-11-07T18:48:00.000Z",
+      "dateLabel": "07 nov, 15:48",
+      "type": "debit"
+    },
+    {
+      "id": 22,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -488,
+      "date": "2025-11-08T00:36:00.000Z",
+      "dateLabel": "07 nov, 21:36",
+      "type": "debit"
+    },
+    {
+      "id": 18,
+      "description": "Açougue Central",
+      "category": "alimentacao",
+      "amount": -106,
+      "date": "2025-11-11T15:57:00.000Z",
+      "dateLabel": "11 nov, 12:57",
+      "type": "debit"
+    },
+    {
+      "id": 28,
+      "description": "Viagem de Fim de Semana",
+      "category": "lazer",
+      "amount": -251,
+      "date": "2025-11-12T22:41:00.000Z",
+      "dateLabel": "12 nov, 19:41",
+      "type": "debit"
+    },
+    {
+      "id": 21,
+      "description": "Manutenção do Carro",
+      "category": "transporte",
+      "amount": -65,
+      "date": "2025-11-14T01:07:00.000Z",
+      "dateLabel": "13 nov, 22:07",
+      "type": "debit"
+    },
+    {
+      "id": 16,
+      "description": "Salário",
+      "category": "renda",
+      "amount": 3391,
+      "date": "2025-11-15T19:02:00.000Z",
+      "dateLabel": "15 nov, 16:02",
+      "type": "credit"
+    },
+    {
+      "id": 17,
+      "description": "Manutenção do Carro",
+      "category": "transporte",
+      "amount": -52,
+      "date": "2025-11-17T00:39:00.000Z",
+      "dateLabel": "16 nov, 21:39",
+      "type": "debit"
+    },
+    {
+      "id": 26,
+      "description": "IPTU",
+      "category": "moradia",
+      "amount": -1733,
+      "date": "2025-11-19T21:11:00.000Z",
+      "dateLabel": "19 nov, 18:11",
+      "type": "debit"
+    },
+    {
+      "id": 19,
+      "description": "Pix para Amigo",
+      "category": "transferencia",
+      "amount": -133,
+      "date": "2025-11-20T01:56:00.000Z",
+      "dateLabel": "19 nov, 22:56",
+      "type": "debit"
+    },
+    {
+      "id": 31,
+      "description": "Aluguel",
+      "category": "moradia",
+      "amount": -1413,
+      "date": "2025-11-21T22:56:00.000Z",
+      "dateLabel": "21 nov, 19:56",
+      "type": "debit"
+    },
+    {
+      "id": 29,
+      "description": "Livros Técnicos",
+      "category": "educacao",
+      "amount": -386,
+      "date": "2025-11-26T13:44:00.000Z",
+      "dateLabel": "26 nov, 10:44",
+      "type": "debit"
+    },
+    {
+      "id": 30,
+      "description": "Internet",
+      "category": "moradia",
+      "amount": -405,
+      "date": "2025-11-26T17:40:00.000Z",
+      "dateLabel": "26 nov, 14:40",
+      "type": "debit"
+    },
+    {
+      "id": 25,
+      "description": "Manutenção do Carro",
+      "category": "transporte",
+      "amount": -77,
+      "date": "2025-11-27T11:32:00.000Z",
+      "dateLabel": "27 nov, 08:32",
+      "type": "debit"
+    },
+    {
+      "id": 23,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -494,
+      "date": "2025-11-29T00:59:00.000Z",
+      "dateLabel": "28 nov, 21:59",
+      "type": "debit"
+    },
+    {
+      "id": 24,
+      "description": "Show de Música",
+      "category": "lazer",
+      "amount": -53,
+      "date": "2025-11-30T22:55:00.000Z",
+      "dateLabel": "30 nov, 19:55",
+      "type": "debit"
+    },
+    {
+      "id": 45,
+      "description": "Farmácia",
+      "category": "saude",
+      "amount": -35,
+      "date": "2025-12-01T18:46:00.000Z",
+      "dateLabel": "01 dez, 15:46",
+      "type": "debit"
+    },
+    {
+      "id": 34,
+      "description": "Dentista",
+      "category": "saude",
+      "amount": -482,
+      "date": "2025-12-03T16:22:00.000Z",
+      "dateLabel": "03 dez, 13:22",
+      "type": "debit"
+    },
+    {
+      "id": 32,
+      "description": "Transferência recebida",
+      "category": "transferencia",
+      "amount": 379,
+      "date": "2025-12-04T13:10:00.000Z",
+      "dateLabel": "04 dez, 10:10",
+      "type": "credit"
+    },
+    {
+      "id": 44,
+      "description": "Viagem de Fim de Semana",
+      "category": "lazer",
+      "amount": -269,
+      "date": "2025-12-05T23:28:00.000Z",
+      "dateLabel": "05 dez, 20:28",
+      "type": "debit"
+    },
+    {
+      "id": 36,
+      "description": "Posto de Gasolina",
+      "category": "transporte",
+      "amount": -115,
+      "date": "2025-12-06T10:10:00.000Z",
+      "dateLabel": "06 dez, 07:10",
+      "type": "debit"
+    },
+    {
+      "id": 35,
+      "description": "Consulta Médica",
+      "category": "saude",
+      "amount": -37,
+      "date": "2025-12-09T22:39:00.000Z",
+      "dateLabel": "09 dez, 19:39",
+      "type": "debit"
+    },
+    {
+      "id": 41,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -127,
+      "date": "2025-12-11T19:08:00.000Z",
+      "dateLabel": "11 dez, 16:08",
+      "type": "debit"
+    },
+    {
+      "id": 38,
+      "description": "Feira Livre",
+      "category": "alimentacao",
+      "amount": -110,
+      "date": "2025-12-12T21:36:00.000Z",
+      "dateLabel": "12 dez, 18:36",
+      "type": "debit"
+    },
+    {
+      "id": 39,
+      "description": "Conta de Água",
+      "category": "moradia",
+      "amount": -785,
+      "date": "2025-12-19T15:19:00.000Z",
+      "dateLabel": "19 dez, 12:19",
+      "type": "debit"
+    },
+    {
+      "id": 33,
+      "description": "Pix recebido",
+      "category": "transferencia",
+      "amount": 779,
+      "date": "2025-12-20T21:56:00.000Z",
+      "dateLabel": "20 dez, 18:56",
+      "type": "credit"
+    },
+    {
+      "id": 43,
+      "description": "Spotify",
+      "category": "lazer",
+      "amount": -300,
+      "date": "2025-12-21T18:58:00.000Z",
+      "dateLabel": "21 dez, 15:58",
+      "type": "debit"
+    },
+    {
+      "id": 40,
+      "description": "Livros Técnicos",
+      "category": "educacao",
+      "amount": -58,
+      "date": "2025-12-27T12:13:00.000Z",
+      "dateLabel": "27 dez, 09:13",
+      "type": "debit"
+    },
+    {
+      "id": 37,
+      "description": "iFood",
+      "category": "alimentacao",
+      "amount": -311,
+      "date": "2025-12-29T13:26:00.000Z",
+      "dateLabel": "29 dez, 10:26",
+      "type": "debit"
+    },
+    {
+      "id": 42,
+      "description": "Show de Música",
+      "category": "lazer",
+      "amount": -193,
+      "date": "2025-12-31T10:47:00.000Z",
+      "dateLabel": "31 dez, 07:47",
+      "type": "debit"
+    },
+    {
+      "id": 50,
+      "description": "Hortifruti",
+      "category": "alimentacao",
+      "amount": -202,
+      "date": "2026-01-01T11:50:00.000Z",
+      "dateLabel": "01 jan, 08:50",
+      "type": "debit"
+    },
+    {
+      "id": 53,
+      "description": "Posto de Gasolina",
+      "category": "transporte",
+      "amount": -43,
+      "date": "2026-01-04T11:17:00.000Z",
+      "dateLabel": "04 jan, 08:17",
+      "type": "debit"
+    },
+    {
+      "id": 49,
+      "description": "Restaurante Sushi",
+      "category": "alimentacao",
+      "amount": -31,
+      "date": "2026-01-05T17:34:00.000Z",
+      "dateLabel": "05 jan, 14:34",
+      "type": "debit"
+    },
+    {
+      "id": 48,
+      "description": "Exames",
+      "category": "saude",
+      "amount": -395,
+      "date": "2026-01-07T12:05:00.000Z",
+      "dateLabel": "07 jan, 09:05",
+      "type": "debit"
+    },
+    {
+      "id": 55,
+      "description": "Restaurante Sushi",
+      "category": "alimentacao",
+      "amount": -330,
+      "date": "2026-01-07T23:24:00.000Z",
+      "dateLabel": "07 jan, 20:24",
+      "type": "debit"
+    },
+    {
+      "id": 56,
+      "description": "Estacionamento",
+      "category": "transporte",
+      "amount": -28,
+      "date": "2026-01-08T00:55:00.000Z",
+      "dateLabel": "07 jan, 21:55",
+      "type": "debit"
+    },
+    {
+      "id": 46,
+      "description": "Salário",
+      "category": "renda",
+      "amount": 6754,
+      "date": "2026-01-08T01:19:00.000Z",
+      "dateLabel": "07 jan, 22:19",
+      "type": "credit"
+    },
+    {
+      "id": 58,
+      "description": "Curso de Inglês",
+      "category": "educacao",
+      "amount": -98,
+      "date": "2026-01-08T18:14:00.000Z",
+      "dateLabel": "08 jan, 15:14",
+      "type": "debit"
+    },
+    {
+      "id": 47,
+      "description": "Consultoria",
+      "category": "renda",
+      "amount": 5496,
+      "date": "2026-01-22T13:10:00.000Z",
+      "dateLabel": "22 jan, 10:10",
+      "type": "credit"
+    },
+    {
+      "id": 59,
+      "description": "Material Escolar",
+      "category": "educacao",
+      "amount": -58,
+      "date": "2026-01-26T00:23:00.000Z",
+      "dateLabel": "25 jan, 21:23",
+      "type": "debit"
+    },
+    {
+      "id": 51,
+      "description": "Cinema",
+      "category": "lazer",
+      "amount": -94,
+      "date": "2026-01-27T10:45:00.000Z",
+      "dateLabel": "27 jan, 07:45",
+      "type": "debit"
+    },
+    {
+      "id": 52,
+      "description": "Internet",
+      "category": "moradia",
+      "amount": -816,
+      "date": "2026-01-27T10:46:00.000Z",
+      "dateLabel": "27 jan, 07:46",
+      "type": "debit"
+    },
+    {
+      "id": 57,
+      "description": "Gás Encanado",
+      "category": "moradia",
+      "amount": -1143,
+      "date": "2026-01-28T13:45:00.000Z",
+      "dateLabel": "28 jan, 10:45",
+      "type": "debit"
+    },
+    {
+      "id": 54,
+      "description": "Livros Técnicos",
+      "category": "educacao",
+      "amount": -252,
+      "date": "2026-01-28T21:23:00.000Z",
+      "dateLabel": "28 jan, 18:23",
+      "type": "debit"
+    },
+    {
+      "id": 60,
+      "description": "Estacionamento",
+      "category": "transporte",
+      "amount": -25,
+      "date": "2026-01-29T23:00:00.000Z",
+      "dateLabel": "29 jan, 20:00",
+      "type": "debit"
+    },
+    {
+      "id": 62,
+      "description": "Material Escolar",
+      "category": "educacao",
+      "amount": -162,
+      "date": "2026-02-01T17:38:00.000Z",
+      "dateLabel": "01 fev, 14:38",
+      "type": "debit"
+    },
+    {
+      "id": 69,
+      "description": "Divisão de Conta",
+      "category": "transferencia",
+      "amount": -271,
+      "date": "2026-02-04T10:03:00.000Z",
+      "dateLabel": "04 fev, 07:03",
+      "type": "debit"
+    },
+    {
+      "id": 66,
+      "description": "Material Escolar",
+      "category": "educacao",
+      "amount": -341,
+      "date": "2026-02-04T21:16:00.000Z",
+      "dateLabel": "04 fev, 18:16",
+      "type": "debit"
+    },
+    {
+      "id": 61,
+      "description": "Freelancer",
+      "category": "renda",
+      "amount": 2545,
+      "date": "2026-02-08T01:25:00.000Z",
+      "dateLabel": "07 fev, 22:25",
+      "type": "credit"
+    },
+    {
+      "id": 64,
+      "description": "Padaria do Bairro",
+      "category": "alimentacao",
+      "amount": -236,
+      "date": "2026-02-11T12:35:00.000Z",
+      "dateLabel": "11 fev, 09:35",
+      "type": "debit"
+    },
+    {
+      "id": 71,
+      "description": "Feira Livre",
+      "category": "alimentacao",
+      "amount": -203,
+      "date": "2026-02-16T22:35:00.000Z",
+      "dateLabel": "16 fev, 19:35",
+      "type": "debit"
+    },
+    {
+      "id": 70,
+      "description": "Açougue Central",
+      "category": "alimentacao",
+      "amount": -199,
+      "date": "2026-02-17T21:38:00.000Z",
+      "dateLabel": "17 fev, 18:38",
+      "type": "debit"
+    },
+    {
+      "id": 63,
+      "description": "Viagem de Fim de Semana",
+      "category": "lazer",
+      "amount": -174,
+      "date": "2026-02-18T20:22:00.000Z",
+      "dateLabel": "18 fev, 17:22",
+      "type": "debit"
+    },
+    {
+      "id": 65,
+      "description": "Conta de Luz",
+      "category": "moradia",
+      "amount": -1186,
+      "date": "2026-02-18T20:26:00.000Z",
+      "dateLabel": "18 fev, 17:26",
+      "type": "debit"
+    },
+    {
+      "id": 67,
+      "description": "Conta de Luz",
+      "category": "moradia",
+      "amount": -483,
+      "date": "2026-02-24T16:36:00.000Z",
+      "dateLabel": "24 fev, 13:36",
+      "type": "debit"
+    },
+    {
+      "id": 68,
+      "description": "Boleto Faculdade",
+      "category": "educacao",
+      "amount": -180,
+      "date": "2026-02-25T10:44:00.000Z",
+      "dateLabel": "25 fev, 07:44",
+      "type": "debit"
+    },
+    {
+      "id": 72,
+      "description": "Uber",
+      "category": "transporte",
+      "amount": -207,
+      "date": "2026-02-26T20:50:00.000Z",
+      "dateLabel": "26 fev, 17:50",
+      "type": "debit"
+    },
+    {
+      "id": 73,
+      "description": "Freelancer",
+      "category": "renda",
+      "amount": 4298,
+      "date": "2026-03-02T10:35:00.000Z",
+      "dateLabel": "02 mar, 07:35",
+      "type": "credit"
+    },
+    {
+      "id": 78,
+      "description": "Transferência para Poupança",
+      "category": "transferencia",
+      "amount": -301,
+      "date": "2026-03-02T21:29:00.000Z",
+      "dateLabel": "02 mar, 18:29",
+      "type": "debit"
+    },
+    {
+      "id": 77,
+      "description": "Exames",
+      "category": "saude",
+      "amount": -51,
+      "date": "2026-03-04T01:21:00.000Z",
+      "dateLabel": "03 mar, 22:21",
+      "type": "debit"
+    },
+    {
+      "id": 85,
+      "description": "Curso de Inglês",
+      "category": "educacao",
+      "amount": -103,
+      "date": "2026-03-05T19:41:00.000Z",
+      "dateLabel": "05 mar, 16:41",
+      "type": "debit"
+    },
+    {
+      "id": 79,
+      "description": "Pedágio",
+      "category": "transporte",
+      "amount": -136,
+      "date": "2026-03-14T23:26:00.000Z",
+      "dateLabel": "14 mar, 20:26",
+      "type": "debit"
+    },
+    {
+      "id": 76,
+      "description": "Pix para Amigo",
+      "category": "transferencia",
+      "amount": -137,
+      "date": "2026-03-19T11:08:00.000Z",
+      "dateLabel": "19 mar, 08:08",
+      "type": "debit"
+    },
+    {
+      "id": 75,
+      "description": "99 Corrida",
+      "category": "transporte",
+      "amount": -85,
+      "date": "2026-03-19T18:45:00.000Z",
+      "dateLabel": "19 mar, 15:45",
+      "type": "debit"
+    },
+    {
+      "id": 82,
+      "description": "Padaria do Bairro",
+      "category": "alimentacao",
+      "amount": -194,
+      "date": "2026-03-21T10:39:00.000Z",
+      "dateLabel": "21 mar, 07:39",
+      "type": "debit"
+    },
+    {
+      "id": 83,
+      "description": "Condomínio",
+      "category": "moradia",
+      "amount": -1608,
+      "date": "2026-03-22T01:09:00.000Z",
+      "dateLabel": "21 mar, 22:09",
+      "type": "debit"
+    },
+    {
+      "id": 81,
+      "description": "Curso de Inglês",
+      "category": "educacao",
+      "amount": -168,
+      "date": "2026-03-26T14:46:00.000Z",
+      "dateLabel": "26 mar, 11:46",
+      "type": "debit"
+    },
+    {
+      "id": 80,
+      "description": "Açougue Central",
+      "category": "alimentacao",
+      "amount": -74,
+      "date": "2026-03-29T19:29:00.000Z",
+      "dateLabel": "29 mar, 16:29",
+      "type": "debit"
+    },
+    {
+      "id": 74,
+      "description": "Show de Música",
+      "category": "lazer",
+      "amount": -258,
+      "date": "2026-03-30T16:39:00.000Z",
+      "dateLabel": "30 mar, 13:39",
+      "type": "debit"
+    },
+    {
+      "id": 84,
+      "description": "Açougue Central",
+      "category": "alimentacao",
+      "amount": -49,
+      "date": "2026-03-30T20:56:00.000Z",
+      "dateLabel": "30 mar, 17:56",
+      "type": "debit"
+    },
+    {
+      "id": 93,
+      "description": "Restaurante Sushi",
+      "category": "alimentacao",
+      "amount": -73,
+      "date": "2026-04-03T11:56:00.000Z",
+      "dateLabel": "03 abr, 08:56",
+      "type": "debit"
+    },
+    {
+      "id": 86,
+      "description": "Transferência recebida",
+      "category": "transferencia",
+      "amount": 548,
+      "date": "2026-04-03T13:13:00.000Z",
+      "dateLabel": "03 abr, 10:13",
+      "type": "credit"
+    },
+    {
+      "id": 92,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -412,
+      "date": "2026-04-03T18:23:00.000Z",
+      "dateLabel": "03 abr, 15:23",
+      "type": "debit"
+    },
+    {
+      "id": 98,
+      "description": "Internet",
+      "category": "moradia",
+      "amount": -1490,
+      "date": "2026-04-03T23:03:00.000Z",
+      "dateLabel": "03 abr, 20:03",
+      "type": "debit"
+    },
+    {
+      "id": 91,
+      "description": "Bilhete Único",
+      "category": "transporte",
+      "amount": -107,
+      "date": "2026-04-04T17:55:00.000Z",
+      "dateLabel": "04 abr, 14:55",
+      "type": "debit"
+    },
+    {
+      "id": 88,
+      "description": "Gás Encanado",
+      "category": "moradia",
+      "amount": -1311,
+      "date": "2026-04-10T19:43:00.000Z",
+      "dateLabel": "10 abr, 16:43",
+      "type": "debit"
+    },
+    {
+      "id": 96,
+      "description": "Viagem de Fim de Semana",
+      "category": "lazer",
+      "amount": -229,
+      "date": "2026-04-15T11:53:00.000Z",
+      "dateLabel": "15 abr, 08:53",
+      "type": "debit"
+    },
+    {
+      "id": 90,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -72,
+      "date": "2026-04-16T18:34:00.000Z",
+      "dateLabel": "16 abr, 15:34",
+      "type": "debit"
+    },
+    {
+      "id": 87,
+      "description": "Posto de Gasolina",
+      "category": "transporte",
+      "amount": -30,
+      "date": "2026-04-18T22:45:00.000Z",
+      "dateLabel": "18 abr, 19:45",
+      "type": "debit"
+    },
+    {
+      "id": 89,
+      "description": "Pedágio",
+      "category": "transporte",
+      "amount": -113,
+      "date": "2026-04-19T17:50:00.000Z",
+      "dateLabel": "19 abr, 14:50",
+      "type": "debit"
+    },
+    {
+      "id": 99,
+      "description": "Gás Encanado",
+      "category": "moradia",
+      "amount": -473,
+      "date": "2026-04-25T23:25:00.000Z",
+      "dateLabel": "25 abr, 20:25",
+      "type": "debit"
+    },
+    {
+      "id": 95,
+      "description": "Farmácia",
+      "category": "saude",
+      "amount": -337,
+      "date": "2026-04-26T17:14:00.000Z",
+      "dateLabel": "26 abr, 14:14",
+      "type": "debit"
+    },
+    {
+      "id": 97,
+      "description": "Açougue Central",
+      "category": "alimentacao",
+      "amount": -341,
+      "date": "2026-04-26T17:22:00.000Z",
+      "dateLabel": "26 abr, 14:22",
+      "type": "debit"
+    },
+    {
+      "id": 94,
+      "description": "Exames",
+      "category": "saude",
+      "amount": -242,
+      "date": "2026-04-28T12:39:00.000Z",
+      "dateLabel": "28 abr, 09:39",
+      "type": "debit"
+    },
+    {
+      "id": 100,
+      "description": "Transferência recebida",
+      "category": "transferencia",
+      "amount": 703,
+      "date": "2026-05-02T00:41:00.000Z",
+      "dateLabel": "01 mai, 21:41",
+      "type": "credit"
+    },
+    {
+      "id": 104,
+      "description": "Bilhete Único",
+      "category": "transporte",
+      "amount": -123,
+      "date": "2026-05-03T10:16:00.000Z",
+      "dateLabel": "03 mai, 07:16",
+      "type": "debit"
+    },
+    {
+      "id": 113,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -97,
+      "date": "2026-05-08T23:35:00.000Z",
+      "dateLabel": "08 mai, 20:35",
+      "type": "debit"
+    },
+    {
+      "id": 102,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -488,
+      "date": "2026-05-10T19:12:00.000Z",
+      "dateLabel": "10 mai, 16:12",
+      "type": "debit"
+    },
+    {
+      "id": 105,
+      "description": "Exames",
+      "category": "saude",
+      "amount": -417,
+      "date": "2026-05-13T20:28:00.000Z",
+      "dateLabel": "13 mai, 17:28",
+      "type": "debit"
+    },
+    {
+      "id": 107,
+      "description": "99 Corrida",
+      "category": "transporte",
+      "amount": -153,
+      "date": "2026-05-15T22:37:00.000Z",
+      "dateLabel": "15 mai, 19:37",
+      "type": "debit"
+    },
+    {
+      "id": 103,
+      "description": "Condomínio",
+      "category": "moradia",
+      "amount": -923,
+      "date": "2026-05-16T17:29:00.000Z",
+      "dateLabel": "16 mai, 14:29",
+      "type": "debit"
+    },
+    {
+      "id": 111,
+      "description": "Transferência para Poupança",
+      "category": "transferencia",
+      "amount": -289,
+      "date": "2026-05-17T20:02:00.000Z",
+      "dateLabel": "17 mai, 17:02",
+      "type": "debit"
+    },
+    {
+      "id": 112,
+      "description": "Academia",
+      "category": "lazer",
+      "amount": -111,
+      "date": "2026-05-18T19:52:00.000Z",
+      "dateLabel": "18 mai, 16:52",
+      "type": "debit"
+    },
+    {
+      "id": 101,
+      "description": "Salário",
+      "category": "renda",
+      "amount": 5822,
+      "date": "2026-05-19T17:22:00.000Z",
+      "dateLabel": "19 mai, 14:22",
+      "type": "credit"
+    },
+    {
+      "id": 108,
+      "description": "Conta de Água",
+      "category": "moradia",
+      "amount": -395,
+      "date": "2026-05-19T18:33:00.000Z",
+      "dateLabel": "19 mai, 15:33",
+      "type": "debit"
+    },
+    {
+      "id": 110,
+      "description": "iFood",
+      "category": "alimentacao",
+      "amount": -100,
+      "date": "2026-05-20T13:03:00.000Z",
+      "dateLabel": "20 mai, 10:03",
+      "type": "debit"
+    },
+    {
+      "id": 109,
+      "description": "Manutenção do Carro",
+      "category": "transporte",
+      "amount": -28,
+      "date": "2026-05-22T14:01:00.000Z",
+      "dateLabel": "22 mai, 11:01",
+      "type": "debit"
+    },
+    {
+      "id": 106,
+      "description": "Conta de Luz",
+      "category": "moradia",
+      "amount": -525,
+      "date": "2026-05-24T15:12:00.000Z",
+      "dateLabel": "24 mai, 12:12",
+      "type": "debit"
+    },
+    {
+      "id": 114,
+      "description": "Curso Udemy",
+      "category": "educacao",
+      "amount": -64,
+      "date": "2026-05-25T19:54:00.000Z",
+      "dateLabel": "25 mai, 16:54",
+      "type": "debit"
+    },
+    {
+      "id": 123,
+      "description": "Pix para Amigo",
+      "category": "transferencia",
+      "amount": -223,
+      "date": "2026-06-01T15:57:00.000Z",
+      "dateLabel": "01 jun, 12:57",
+      "type": "debit"
+    },
+    {
+      "id": 121,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -213,
+      "date": "2026-06-01T18:34:00.000Z",
+      "dateLabel": "01 jun, 15:34",
+      "type": "debit"
+    },
+    {
+      "id": 117,
+      "description": "Cinema",
+      "category": "lazer",
+      "amount": -246,
+      "date": "2026-06-05T15:26:00.000Z",
+      "dateLabel": "05 jun, 12:26",
+      "type": "debit"
+    },
+    {
+      "id": 115,
+      "description": "Décimo Terceiro",
+      "category": "renda",
+      "amount": 3440,
+      "date": "2026-06-06T01:28:00.000Z",
+      "dateLabel": "05 jun, 22:28",
+      "type": "credit"
+    },
+    {
+      "id": 126,
+      "description": "Divisão de Conta",
+      "category": "transferencia",
+      "amount": -147,
+      "date": "2026-06-07T00:14:00.000Z",
+      "dateLabel": "06 jun, 21:14",
+      "type": "debit"
+    },
+    {
+      "id": 124,
+      "description": "Farmácia",
+      "category": "saude",
+      "amount": -454,
+      "date": "2026-06-13T14:36:00.000Z",
+      "dateLabel": "13 jun, 11:36",
+      "type": "debit"
+    },
+    {
+      "id": 119,
+      "description": "Farmácia",
+      "category": "saude",
+      "amount": -105,
+      "date": "2026-06-15T00:15:00.000Z",
+      "dateLabel": "14 jun, 21:15",
+      "type": "debit"
+    },
+    {
+      "id": 116,
+      "description": "Manutenção do Carro",
+      "category": "transporte",
+      "amount": -57,
+      "date": "2026-06-15T15:06:00.000Z",
+      "dateLabel": "15 jun, 12:06",
+      "type": "debit"
+    },
+    {
+      "id": 118,
+      "description": "Curso de Inglês",
+      "category": "educacao",
+      "amount": -96,
+      "date": "2026-06-20T15:20:00.000Z",
+      "dateLabel": "20 jun, 12:20",
+      "type": "debit"
+    },
+    {
+      "id": 120,
+      "description": "Aluguel",
+      "category": "moradia",
+      "amount": -1593,
+      "date": "2026-06-23T14:20:00.000Z",
+      "dateLabel": "23 jun, 11:20",
+      "type": "debit"
+    },
+    {
+      "id": 125,
+      "description": "Curso Udemy",
+      "category": "educacao",
+      "amount": -375,
+      "date": "2026-06-24T15:37:00.000Z",
+      "dateLabel": "24 jun, 12:37",
+      "type": "debit"
+    },
+    {
+      "id": 122,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -50,
+      "date": "2026-06-28T17:41:00.000Z",
+      "dateLabel": "28 jun, 14:41",
+      "type": "debit"
+    },
+    {
+      "id": 143,
+      "description": "Transferência para Poupança",
+      "category": "transferencia",
+      "amount": -158,
+      "date": "2026-07-01T16:22:00.000Z",
+      "dateLabel": "01 jul, 13:22",
+      "type": "debit"
+    },
+    {
+      "id": 139,
+      "description": "Dentista",
+      "category": "saude",
+      "amount": -483,
+      "date": "2026-07-02T16:23:00.000Z",
+      "dateLabel": "02 jul, 13:23",
+      "type": "debit"
+    },
+    {
+      "id": 134,
+      "description": "Transferência para Poupança",
+      "category": "transferencia",
+      "amount": -369,
+      "date": "2026-07-02T22:17:00.000Z",
+      "dateLabel": "02 jul, 19:17",
+      "type": "debit"
+    },
+    {
+      "id": 127,
+      "description": "Transferência recebida",
+      "category": "transferencia",
+      "amount": 683,
+      "date": "2026-07-05T15:09:00.000Z",
+      "dateLabel": "05 jul, 12:09",
+      "type": "credit"
+    },
+    {
+      "id": 136,
+      "description": "Bilhete Único",
+      "category": "transporte",
+      "amount": -113,
+      "date": "2026-07-06T01:51:00.000Z",
+      "dateLabel": "05 jul, 22:51",
+      "type": "debit"
+    },
+    {
+      "id": 131,
+      "description": "Conta de Água",
+      "category": "moradia",
+      "amount": -940,
+      "date": "2026-07-07T10:49:00.000Z",
+      "dateLabel": "07 jul, 07:49",
+      "type": "debit"
+    },
+    {
+      "id": 135,
+      "description": "Farmácia",
+      "category": "saude",
+      "amount": -471,
+      "date": "2026-07-12T01:18:00.000Z",
+      "dateLabel": "11 jul, 22:18",
+      "type": "debit"
+    },
+    {
+      "id": 128,
+      "description": "Reembolso",
+      "category": "transferencia",
+      "amount": 385,
+      "date": "2026-07-12T23:53:00.000Z",
+      "dateLabel": "12 jul, 20:53",
+      "type": "credit"
+    },
+    {
+      "id": 137,
+      "description": "Netflix",
+      "category": "lazer",
+      "amount": -164,
+      "date": "2026-07-13T21:06:00.000Z",
+      "dateLabel": "13 jul, 18:06",
+      "type": "debit"
+    },
+    {
+      "id": 138,
+      "description": "Spotify",
+      "category": "lazer",
+      "amount": -268,
+      "date": "2026-07-14T11:02:00.000Z",
+      "dateLabel": "14 jul, 08:02",
+      "type": "debit"
+    },
+    {
+      "id": 141,
+      "description": "Aluguel",
+      "category": "moradia",
+      "amount": -1539,
+      "date": "2026-07-15T23:55:00.000Z",
+      "dateLabel": "15 jul, 20:55",
+      "type": "debit"
+    },
+    {
+      "id": 142,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -400,
+      "date": "2026-07-18T18:16:00.000Z",
+      "dateLabel": "18 jul, 15:16",
+      "type": "debit"
+    },
+    {
+      "id": 133,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -312,
+      "date": "2026-07-19T00:50:00.000Z",
+      "dateLabel": "18 jul, 21:50",
+      "type": "debit"
+    },
+    {
+      "id": 140,
+      "description": "Exames",
+      "category": "saude",
+      "amount": -138,
+      "date": "2026-07-20T14:02:00.000Z",
+      "dateLabel": "20 jul, 11:02",
+      "type": "debit"
+    },
+    {
+      "id": 132,
+      "description": "Açougue Central",
+      "category": "alimentacao",
+      "amount": -95,
+      "date": "2026-07-22T15:00:00.000Z",
+      "dateLabel": "22 jul, 12:00",
+      "type": "debit"
+    },
+    {
+      "id": 129,
+      "description": "Consulta Médica",
+      "category": "saude",
+      "amount": -130,
+      "date": "2026-07-26T01:29:00.000Z",
+      "dateLabel": "25 jul, 22:29",
+      "type": "debit"
+    },
+    {
+      "id": 130,
+      "description": "Cinema",
+      "category": "lazer",
+      "amount": -283,
+      "date": "2026-07-27T10:45:00.000Z",
+      "dateLabel": "27 jul, 07:45",
+      "type": "debit"
+    },
+    {
+      "id": 144,
+      "description": "Freelancer",
+      "category": "renda",
+      "amount": 3772,
+      "date": "2026-08-03T00:49:00.000Z",
+      "dateLabel": "02 ago, 21:49",
+      "type": "credit"
+    },
+    {
+      "id": 159,
+      "description": "iFood",
+      "category": "alimentacao",
+      "amount": -260,
+      "date": "2026-08-03T18:42:00.000Z",
+      "dateLabel": "03 ago, 15:42",
+      "type": "debit"
+    },
+    {
+      "id": 160,
+      "description": "Restaurante Sushi",
+      "category": "alimentacao",
+      "amount": -179,
+      "date": "2026-08-03T20:28:00.000Z",
+      "dateLabel": "03 ago, 17:28",
+      "type": "debit"
+    },
+    {
+      "id": 151,
+      "description": "Gás Encanado",
+      "category": "moradia",
+      "amount": -992,
+      "date": "2026-08-04T20:13:00.000Z",
+      "dateLabel": "04 ago, 17:13",
+      "type": "debit"
+    },
+    {
+      "id": 153,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -432,
+      "date": "2026-08-09T10:37:00.000Z",
+      "dateLabel": "09 ago, 07:37",
+      "type": "debit"
+    },
+    {
+      "id": 145,
+      "description": "Consultoria",
+      "category": "renda",
+      "amount": 4580,
+      "date": "2026-08-10T18:32:00.000Z",
+      "dateLabel": "10 ago, 15:32",
+      "type": "credit"
+    },
+    {
+      "id": 156,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -448,
+      "date": "2026-08-13T11:04:00.000Z",
+      "dateLabel": "13 ago, 08:04",
+      "type": "debit"
+    },
+    {
+      "id": 146,
+      "description": "Transferência para Poupança",
+      "category": "transferencia",
+      "amount": -389,
+      "date": "2026-08-14T00:51:00.000Z",
+      "dateLabel": "13 ago, 21:51",
+      "type": "debit"
+    },
+    {
+      "id": 158,
+      "description": "Condomínio",
+      "category": "moradia",
+      "amount": -1266,
+      "date": "2026-08-16T10:43:00.000Z",
+      "dateLabel": "16 ago, 07:43",
+      "type": "debit"
+    },
+    {
+      "id": 149,
+      "description": "Conta de Água",
+      "category": "moradia",
+      "amount": -454,
+      "date": "2026-08-18T00:51:00.000Z",
+      "dateLabel": "17 ago, 21:51",
+      "type": "debit"
+    },
+    {
+      "id": 154,
+      "description": "99 Corrida",
+      "category": "transporte",
+      "amount": -214,
+      "date": "2026-08-23T00:34:00.000Z",
+      "dateLabel": "22 ago, 21:34",
+      "type": "debit"
+    },
+    {
+      "id": 152,
+      "description": "Farmácia",
+      "category": "saude",
+      "amount": -216,
+      "date": "2026-08-24T14:15:00.000Z",
+      "dateLabel": "24 ago, 11:15",
+      "type": "debit"
+    },
+    {
+      "id": 150,
+      "description": "Pix para Amigo",
+      "category": "transferencia",
+      "amount": -65,
+      "date": "2026-08-28T01:17:00.000Z",
+      "dateLabel": "27 ago, 22:17",
+      "type": "debit"
+    },
+    {
+      "id": 147,
+      "description": "Exames",
+      "category": "saude",
+      "amount": -284,
+      "date": "2026-08-28T10:14:00.000Z",
+      "dateLabel": "28 ago, 07:14",
+      "type": "debit"
+    },
+    {
+      "id": 148,
+      "description": "Dentista",
+      "category": "saude",
+      "amount": -425,
+      "date": "2026-08-29T00:13:00.000Z",
+      "dateLabel": "28 ago, 21:13",
+      "type": "debit"
+    },
+    {
+      "id": 157,
+      "description": "Transferência para Poupança",
+      "category": "transferencia",
+      "amount": -55,
+      "date": "2026-08-29T21:54:00.000Z",
+      "dateLabel": "29 ago, 18:54",
+      "type": "debit"
+    },
+    {
+      "id": 155,
+      "description": "Plano de Saúde",
+      "category": "saude",
+      "amount": -60,
+      "date": "2026-08-31T00:53:00.000Z",
+      "dateLabel": "30 ago, 21:53",
+      "type": "debit"
+    },
+    {
+      "id": 161,
+      "description": "Salário",
+      "category": "renda",
+      "amount": 3263,
+      "date": "2026-09-01T18:15:00.000Z",
+      "dateLabel": "01 set, 15:15",
+      "type": "credit"
+    },
+    {
+      "id": 165,
+      "description": "Internet",
+      "category": "moradia",
+      "amount": -538,
+      "date": "2026-09-06T11:33:00.000Z",
+      "dateLabel": "06 set, 08:33",
+      "type": "debit"
+    },
+    {
+      "id": 162,
+      "description": "Curso Udemy",
+      "category": "educacao",
+      "amount": -213,
+      "date": "2026-09-09T23:14:00.000Z",
+      "dateLabel": "09 set, 20:14",
+      "type": "debit"
+    },
+    {
+      "id": 169,
+      "description": "Aluguel",
+      "category": "moradia",
+      "amount": -1658,
+      "date": "2026-09-19T19:28:00.000Z",
+      "dateLabel": "19 set, 16:28",
+      "type": "debit"
+    },
+    {
+      "id": 167,
+      "description": "Pedágio",
+      "category": "transporte",
+      "amount": -189,
+      "date": "2026-09-20T11:44:00.000Z",
+      "dateLabel": "20 set, 08:44",
+      "type": "debit"
+    },
+    {
+      "id": 163,
+      "description": "Manutenção do Carro",
+      "category": "transporte",
+      "amount": -147,
+      "date": "2026-09-24T15:35:00.000Z",
+      "dateLabel": "24 set, 12:35",
+      "type": "debit"
+    },
+    {
+      "id": 168,
+      "description": "Hortifruti",
+      "category": "alimentacao",
+      "amount": -336,
+      "date": "2026-09-25T01:42:00.000Z",
+      "dateLabel": "24 set, 22:42",
+      "type": "debit"
+    },
+    {
+      "id": 171,
+      "description": "Empréstimo Pessoal",
+      "category": "transferencia",
+      "amount": -34,
+      "date": "2026-09-26T20:08:00.000Z",
+      "dateLabel": "26 set, 17:08",
+      "type": "debit"
+    },
+    {
+      "id": 164,
+      "description": "Boleto Faculdade",
+      "category": "educacao",
+      "amount": -140,
+      "date": "2026-09-27T00:18:00.000Z",
+      "dateLabel": "26 set, 21:18",
+      "type": "debit"
+    },
+    {
+      "id": 172,
+      "description": "Hortifruti",
+      "category": "alimentacao",
+      "amount": -240,
+      "date": "2026-09-29T00:12:00.000Z",
+      "dateLabel": "28 set, 21:12",
+      "type": "debit"
+    },
+    {
+      "id": 166,
+      "description": "Estacionamento",
+      "category": "transporte",
+      "amount": -69,
+      "date": "2026-09-29T12:09:00.000Z",
+      "dateLabel": "29 set, 09:09",
+      "type": "debit"
+    },
+    {
+      "id": 170,
+      "description": "Livraria",
+      "category": "lazer",
+      "amount": -53,
+      "date": "2026-09-30T16:33:00.000Z",
+      "dateLabel": "30 set, 13:33",
+      "type": "debit"
+    },
+    {
+      "id": 173,
+      "description": "Transferência recebida",
+      "category": "transferencia",
+      "amount": 621,
+      "date": "2026-10-06T13:51:00.000Z",
+      "dateLabel": "06 out, 10:51",
+      "type": "credit"
+    },
+    {
+      "id": 174,
+      "description": "Bônus",
+      "category": "renda",
+      "amount": 3706,
+      "date": "2026-10-14T23:30:00.000Z",
+      "dateLabel": "14 out, 20:30",
+      "type": "credit"
     }
   ],
   "categories": [
