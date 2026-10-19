@@ -3,6 +3,7 @@
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import GridLayout, { useContainerWidth } from "react-grid-layout";
 import type { Layout } from "react-grid-layout";
@@ -19,8 +20,15 @@ import {
 } from "@/lib/queries/widgets";
 import { defaultSizeFor, WIDGET_MIN_SIZE } from "../types";
 import { WidgetCard } from "./WidgetCard";
-import { DeleteWidgetModal } from "./DeleteWidgetModal";
-import { WidgetModal, type WidgetFormValues } from "./WidgetModal";
+import type { WidgetFormValues } from "./WidgetModal";
+
+// Modais só são necessários após interação: saem do bundle inicial do dashboard.
+const WidgetModal = dynamic(() =>
+  import("./WidgetModal").then((m) => m.WidgetModal)
+);
+const DeleteWidgetModal = dynamic(() =>
+  import("./DeleteWidgetModal").then((m) => m.DeleteWidgetModal)
+);
 
 export interface WidgetsBoardProps {
   initialWidgets: DashboardWidget[];
@@ -215,22 +223,27 @@ export function WidgetsBoard({
         )}
       </div>
 
-      <WidgetModal
-        open={modal.open}
-        onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
-        mode={modal.mode}
-        initial={modal.mode === "edit" ? modal.widget : undefined}
-        transactions={transactions}
-        categories={categories}
-        onSubmit={handleSubmit}
-      />
+      {/* Montados só quando abertos: o chunk do modal é baixado sob demanda. */}
+      {modal.open && (
+        <WidgetModal
+          open={modal.open}
+          onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}
+          mode={modal.mode}
+          initial={modal.mode === "edit" ? modal.widget : undefined}
+          transactions={transactions}
+          categories={categories}
+          onSubmit={handleSubmit}
+        />
+      )}
 
-      <DeleteWidgetModal
-        open={deleting !== undefined}
-        onOpenChange={(open) => !open && setDeleting(undefined)}
-        widget={deleting}
-        onConfirm={(id) => deleteWidget.mutateAsync(id)}
-      />
+      {deleting !== undefined && (
+        <DeleteWidgetModal
+          open
+          onOpenChange={(open) => !open && setDeleting(undefined)}
+          widget={deleting}
+          onConfirm={(id) => deleteWidget.mutateAsync(id)}
+        />
+      )}
     </section>
   );
 }

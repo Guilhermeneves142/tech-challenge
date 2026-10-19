@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { TransactionModal } from "@/components/transactions";
+import dynamic from "next/dynamic";
 import { useCategories } from "@/lib/queries/transactions";
 import type { Category } from "@/lib/api";
+
+const TransactionModal = dynamic(() =>
+  import("@/components/transactions").then((m) => m.TransactionModal)
+);
 
 type Props = {
   className?: string;
@@ -37,12 +41,14 @@ export default function NewTransactionAction({ className, categories: categories
         <span className="pt-2 text-[18px] font-medium">Transação</span>
       </button>
 
-      <TransactionModal
-        open={open}
-        onOpenChange={setOpen}
-        categories={categories}
-        mode="create"
-      />
+      {open && (
+        <TransactionModal
+          open={open}
+          onOpenChange={setOpen}
+          categories={categories}
+          mode="create"
+        />
+      )}
     </>
   );
 }

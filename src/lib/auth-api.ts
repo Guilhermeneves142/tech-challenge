@@ -24,7 +24,6 @@ export interface AuthUser {
 
 export interface AuthResponse {
   user: AuthUser;
-  token: string;
 }
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {

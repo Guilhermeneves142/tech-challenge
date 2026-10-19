@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { AUTH_COOKIE, verifySessionToken } from "@/server/auth";
 
 // Prefixo das zonas públicas (MFE de autenticação via multizone).
 const PUBLIC_PREFIX = "/auth";
@@ -12,7 +13,9 @@ export default function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = request.cookies.get("finance-app-token")?.value;
+  // Token assinado (HMAC) e não expirado — não basta o cookie existir.
+  const token =
+    verifySessionToken(request.cookies.get(AUTH_COOKIE)?.value) !== null;
   const isPublic = pathname.startsWith(PUBLIC_PREFIX);
 
   if (!token && !isPublic) {

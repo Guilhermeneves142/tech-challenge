@@ -11,11 +11,32 @@
 // ──────────────────────────────────────────────────────────────
 import { NextRequest, NextResponse } from "next/server";
 import { getDb, saveDb, type Db } from "@/server/mock-db";
+import {
+  AUTH_COOKIE,
+  createSessionToken,
+  hashPassword,
+  isHashed,
+  sessionCookieOptions,
+  verifyPassword,
+  verifySessionToken,
+} from "@/server/auth";
 
 export const runtime = "nodejs"; // precisa de FS
 export const dynamic = "force-dynamic"; // sem cache
 
 type Item = Record<string, unknown>;
+
+// Recursos nunca expostos pelo CRUD genérico (contêm credenciais).
+const PRIVATE = new Set(["users"]);
+
+// Exige sessão válida (cookie httpOnly) em tudo, exceto login/registro/logout.
+function unauthorized(req: NextRequest, seg: string[]) {
+  if (seg[0] === "auth" && ["login", "register", "logout"].includes(seg[1])) {
+    return null;
+  }
+  const userId = verifySessionToken(req.cookies.get(AUTH_COOKIE)?.value);
+  return userId === null ? json({ message: "Não autenticado." }, 401) : null;
+}
 
 // Recursos que são objeto único (não-coleção) no db.json
 const SINGULAR = new Set(["user", "balance"]);
@@ -53,6 +74,12 @@ export async function GET(
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   const { path: seg = [] } = await params;
+  const denied = unauthorized(req, seg);
+  if (denied) return denied;
+
+  if (seg[0] === "auth" && seg[1] === "me") return me(req);
+  if (seg[0] && PRIVATE.has(seg[0])) return json({}, 404);
+
   const db = await getDb();
 
   // Rotas custom
@@ -65,7 +92,8 @@ export async function GET(
   if (!resource || !(resource in db)) return json({}, 404);
 
   // Objeto único (user, balance)
-  if (SINGULAR.has(resource)) return json(db[resource]);
+  if (SINGULAR.has(resource))
+    return json(stripPassword(db[resource] as Item));
 
   const collection = (db[resource] as Item[]) ?? [];
 
@@ -85,9 +113,13 @@ export async function POST(
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   const { path: seg = [] } = await params;
+  const denied = unauthorized(req, seg);
+  if (denied) return denied;
 
   if (seg[0] === "auth" && seg[1] === "login") return login(req);
   if (seg[0] === "auth" && seg[1] === "register") return register(req);
+  if (seg[0] === "auth" && seg[1] === "logout") return logout();
+  if (seg[0] && PRIVATE.has(seg[0])) return json({}, 404);
 
   const db = await getDb();
   const resource = seg[0];
@@ -107,9 +139,13 @@ async function updateItem(
   seg: string[],
   replace: boolean
 ) {
+  const denied = unauthorized(req, seg);
+  if (denied) return denied;
+
   const db = await getDb();
   const [resource, id] = seg;
-  if (!resource || !Array.isArray(db[resource])) return json({}, 404);
+  if (!resource || PRIVATE.has(resource) || !Array.isArray(db[resource]))
+    return json({}, 404);
 
   const collection = db[resource] as Item[];
   const idx = collection.findIndex((it) => String(it.id) === String(id));
@@ -139,13 +175,17 @@ export async function PUT(
 
 // ── DELETE ─────────────────────────────────────────────────────
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   const { path: seg = [] } = await params;
+  const denied = unauthorized(req, seg);
+  if (denied) return denied;
+
   const db = await getDb();
   const [resource, id] = seg;
-  if (!resource || !Array.isArray(db[resource])) return json({}, 404);
+  if (!resource || PRIVATE.has(resource) || !Array.isArray(db[resource]))
+    return json({}, 404);
 
   const collection = db[resource] as Item[];
   const idx = collection.findIndex((it) => String(it.id) === String(id));
@@ -215,7 +255,7 @@ function getDashboard(db: Db) {
     .slice(0, 5);
   const current = all.reduce((sum, t) => sum + Number(t.amount), 0);
   return json({
-    user: db.user,
+    user: stripPassword(db.user as Item),
     balance: { current, variation: 0, variationLabel: "+0% este mês" },
     recentTransactions,
   });
@@ -261,11 +301,38 @@ async function login(req: NextRequest) {
 
   const normalized = String(email).trim().toLowerCase();
   const user = (db.users as Item[]).find(
-    (u) => u.email === normalized && String(u.password) === String(password)
+    (u) => u.email === normalized
   );
-  if (!user) return json({ message: "E-mail ou senha inválidos." }, 401);
+  if (!user || !verifyPassword(String(password), String(user.password))) {
+    return json({ message: "E-mail ou senha inválidos." }, 401);
+  }
 
-  return json({ user: stripPassword(user), token: `fake-token-${user.id}` });
+  // Migra senhas legadas (texto puro) para hash no primeiro login.
+  if (!isHashed(String(user.password))) {
+    user.password = hashPassword(String(password));
+    await saveDb(db);
+  }
+
+  return withSession({ user: stripPassword(user) }, Number(user.id));
+}
+
+function withSession(body: unknown, userId: number, status = 200) {
+  const res = NextResponse.json(body, { status });
+  res.cookies.set(AUTH_COOKIE, createSessionToken(userId), sessionCookieOptions);
+  return res;
+}
+
+async function me(req: NextRequest) {
+  const userId = verifySessionToken(req.cookies.get(AUTH_COOKIE)?.value);
+  const db = await getDb();
+  const user = (db.users as Item[]).find((u) => Number(u.id) === userId);
+  return user ? json({ user: stripPassword(user) }) : json({}, 401);
+}
+
+function logout() {
+  const res = NextResponse.json({});
+  res.cookies.set(AUTH_COOKIE, "", { ...sessionCookieOptions, maxAge: 0 });
+  return res;
 }
 
 async function register(req: NextRequest) {
@@ -287,15 +354,12 @@ async function register(req: NextRequest) {
     id: nextId(users),
     name: String(name).trim(),
     email: normalized,
-    password: String(password),
+    password: hashPassword(String(password)),
     initials: getInitials(name),
     plan: "Plano Grátis",
     avatar: null,
   };
   users.push(newUser);
   await saveDb(db);
-  return json(
-    { user: stripPassword(newUser), token: `fake-token-${newUser.id}` },
-    201
-  );
+  return withSession({ user: stripPassword(newUser) }, Number(newUser.id), 201);
 }

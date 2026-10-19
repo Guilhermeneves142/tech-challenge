@@ -1,8 +1,24 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
 import type { Category, DashboardWidget, Transaction } from "@/lib/api";
-import { WidgetChart } from "./WidgetChart";
+
+const WidgetChart = dynamic(
+  () => import("./WidgetChart").then((m) => m.WidgetChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        role="status"
+        aria-busy="true"
+        className="h-full w-full animate-pulse rounded-md bg-gray-100"
+      >
+        <span className="sr-only">Carregando gráfico…</span>
+      </div>
+    ),
+  }
+);
 
 export interface WidgetCardProps {
   widget: DashboardWidget;

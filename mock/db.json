@@ -3,7 +3,7 @@
     "id": 1,
     "name": "João Silva",
     "email": "joao@financeapp.com",
-    "password": "123456",
+    "password": "scrypt$b00c98295cdfb1469d48247257da1451$29248226e7323476796bbb4e49a10e61b4b64ac2f4f74e2e24e46e26465669dfef68f63192c6d46a2bd722f5ba1f196c0637ce36c560b6006005bacea20fd801",
     "initials": "JS",
     "plan": "Plano Profissional",
     "avatar": null
@@ -13,7 +13,7 @@
       "id": 1,
       "name": "João Silva",
       "email": "joao@financeapp.com",
-      "password": "123456",
+      "password": "scrypt$a890545ee1d2d260df599364655dd6c8$45dde3f351ee65dbcd0ec7851d2f7892dbd0e6ae5961e9e72752178ef1b8aa43eb196afd4fd5297bbd896236455b1f39b2906fd8b57d02d0100f7f7010635bcd",
       "initials": "JS",
       "plan": "Plano Profissional",
       "avatar": null
@@ -22,7 +22,7 @@
       "id": 2,
       "name": "Pedro Augusto",
       "email": "pedro@email.com",
-      "password": "123456",
+      "password": "scrypt$7d6bc1b6d0a0356572c23d134fbec3ba$9917b5863293380638bdbb96d23144d38073946566c2ab8496fca0e88ae03d4a82f2636dc99b5841a7ac7597c4664fe9bacd38ddb511acd84160981a50617ede",
       "initials": "PA",
       "plan": "Plano Grátis",
       "avatar": null
@@ -31,7 +31,7 @@
       "id": 3,
       "name": "Ana Beatriz",
       "email": "ana@gmail.com",
-      "password": "12345",
+      "password": "scrypt$fafb468c99c7cf162be1fbe4119b025c$d33b22808d58bd8f27d1f864ce1e732b16e72a354165e6c572c72786a59c40de9dc404b1325626d272b56a490be24acd911b9e32922643dab62c929b1fdc3e27",
       "initials": "AB",
       "plan": "Plano Grátis",
       "avatar": null
@@ -40,7 +40,7 @@
       "id": 4,
       "name": "Gabriela Santos",
       "email": "gabriela@gmail.com",
-      "password": "12345@",
+      "password": "scrypt$ea5c2bf2f3b027eedd9a44165a9fff05$92e4bc66a53709ace671b656f2947b33a80ec62fd476d88af37b51e5094147538deaf4fdbf7338e18ce2b6e5371bf120babf380442f276a9b4e9e10fc7ff9fb0",
       "initials": "GS",
       "plan": "Plano Grátis",
       "avatar": null
@@ -49,7 +49,7 @@
       "id": 5,
       "name": "Vandrei.lima",
       "email": "vandreilm@gmail.com",
-      "password": "12345678",
+      "password": "scrypt$b3aa24b10363277a916341d4d0332866$10b4fa3207e819c8b7ef9e459d2f898a63faa1314b619be90c0c64495544812f0346f01a63b1509b156b1aed069ee0993c4ddb7b5b4f6fb8226446d114e78c49",
       "initials": "V",
       "plan": "Plano Grátis",
       "avatar": null
@@ -58,7 +58,7 @@
       "id": 6,
       "name": "admin",
       "email": "admin@teste.com",
-      "password": "12345678",
+      "password": "scrypt$be04af7400c1db24a70dcaba20c6ffad$61760bb77c05a79c6e94ed5e54c703ae7f9adbedf1a8eda18873e28645f0c0d48a3426d878ade8b869f4fadd0c0bd3726346b2c2f37506c961e86a4a3d62ab47",
       "initials": "A",
       "plan": "Plano Grátis",
       "avatar": null

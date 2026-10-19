@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -33,7 +34,22 @@ import {
   validDimensions,
   validMetrics,
 } from "../types";
-import { WidgetChart } from "./WidgetChart";
+
+const WidgetChart = dynamic(
+  () => import("./WidgetChart").then((m) => m.WidgetChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        role="status"
+        aria-busy="true"
+        className="h-full w-full animate-pulse rounded-md bg-gray-100"
+      >
+        <span className="sr-only">Carregando gráfico…</span>
+      </div>
+    ),
+  }
+);
 
 export interface WidgetFormValues {
   title: string;

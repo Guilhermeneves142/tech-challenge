@@ -39,7 +39,12 @@ Nesta fase, a aplicação evoluiu para uma arquitetura de **Microfrontends** usa
 
 * **Desenvolvimento:** Next.js 16, React 19, TypeScript, Tailwind, shadcn/cn
 * **Microfrontends:** Next.js Multizones (proxy via `rewrites`)
+* **Dados no cliente (cache/requisições):** TanStack React Query v5 (`useQuery`, `useMutation`, scroll infinito e invalidação de cache)
+* **Estado global:** Redux Toolkit (MFE de transações)
 * **Gráficos:** Recharts
+* **Layout do dashboard:** react-grid-layout (widgets arrastáveis)
+* **Performance:** `next/dynamic` (lazy loading de gráficos e modais) + `loading.tsx` por rota
+* **Segurança:** sessão em cookie `httpOnly` com token assinado (HMAC-SHA256) e senhas com hash `scrypt`
 * **Dados:** API _mock_ via Route Handlers do Next (`/api`) · persistência em **Upstash Redis** (produção) ou `mock/db.json` (local/Docker)
 * **Containerização:** Docker + Docker Compose
 * **Design System:** Figma
@@ -157,13 +162,62 @@ npm install --prefix tech-challenge
 npm install --prefix mfe-auth
 npm install --prefix mfe-transactions
 
-# A partir do host, suba tudo (host + 2 MFEs) de uma vez
+# (opcional) variáveis de ambiente do host — veja a tabela abaixo
 cd tech-challenge
+echo 'AUTH_SECRET=troque-por-uma-string-aleatoria-com-32+-caracteres' > .env.local
+
+# A partir do host, suba tudo (host + 2 MFEs) de uma vez
 npm run dev
 
 # Abra o link do host (Ctrl + clique)
 http://localhost:3000
 ```
+
+| Porta | App |
+|---|---|
+| `3000` | host (shell + API `/api`) |
+| `4001` | mfe-auth (`/auth`) |
+| `4002` | mfe-transactions (`/transacoes`) |
+
+**React Query:** não precisa de configuração extra — o `QueryClientProvider` já está
+em `src/app/providers.tsx` de cada app e os hooks ficam em `src/lib/queries/`
+(`transactions.ts`, `widgets.ts`, `auth.ts`). Em dev, os MFEs incluem o
+`@tanstack/react-query-devtools` para inspecionar o cache no navegador.
+
+#### Variáveis de ambiente (host)
+
+| Variável | Para quê | Padrão |
+|---|---|---|
+| `AUTH_SECRET` | segredo que assina o token de sessão (**defina em produção**) | valor inseguro de dev |
+| `MFE_AUTH_URL` / `MFE_TX_URL` | URLs das zonas | `localhost:4001` / `:4002` |
+| `UPSTASH_REDIS_REST_URL` / `_TOKEN` | persistência em produção | `mock/db.json` |
+
+> **Login de teste:** `joao@financeapp.com` / `123456`.
+
+<br>
+
+## 🔐 Segurança
+
+* **Sessão:** o login define um cookie `httpOnly` (+ `Secure` em produção, `SameSite=Lax`)
+  com um token assinado por HMAC-SHA256 e expiração de 7 dias. O token **não é mais
+  guardado em `localStorage`** nem exposto ao JavaScript, o que mitiga roubo por XSS.
+* **Auth guard:** `src/proxy.ts` valida a assinatura/expiração do token (não basta o
+  cookie existir) e a API `/api` responde `401` sem sessão válida.
+* **Dados sensíveis:** senhas são armazenadas com hash `scrypt` + salt (senhas
+  legadas em texto puro são migradas no primeiro login); `password` nunca é
+  retornado pela API e o recurso `users` não é exposto pelo CRUD genérico.
+* **Usuário logado:** vem de `GET /api/auth/me`; logout via `POST /api/auth/logout`
+  (o servidor invalida o cookie).
+
+<br>
+
+## ⚡ Performance
+
+* `next/dynamic` nos gráficos (`WidgetChart`/Recharts) e nos modais (widget,
+  exclusão, transação), carregados só quando necessários.
+* `loading.tsx` por rota (`/dashboard`, `/em-construcao`, telas de auth e
+  transações) para feedback imediato durante a navegação.
+
 <br>
 
 ## 🐳 Como rodar com Docker
