@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
-import type { Category, DashboardWidget, Transaction } from "@/lib/api";
+import type { Category, DashboardWidget, Transaction } from "@/domain";
 
 const WidgetChart = dynamic(
   () => import("./WidgetChart").then((m) => m.WidgetChart),

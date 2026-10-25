@@ -24,14 +24,10 @@ import type {
   WidgetChartType,
   WidgetDimension,
   WidgetMetric,
-} from "@/lib/api";
+} from "@/domain";
 import { getCategoryIcon } from "@/lib/categoryIcons";
-import {
-  buildSeries,
-  formatAxisValue,
-  formatMetricValue,
-  metricValue,
-} from "../aggregate";
+import { buildSeries, metricValue } from "@/domain";
+import { formatAxisValue, formatMetricValue } from "../format";
 import { METRIC_LABELS } from "../types";
 
 export interface WidgetChartProps {

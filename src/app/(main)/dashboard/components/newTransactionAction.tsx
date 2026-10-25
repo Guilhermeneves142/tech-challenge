@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useCategories } from "@/lib/queries/transactions";
-import type { Category } from "@/lib/api";
+import type { Category } from "@/domain";
 
 const TransactionModal = dynamic(() =>
   import("@/components/transactions").then((m) => m.TransactionModal)

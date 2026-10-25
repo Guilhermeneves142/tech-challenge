@@ -1,9 +1,10 @@
-import type {
-  Category,
-  Transaction,
-  WidgetDimension,
-  WidgetMetric,
-} from "@/lib/api";
+import type { Category, Transaction } from "../transactions/transaction.entity";
+import type { WidgetDimension, WidgetMetric } from "./widget.entity";
+
+// ─────────────────────────────────────────────
+//  Domínio · Métricas dos widgets
+//  Agregações puras sobre transações (sem formatação de UI).
+// ─────────────────────────────────────────────
 
 export interface ChartDatum {
   label: string;
@@ -13,16 +14,6 @@ export interface ChartDatum {
 }
 
 const MONTH_FORMATTER = new Intl.DateTimeFormat("pt-BR", { month: "short" });
-
-const CURRENCY_FORMATTER = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
-
-const COMPACT_FORMATTER = new Intl.NumberFormat("pt-BR", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
 
 function sumIncome(transactions: Transaction[]): number {
   return transactions
@@ -51,18 +42,6 @@ export function metricValue(
     case "count":
       return transactions.length;
   }
-}
-
-export function formatMetricValue(metric: WidgetMetric, value: number): string {
-  return metric === "count"
-    ? String(value)
-    : CURRENCY_FORMATTER.format(value);
-}
-
-export function formatAxisValue(metric: WidgetMetric, value: number): string {
-  return metric === "count"
-    ? String(value)
-    : COMPACT_FORMATTER.format(value);
 }
 
 interface Group {

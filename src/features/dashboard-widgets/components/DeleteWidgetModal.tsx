@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@vandrei/finance-ui";
-import type { DashboardWidget } from "@/lib/api";
+import type { DashboardWidget } from "@/domain";
 
 export interface DeleteWidgetModalProps {
   open: boolean;

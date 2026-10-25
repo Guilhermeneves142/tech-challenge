@@ -25,7 +25,15 @@ import type {
   WidgetChartType,
   WidgetDimension,
   WidgetMetric,
-} from "@/lib/api";
+} from "@/domain";
+import {
+  DEFAULT_WIDGET_CONFIG,
+  metricValue,
+  normalizeWidgetConfig,
+  validateWidgetConfig,
+  type WidgetConfig,
+} from "@/domain";
+import { formatMetricValue } from "../format";
 import {
   CHART_TYPES,
   CHART_TYPE_LABELS,
@@ -51,12 +59,7 @@ const WidgetChart = dynamic(
   }
 );
 
-export interface WidgetFormValues {
-  title: string;
-  chartType: WidgetChartType;
-  metric: WidgetMetric;
-  dimension: WidgetDimension;
-}
+export type WidgetFormValues = WidgetConfig;
 
 export interface WidgetModalProps {
   open: boolean;
@@ -68,13 +71,6 @@ export interface WidgetModalProps {
   onSubmit: (values: WidgetFormValues) => Promise<void>;
 }
 
-const DEFAULT_FORM: WidgetFormValues = {
-  title: "",
-  chartType: "bar",
-  metric: "comparison",
-  dimension: "month",
-};
-
 export function WidgetModal({
   open,
   onOpenChange,
@@ -84,7 +80,7 @@ export function WidgetModal({
   categories,
   onSubmit,
 }: WidgetModalProps) {
-  const [form, setForm] = useState<WidgetFormValues>(DEFAULT_FORM);
+  const [form, setForm] = useState<WidgetFormValues>(DEFAULT_WIDGET_CONFIG);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -98,7 +94,7 @@ export function WidgetModal({
               metric: initial.metric,
               dimension: initial.dimension,
             }
-          : DEFAULT_FORM
+          : DEFAULT_WIDGET_CONFIG
       );
       setError(null);
     }
@@ -109,35 +105,20 @@ export function WidgetModal({
   const hasMetric = metrics.length > 0;
   const hasDimension = dimensions.length > 0;
 
+  // Troca de tipo/métrica re-normaliza a config segundo as regras do domínio
   function setChartType(chartType: WidgetChartType) {
-    setForm((prev) => {
-      const validM = validMetrics(chartType);
-      const metric =
-        validM.length === 0 || validM.includes(prev.metric)
-          ? prev.metric
-          : validM[0];
-      const dims = validDimensions(chartType, metric);
-      const dimension = dims.includes(prev.dimension)
-        ? prev.dimension
-        : (dims[0] ?? prev.dimension);
-      return { ...prev, chartType, metric, dimension };
-    });
+    setForm((prev) => normalizeWidgetConfig({ ...prev, chartType }));
   }
 
   function setMetric(metric: WidgetMetric) {
-    setForm((prev) => {
-      const dims = validDimensions(prev.chartType, metric);
-      const dimension = dims.includes(prev.dimension)
-        ? prev.dimension
-        : (dims[0] ?? prev.dimension);
-      return { ...prev, metric, dimension };
-    });
+    setForm((prev) => normalizeWidgetConfig({ ...prev, metric }));
   }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (!form.title.trim()) {
-      setError("Dê um nome para o widget.");
+    const validationError = validateWidgetConfig(form);
+    if (validationError) {
+      setError(validationError);
       return;
     }
     setError(null);
@@ -152,46 +133,10 @@ export function WidgetModal({
     }
   }
 
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(value);
-
-  const totalReceitas = transactions
-    .filter((transaction) => transaction.type === "credit")
-    .reduce((total, transaction) => total + transaction.amount, 0);
-
-  const totalDespesas = transactions
-    .filter((transaction) => transaction.type === "debit")
-    .reduce((total, transaction) => total + transaction.amount, 0);
-
-    const getPreviewValue = () => {
-      if (form.metric === ("revenue" as WidgetMetric)) {
-        return formatCurrency(totalReceitas);
-      }
-    
-      if (form.metric === ("expenses" as WidgetMetric)) {
-        return formatCurrency(totalDespesas);
-      }
-    
-      if (form.metric === "balance") {
-        return formatCurrency(totalReceitas - totalDespesas);
-      }
-    
-      if (form.metric === "count") {
-        return `${transactions.length} transações`;
-      }
-    
-      if (form.metric === "comparison") {
-        const totalCredit = transactions.filter((t) => t.type === "credit").length;
-        const totalDebit = transactions.filter((t) => t.type === "debit").length;
-    
-        return `Comparação com ${totalCredit} receitas e ${totalDebit} despesas`;
-      }
-    
-      return "Gráfico disponível";
-    };
+  const getPreviewValue = () => {
+    if (form.chartType === "list") return `${transactions.length} transações`;
+    return formatMetricValue(form.metric, metricValue(transactions, form.metric));
+  };
 
   const previewText = `${METRIC_LABELS[form.metric] ?? "Indicador"}: ${getPreviewValue()}`;
 

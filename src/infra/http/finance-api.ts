@@ -1,96 +1,25 @@
 // ─────────────────────────────────────────────
-//  API Client — aponta para as Route Handlers em /api
+//  Infra · API Client — aponta para as Route Handlers em /api
 //  (navegador usa "/api"; SSR usa URL absoluta)
 // ─────────────────────────────────────────────
-import { resolveApiBaseUrl } from "@/lib/api-base";
+// Tipos de domínio — a infra depende do domínio, nunca o contrário.
+import type {
+  Balance,
+  Budget,
+  Category,
+  Dashboard,
+  DashboardWidget,
+  NewDashboardWidget,
+  NewTransaction,
+  Report,
+  Transaction,
+  TransactionSummary,
+  User,
+} from "@/domain";
+import { resolveApiBaseUrl } from "./api-base";
+import { createHttpClient } from "./http-client";
 
-const BASE_URL = resolveApiBaseUrl();
-
-// ── Tipos ─────────────────────────────────────
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  initials: string;
-  plan: string;
-  avatar: string | null;
-}
-
-export interface Balance {
-  current: number;
-  variation: number;
-  variationLabel: string;
-}
-
-export interface Transaction {
-  id: number;
-  description: string;
-  category: string;
-  amount: number;
-  date: string;
-  dateLabel: string;
-  type: "credit" | "debit";
-}
-
-export interface Category {
-  id: string;
-  label: string;
-  icon: string;
-}
-
-export interface Budget {
-  id: number;
-  category: string;
-  categoryLabel: string;
-  limit: number;
-  spent: number;
-  period: string;
-}
-
-export interface Report {
-  month: string;
-  income: number;
-  expenses: number;
-}
-
-export interface TransactionSummary {
-  income: number;
-  expense: number;
-  currentBalance: number;
-  future: number;
-}
-
-export interface Dashboard {
-  user: User;
-  balance: Balance;
-  recentTransactions: Transaction[];
-}
-
-export type WidgetChartType = "kpi" | "bar" | "line" | "area" | "pie" | "list";
-export type WidgetMetric =
-  | "income"
-  | "expense"
-  | "balance"
-  | "count"
-  | "comparison";
-export type WidgetDimension = "month" | "category" | "type";
-
-export interface WidgetLayout {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
-
-export interface DashboardWidget {
-  id: number;
-  title: string;
-  chartType: WidgetChartType;
-  metric: WidgetMetric;
-  dimension: WidgetDimension;
-  layout: WidgetLayout;
-}
+const request = createHttpClient(resolveApiBaseUrl());
 
 export interface TransactionParams {
   _sort?: keyof Transaction;
@@ -109,21 +38,6 @@ const PARAM_KEY_MAP: Partial<Record<keyof TransactionParams, string>> = {
   dateGte: "date_gte",
   dateLte: "date_lte",
 };
-
-// ── Fetch base ────────────────────────────────
-
-async function request<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { "Content-Type": "application/json" },
-    ...options,
-  });
-
-  if (!res.ok) {
-    throw new Error(`API error ${res.status}: ${res.statusText}`);
-  }
-
-  return res.json() as Promise<T>;
-}
 
 function toQueryString(params: TransactionParams): string {
   const qs = new URLSearchParams(
@@ -171,14 +85,14 @@ export const api = {
   getDashboard: () => request<Dashboard>("/dashboard"),
 
   /** Cria uma nova transação */
-  createTransaction: (body: Omit<Transaction, "id">) =>
+  createTransaction: (body: NewTransaction) =>
     request<Transaction>("/transactions", {
       method: "POST",
       body: JSON.stringify(body),
     }),
 
   /** Atualiza uma transação existente */
-  updateTransaction: (id: number, body: Partial<Omit<Transaction, "id">>) =>
+  updateTransaction: (id: number, body: Partial<NewTransaction>) =>
     request<Transaction>(`/transactions/${id}`, {
       method: "PATCH",
       body: JSON.stringify(body),
@@ -193,7 +107,7 @@ export const api = {
     request<DashboardWidget[]>("/dashboardWidgets"),
 
   /** Cria um widget no dashboard */
-  createDashboardWidget: (body: Omit<DashboardWidget, "id">) =>
+  createDashboardWidget: (body: NewDashboardWidget) =>
     request<DashboardWidget>("/dashboardWidgets", {
       method: "POST",
       body: JSON.stringify(body),
@@ -202,7 +116,7 @@ export const api = {
   /** Atualiza um widget (config ou posição/tamanho) */
   updateDashboardWidget: (
     id: number,
-    body: Partial<Omit<DashboardWidget, "id">>
+    body: Partial<NewDashboardWidget>
   ) =>
     request<DashboardWidget>(`/dashboardWidgets/${id}`, {
       method: "PATCH",

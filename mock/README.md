@@ -120,7 +120,7 @@ Lógica que o CRUD genérico não cobre (agregações, joins) entra como um
 _branch_ em `src/app/api/[...path]/route.ts`, antes do CRUD genérico —
 veja `getDashboard()` e `getSummary()` como exemplos.
 
-### 3. Adicionar o endpoint no helper `src/lib/api.ts`
+### 3. Adicionar o endpoint no helper `src/infra/http/finance-api.ts`
 
 ```ts
 export const api = {
@@ -133,7 +133,7 @@ export const api = {
 ### 4. Usar no componente
 
 ```tsx
-import { api } from "@/lib/api";
+import { api } from "@/infra/http/finance-api";
 
 const goals = await api.getGoals();
 ```

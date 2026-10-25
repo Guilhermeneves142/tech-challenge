@@ -1,8 +1,10 @@
 "use client";
 
+// Adapter de apresentação: React Query cuida de cache/estado de servidor;
+// a regra de negócio fica nos casos de uso (application) e no domínio.
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/lib/api";
-import type { Transaction } from "@/lib/api";
+import { repositories, useCases } from "@/di/container";
+import type { SaveTransactionInput } from "@/application/transactions";
 
 export const TRANSACTIONS_QUERY_KEY = ["transactions"] as const;
 export const CATEGORIES_QUERY_KEY = ["categories"] as const;
@@ -10,33 +12,29 @@ export const CATEGORIES_QUERY_KEY = ["categories"] as const;
 export function useCategories(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: CATEGORIES_QUERY_KEY,
-    queryFn: api.getCategories,
+    queryFn: () => repositories.transactions.listCategories(),
     enabled: options?.enabled,
+    // Categorias quase nunca mudam: evita refetch à toa
+    staleTime: Infinity,
   });
 }
 
-export function useCreateTransaction() {
+export function useSaveTransaction() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (body: Omit<Transaction, "id">) => api.createTransaction(body),
+    mutationFn: (input: SaveTransactionInput) => useCases.saveTransaction(input),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: TRANSACTIONS_QUERY_KEY });
     },
   });
 }
 
-export function useUpdateTransaction() {
+export function useDeleteTransaction() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      id,
-      body,
-    }: {
-      id: number;
-      body: Partial<Omit<Transaction, "id">>;
-    }) => api.updateTransaction(id, body),
+    mutationFn: (id: number) => useCases.deleteTransaction(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: TRANSACTIONS_QUERY_KEY });
     },

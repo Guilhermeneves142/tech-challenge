@@ -1,6 +1,6 @@
 import "server-only";
 import { getDb } from "@/server/mock-db";
-import type { Category, DashboardWidget, Transaction } from "@/lib/api";
+import type { Category, DashboardWidget, Transaction } from "@/domain";
 
 // Acesso DIRETO aos dados no servidor (sem HTTP). Usado pelo SSR do dashboard:
 // evita self-fetch (VERCEL_URL/proteção de deployment) e funciona em qualquer ambiente.

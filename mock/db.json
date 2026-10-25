@@ -1635,6 +1635,28 @@
       "date": "2026-10-14T23:30:00.000Z",
       "dateLabel": "14 out, 20:30",
       "type": "credit"
+    },
+    {
+      "id": 176,
+      "description": "Steam",
+      "amount": -350,
+      "category": "lazer",
+      "date": "2026-10-25T00:00:00.000Z",
+      "dateLabel": "25 out, 09:35",
+      "type": "debit",
+      "attachment": "",
+      "attachmentName": ""
+    },
+    {
+      "id": 177,
+      "description": "Epic",
+      "amount": -500,
+      "category": "lazer",
+      "date": "2026-10-25T00:00:00.000Z",
+      "dateLabel": "25 out, 10:07",
+      "type": "debit",
+      "attachment": "",
+      "attachmentName": ""
     }
   ],
   "categories": [

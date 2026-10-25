@@ -40,7 +40,7 @@ Nesta fase, a aplicação evoluiu para uma arquitetura de **Microfrontends** usa
 * **Desenvolvimento:** Next.js 16, React 19, TypeScript, Tailwind, shadcn/cn
 * **Microfrontends:** Next.js Multizones (proxy via `rewrites`)
 * **Dados no cliente (cache/requisições):** TanStack React Query v5 (`useQuery`, `useMutation`, scroll infinito e invalidação de cache)
-* **Estado global:** Redux Toolkit (MFE de transações)
+* **Estado:** React Query (estado de servidor) + estado local; Redux Toolkit apenas no MFE de transações
 * **Gráficos:** Recharts
 * **Layout do dashboard:** react-grid-layout (widgets arrastáveis)
 * **Performance:** `next/dynamic` (lazy loading de gráficos e modais) + `loading.tsx` por rota
@@ -79,26 +79,37 @@ flowchart LR
 
 <br>
 
-## Arquitetura de pastas (host)
+## Arquitetura de pastas (host · Clean Architecture)
+
+O host separa **regras de negócio** (puras, testáveis) de **React/Next** e de **HTTP**.
+Regra de dependência: as setas só apontam para dentro → `presentation → application → domain ← infra`.
+
 ```bash
-TECH-CHALLENGE/
-├── mock/                       # db.json (seed dos dados / banco local)
-├── scripts/                    # seed-db.mjs (sobe o db.json p/ o Redis)
-├── src/
-│   ├── app/
-│   │   ├── (main)/             # área autenticada (dashboard, etc.)
-│   │   │   └── dashboard/
-│   │   ├── api/[...path]/      # API mock (mini json-server)
-│   │   └── layout.tsx
-│   ├── components/             # componentes do shell
-│   ├── features/               # dashboard-widgets, etc.
-│   ├── lib/                    # clientes de API e utilidades
-│   ├── server/                 # acesso a dados server-only (SSR)
-│   ├── shared/  ·  store/  ·  styles/
-│   └── proxy.ts                # auth guard (middleware)
-├── Dockerfile · docker-compose.yml · DOCKER.md
-└── next.config.ts              # rewrites das zonas (multizone)
+src/
+├── domain/                 #  Regras de negócio puras (sem React, sem fetch)
+│   ├── transactions/       #   entidades, validação, parseAmount, toNewTransaction, porta TransactionRepository
+│   ├── widgets/            #   CHART_RULES, normalizeWidgetConfig, métricas/séries, porta WidgetRepository
+│   └── user/ · finance/
+├── application/            #   Casos de uso (orquestram domínio + portas)
+│   ├── transactions/       #   saveTransaction, deleteTransaction
+│   └── widgets/            #   saveWidget
+├── infra/                  #   Detalhes técnicos (implementam as portas)
+│   ├── http/               #   http-client, finance-api, auth-api, api-base
+│   └── repositories/       #   httpTransactionRepository, httpWidgetRepository
+├── di/container.ts         #   Composition root: liga casos de uso ↔ infra
+├── lib/queries/            # Adapters React Query (estado de servidor/cache)
+├── app/ · components/ · features/   # Apresentação (UI + hooks de formulário)
+├── shared/formatters/      # Formatação de moeda (apresentação)
+└── server/                 # acesso a dados server-only (SSR) + mock DB
 ```
+
+**Gerenciamento de estado no host:** não usa Redux. Estado de servidor (transações,
+categorias, widgets, usuário) fica no **React Query**; estado de UI (modal aberto,
+campos do formulário) fica local em `useState`. Como cada zona do multizone é um app
+Next separado, um store global no host não seria compartilhado com os MFEs.
+
+Testes unitários de domínio/casos de uso: `npm run test:unit`.
+
 <br>
 
 ##  Demonstração
