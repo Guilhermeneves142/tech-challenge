@@ -19,6 +19,7 @@ import {
   useUpdateWidget,
   WIDGETS_QUERY_KEY,
 } from "@/lib/queries/widgets";
+import { useTransactions } from "@/lib/queries/transactions";
 import { defaultSizeFor, WIDGET_MIN_SIZE } from "../types";
 import { WidgetCard } from "./WidgetCard";
 import type { WidgetFormValues } from "./WidgetModal";
@@ -33,7 +34,7 @@ const DeleteWidgetModal = dynamic(() =>
 
 export interface WidgetsBoardProps {
   initialWidgets: DashboardWidget[];
-  transactions: Transaction[];
+  initialTransactions: Transaction[];
   categories: Category[];
 }
 
@@ -49,12 +50,14 @@ function sameLayout(a: WidgetLayout, b: WidgetLayout): boolean {
 
 export function WidgetsBoard({
   initialWidgets,
-  transactions,
+  initialTransactions,
   categories,
 }: WidgetsBoardProps) {
   const { width, containerRef, mounted } = useContainerWidth();
   const queryClient = useQueryClient();
   const { data: widgets } = useDashboardWidgets(initialWidgets);
+  const { data: transactions = initialTransactions } =
+    useTransactions(initialTransactions);
   const createWidget = useCreateWidget();
   const updateWidget = useUpdateWidget();
   const deleteWidget = useDeleteWidget();

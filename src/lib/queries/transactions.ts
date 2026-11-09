@@ -7,6 +7,15 @@ import type { Transaction } from "@/lib/api";
 export const TRANSACTIONS_QUERY_KEY = ["transactions"] as const;
 export const CATEGORIES_QUERY_KEY = ["categories"] as const;
 
+/** Transações do dashboard. `initialTransactions` vem do SSR — evita refetch no mount. */
+export function useTransactions(initialTransactions?: Transaction[]) {
+  return useQuery({
+    queryKey: TRANSACTIONS_QUERY_KEY,
+    queryFn: () => api.getTransactions(),
+    initialData: initialTransactions,
+  });
+}
+
 export function useCategories(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: CATEGORIES_QUERY_KEY,
