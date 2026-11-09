@@ -4,7 +4,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import GridLayout, { useContainerWidth } from "react-grid-layout";
 import type { Layout } from "react-grid-layout";
 import { ChartNoAxesCombined, Plus } from "lucide-react";
@@ -69,29 +69,25 @@ export function WidgetsBoard({
   const list = widgets ?? initialWidgets;
   const isMobile = width < 640;
 
-  const layout: Layout = useMemo(
-    () =>
-      list.map((w, index) => {
-        const base = {
-          i: String(w.id),
-          ...w.layout,
-          ...WIDGET_MIN_SIZE,
-        };
+  const layout: Layout = list.map((w, index) => {
+    const base = {
+      i: String(w.id),
+      ...w.layout,
+      ...WIDGET_MIN_SIZE,
+    };
 
-        if (isMobile) {
-          return {
-            ...base,
-            x: 0,
-            y: index * 8,
-            w: 12,
-            h: Math.max(base.h - 1, 4),
-          };
-        }
+    if (isMobile) {
+      return {
+        ...base,
+        x: 0,
+        y: index * 8,
+        w: 12,
+        h: Math.max(base.h - 1, 4)
+      };
+    }
 
-        return base;
-      }),
-    [list, isMobile]
-  );
+    return base;
+  });
 
   function handleLayoutChange(next: Layout) {
     if (isMobile) return;
@@ -110,8 +106,6 @@ export function WidgetsBoard({
 
     if (changed.length === 0) return;
 
-    // Cancela refetches em andamento: uma resposta antiga sobrescreveria o layout novo
-    // e o card "voltaria" para a posição anterior.
     queryClient.cancelQueries({ queryKey: WIDGETS_QUERY_KEY });
 
     // Atualiza o cache localmente antes da persistência, para o drag parecer instantâneo
@@ -122,8 +116,6 @@ export function WidgetsBoard({
       })
     );
 
-    // Uma única requisição em lote (o banco é uma chave só: PUTs paralelos se
-    // sobrescrevem) e uma única invalidação ao final.
     api
       .updateDashboardWidgetLayouts(changed)
       .then(() => setLayoutError(null))
@@ -213,9 +205,6 @@ export function WidgetsBoard({
                 handle: ".widget-drag-handle",
               }}
               resizeConfig={{ enabled: !isMobile }}
-              // Persiste só quando o usuário solta o card (drag/resize). `onLayoutChange`
-              // também dispara em mount, resize da janela e recompactação do grid,
-              // gerando PUTs/GETs em cascata sem ação do usuário.
               onDragStop={handleLayoutChange}
               onResizeStop={handleLayoutChange}
               className={isMobile ? "mx-0" : "-mx-3"}

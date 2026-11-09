@@ -209,7 +209,7 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
-  /** Salva o layout de vários widgets numa única requisição (evita corrida no banco) */
+  /** Atualiza o layout de vários widgets em uma única requisição */
   updateDashboardWidgetLayouts: (
     items: Array<{ id: number; layout: WidgetLayout }>
   ) =>
