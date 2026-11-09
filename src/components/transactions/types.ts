@@ -1,32 +1,24 @@
-import type { Category, Transaction } from "@/lib/api";
+import type {
+  Category,
+  NewTransaction,
+  Transaction,
+  TransactionDraft,
+  TransactionType,
+} from "@/domain";
 
-export type TransactionFormType = "credit" | "debit";
+// Aliases mantidos para não quebrar quem já importa daqui.
+export type TransactionFormType = TransactionType;
+export type TransactionFormState = TransactionDraft;
+export type CreateTransactionPayload = NewTransaction;
 
 export type TransactionModalMode = "create" | "edit";
-
-export interface CreateTransactionPayload {
-  description: string;
-  amount: number;
-  category: string;
-  date: string;
-  dateLabel: string;
-  type: TransactionFormType;
-}
-
-export interface TransactionFormState {
-  description: string;
-  amount: string;
-  category: string;
-  date: string;
-  type: TransactionFormType;
-}
 
 export interface TransactionModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   categories: Category[];
   mode?: TransactionModalMode;
-  initialData?: Partial<TransactionFormState>;
+  initialData?: Partial<TransactionDraft>;
   transactionId?: number;
   onSuccess?: (transaction: Transaction) => void;
 }

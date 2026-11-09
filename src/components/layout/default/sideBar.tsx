@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   LogOut,
   Lock,
@@ -23,16 +23,10 @@ import {
   DialogClose,
   Button,
 } from "@vandrei/finance-ui";
-import { clearAuth } from "@/lib/auth-storage";
+import { getInitials } from "@/domain";
+import { clearAuth } from "@/infra/http/auth-storage";
+import { useCurrentUser } from "@/lib/queries/user";
 
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  initials?: string;
-  plan?: string;
-  avatar?: string | null;
-};
 
 const menuItems = [
   {
@@ -59,16 +53,6 @@ const menuItems = [
   },
 ];
 
-function getInitials(name: string) {
-  return name
-    .trim()
-    .split(" ")
-    .filter(Boolean)
-    .map((word) => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
 
 const navItemClass =
   "flex h-12 items-center gap-3 rounded-lg px-4 transition-all duration-200";
@@ -185,21 +169,8 @@ export default function Sidebar() {
 
   const [openLogoutModal, setOpenLogoutModal] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    // Usuário vem da sessão (cookie httpOnly) via /api/auth/me — nada em localStorage.
-    const controller = new AbortController();
-    fetch(`${process.env.NEXT_PUBLIC_API_URL ?? "/api"}/auth/me`, {
-      signal: controller.signal,
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => setUser(data?.user ?? null))
-      .catch(() => setUser(null))
-      .finally(() => setIsMounted(true));
-    return () => controller.abort();
-  }, []);
+  // query cacheada (sem refetch a cada navegação).
+  const { data: user, isFetched: isMounted } = useCurrentUser();
 
   async function handleLogout() {
     await clearAuth();

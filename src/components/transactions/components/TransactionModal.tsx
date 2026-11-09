@@ -26,7 +26,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@vandrei/finance-ui";
-import { TransactionFormType, TransactionModalProps } from "@/components/transactions/types";
+import { DESCRIPTION_MAX_LENGTH } from "@/domain";
+import type { TransactionFormType, TransactionModalProps } from "@/components/transactions/types";
 import { useTransactionForm } from "@/components/transactions/hooks/useTransactionForm";
 
 const tabTriggerClass =
@@ -93,7 +94,7 @@ export function TransactionModal({
               className="rounded-lg"
               value={form.description}
               onChange={(e) => setField("description", e.target.value)}
-              maxLength={20}
+              maxLength={DESCRIPTION_MAX_LENGTH}
             />
           </div>
 

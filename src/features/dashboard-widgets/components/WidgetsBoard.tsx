@@ -9,18 +9,15 @@ import GridLayout, { useContainerWidth } from "react-grid-layout";
 import type { Layout } from "react-grid-layout";
 import { ChartNoAxesCombined, Plus } from "lucide-react";
 import { Button } from "@vandrei/finance-ui";
-import { useQueryClient } from "@tanstack/react-query";
-import { api } from "@/lib/api";
-import type { Category, DashboardWidget, Transaction, WidgetLayout } from "@/lib/api";
+import type { Category, DashboardWidget, Transaction, WidgetLayout } from "@/domain";
+import { changedLayouts, WIDGET_MIN_SIZE } from "@/domain";
 import {
-  useCreateWidget,
   useDashboardWidgets,
   useDeleteWidget,
-  useUpdateWidget,
-  WIDGETS_QUERY_KEY,
+  useSaveWidget,
+  useSaveWidgetLayouts,
 } from "@/lib/queries/widgets";
 import { useTransactions } from "@/lib/queries/transactions";
-import { defaultSizeFor, WIDGET_MIN_SIZE } from "../types";
 import { WidgetCard } from "./WidgetCard";
 import type { WidgetFormValues } from "./WidgetModal";
 
@@ -44,22 +41,17 @@ interface ModalState {
   widget?: DashboardWidget;
 }
 
-function sameLayout(a: WidgetLayout, b: WidgetLayout): boolean {
-  return a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h;
-}
-
 export function WidgetsBoard({
   initialWidgets,
   initialTransactions,
   categories,
 }: WidgetsBoardProps) {
   const { width, containerRef, mounted } = useContainerWidth();
-  const queryClient = useQueryClient();
   const { data: widgets } = useDashboardWidgets(initialWidgets);
   const { data: transactions = initialTransactions } =
     useTransactions(initialTransactions);
-  const createWidget = useCreateWidget();
-  const updateWidget = useUpdateWidget();
+  const saveWidget = useSaveWidget();
+  const saveLayouts = useSaveWidgetLayouts();
   const deleteWidget = useDeleteWidget();
   const [layoutError, setLayoutError] = useState<string | null>(null);
 
@@ -102,52 +94,22 @@ export function WidgetsBoard({
       })
     );
 
-    const changed = layouts.filter(({ id, layout }) => {
-      const widget = list.find((w) => w.id === id);
-      return widget && !sameLayout(widget.layout, layout);
-    });
+    const changed = changedLayouts(list, layouts);
 
     if (changed.length === 0) return;
 
-    queryClient.cancelQueries({ queryKey: WIDGETS_QUERY_KEY });
-
-    // Atualiza o cache localmente antes da persistência, para o drag parecer instantâneo
-    queryClient.setQueryData<DashboardWidget[]>(WIDGETS_QUERY_KEY, (prev) =>
-      (prev ?? list).map((w) => {
-        const next = changed.find((c) => c.id === w.id);
-        return next ? { ...w, layout: next.layout } : w;
-      })
-    );
-
-    api
-      .updateDashboardWidgetLayouts(changed)
-      .then(() => setLayoutError(null))
-      .catch(() =>
-        setLayoutError("Não foi possível salvar a posição dos widgets.")
-      )
-      .finally(() =>
-        queryClient.invalidateQueries({ queryKey: WIDGETS_QUERY_KEY })
-      );
+    saveLayouts.mutate(changed, {
+      onSuccess: () => setLayoutError(null),
+      onError: () =>
+        setLayoutError("Não foi possível salvar a posição dos widgets."),
+    });
   }
 
   async function handleSubmit(values: WidgetFormValues) {
-    if (modal.mode === "edit" && modal.widget) {
-      await updateWidget.mutateAsync({ id: modal.widget.id, data: values });
-      return;
-    }
-
-    const bottom = list.reduce(
-      (max, w) => Math.max(max, w.layout.y + w.layout.h),
-      0
-    );
-
-    await createWidget.mutateAsync({
-      ...values,
-      layout: {
-        x: 0,
-        y: bottom,
-        ...defaultSizeFor(values.chartType),
-      },
+    await saveWidget.mutateAsync({
+      config: values,
+      current: list,
+      id: modal.mode === "edit" ? modal.widget?.id : undefined,
     });
   }
 

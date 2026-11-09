@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { Category, Transaction } from "@/lib/api";
+import type { Category, Transaction } from "@/domain";
 import { WidgetCard } from "./WidgetCard";
 
 // ── Dados de exemplo (mock) usados em todas as stories ───────────────
