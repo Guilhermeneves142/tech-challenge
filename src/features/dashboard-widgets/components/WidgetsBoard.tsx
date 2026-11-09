@@ -17,6 +17,7 @@ import {
   useSaveWidget,
   useSaveWidgetLayouts,
 } from "@/lib/queries/widgets";
+import { useTransactions } from "@/lib/queries/transactions";
 import { WidgetCard } from "./WidgetCard";
 import type { WidgetFormValues } from "./WidgetModal";
 
@@ -30,7 +31,7 @@ const DeleteWidgetModal = dynamic(() =>
 
 export interface WidgetsBoardProps {
   initialWidgets: DashboardWidget[];
-  transactions: Transaction[];
+  initialTransactions: Transaction[];
   categories: Category[];
 }
 
@@ -42,11 +43,13 @@ interface ModalState {
 
 export function WidgetsBoard({
   initialWidgets,
-  transactions,
+  initialTransactions,
   categories,
 }: WidgetsBoardProps) {
   const { width, containerRef, mounted } = useContainerWidth();
   const { data: widgets } = useDashboardWidgets(initialWidgets);
+  const { data: transactions = initialTransactions } =
+    useTransactions(initialTransactions);
   const saveWidget = useSaveWidget();
   const saveLayouts = useSaveWidgetLayouts();
   const deleteWidget = useDeleteWidget();
@@ -167,7 +170,8 @@ export function WidgetsBoard({
                 handle: ".widget-drag-handle",
               }}
               resizeConfig={{ enabled: !isMobile }}
-              onLayoutChange={handleLayoutChange}
+              onDragStop={handleLayoutChange}
+              onResizeStop={handleLayoutChange}
               className={isMobile ? "mx-0" : "-mx-3"}
             >
               {list.map((widget) => (

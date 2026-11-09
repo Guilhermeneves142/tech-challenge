@@ -57,7 +57,7 @@ export default async function DashboardPage() {
         </section>
         <WidgetsBoard
           initialWidgets={widgets}
-          transactions={transactions}
+          initialTransactions={transactions}
           categories={categories}
         />
       </section>

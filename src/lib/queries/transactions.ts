@@ -5,9 +5,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { repositories, useCases } from "@/di/container";
 import type { SaveTransactionInput } from "@/application/transactions";
+import type { Transaction } from "@/domain";
 
 export const TRANSACTIONS_QUERY_KEY = ["transactions"] as const;
 export const CATEGORIES_QUERY_KEY = ["categories"] as const;
+
+/** Transações do dashboard. `initialTransactions` vem do SSR — evita refetch no mount. */
+export function useTransactions(initialTransactions?: Transaction[]) {
+  return useQuery({
+    queryKey: TRANSACTIONS_QUERY_KEY,
+    queryFn: () => repositories.transactions.list(),
+    initialData: initialTransactions,
+  });
+}
 
 export function useCategories(options?: { enabled?: boolean }) {
   return useQuery({

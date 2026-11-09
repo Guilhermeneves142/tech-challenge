@@ -15,6 +15,7 @@ import type {
   Transaction,
   TransactionSummary,
   User,
+  WidgetLayout,
 } from "@/domain";
 import { resolveApiBaseUrl } from "./api-base";
 import { createHttpClient } from "./http-client";
@@ -121,6 +122,15 @@ export const api = {
     request<DashboardWidget>(`/dashboardWidgets/${id}`, {
       method: "PATCH",
       body: JSON.stringify(body),
+    }),
+
+  /** Atualiza o layout de vários widgets em uma única requisição */
+  updateDashboardWidgetLayouts: (
+    items: Array<{ id: number; layout: WidgetLayout }>
+  ) =>
+    request<DashboardWidget[]>("/dashboardWidgets/layouts", {
+      method: "PUT",
+      body: JSON.stringify(items),
     }),
 
   /** Remove um widget do dashboard */

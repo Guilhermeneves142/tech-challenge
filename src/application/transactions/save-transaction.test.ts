@@ -4,6 +4,7 @@ import { makeSaveTransaction } from "./save-transaction";
 
 function fakeRepo(): TransactionRepository {
   return {
+    list: vi.fn(async () => []),
     create: vi.fn(async (data) => ({ id: 1, ...data })),
     update: vi.fn(async (id, data) => ({ id, ...(data as NewTransaction) })),
     remove: vi.fn(async () => {}),
