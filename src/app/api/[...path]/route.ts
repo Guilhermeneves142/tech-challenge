@@ -144,6 +144,18 @@ async function updateItem(
 
   const db = await getDb();
   const [resource, id] = seg;
+
+  if (resource === "dashboardWidgets" && id === "layouts") {
+    const widgets = (db.dashboardWidgets as Item[]) ?? [];
+    const updates = (await req.json()) as Array<{ id: number; layout: unknown }>;
+    for (const u of updates) {
+      const w = widgets.find((it) => String(it.id) === String(u.id));
+      if (w) w.layout = u.layout;
+    }
+    await saveDb(db);
+    return json(widgets);
+  }
+
   if (!resource || PRIVATE.has(resource) || !Array.isArray(db[resource]))
     return json({}, 404);
 

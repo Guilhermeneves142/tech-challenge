@@ -10,6 +10,7 @@ import type { Layout } from "react-grid-layout";
 import { ChartNoAxesCombined, Plus } from "lucide-react";
 import { Button } from "@vandrei/finance-ui";
 import { useQueryClient } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import type { Category, DashboardWidget, Transaction, WidgetLayout } from "@/lib/api";
 import {
   useCreateWidget,
@@ -105,6 +106,8 @@ export function WidgetsBoard({
 
     if (changed.length === 0) return;
 
+    queryClient.cancelQueries({ queryKey: WIDGETS_QUERY_KEY });
+
     // Atualiza o cache localmente antes da persistência, para o drag parecer instantâneo
     queryClient.setQueryData<DashboardWidget[]>(WIDGETS_QUERY_KEY, (prev) =>
       (prev ?? list).map((w) => {
@@ -113,14 +116,14 @@ export function WidgetsBoard({
       })
     );
 
-    Promise.all(
-      changed.map(({ id, layout }) =>
-        updateWidget.mutateAsync({ id, data: { layout } })
-      )
-    )
+    api
+      .updateDashboardWidgetLayouts(changed)
       .then(() => setLayoutError(null))
       .catch(() =>
         setLayoutError("Não foi possível salvar a posição dos widgets.")
+      )
+      .finally(() =>
+        queryClient.invalidateQueries({ queryKey: WIDGETS_QUERY_KEY })
       );
   }
 
@@ -202,7 +205,8 @@ export function WidgetsBoard({
                 handle: ".widget-drag-handle",
               }}
               resizeConfig={{ enabled: !isMobile }}
-              onLayoutChange={handleLayoutChange}
+              onDragStop={handleLayoutChange}
+              onResizeStop={handleLayoutChange}
               className={isMobile ? "mx-0" : "-mx-3"}
             >
               {list.map((widget) => (
