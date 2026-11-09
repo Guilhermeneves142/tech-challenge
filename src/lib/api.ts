@@ -209,6 +209,15 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
+  /** Salva o layout de vários widgets numa única requisição (evita corrida no banco) */
+  updateDashboardWidgetLayouts: (
+    items: Array<{ id: number; layout: WidgetLayout }>
+  ) =>
+    request<DashboardWidget[]>("/dashboardWidgets/layouts", {
+      method: "PUT",
+      body: JSON.stringify(items),
+    }),
+
   /** Remove um widget do dashboard */
   deleteDashboardWidget: (id: number) =>
     request<void>(`/dashboardWidgets/${id}`, { method: "DELETE" }),

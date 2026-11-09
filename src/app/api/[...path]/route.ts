@@ -144,6 +144,21 @@ async function updateItem(
 
   const db = await getDb();
   const [resource, id] = seg;
+
+  // Lote: /dashboardWidgets/layouts — grava vários layouts em UMA leitura/escrita.
+  // O banco é uma única chave; PUTs paralelos por widget fazem read-modify-write
+  // concorrente e se sobrescrevem (o último ganha), perdendo posições.
+  if (resource === "dashboardWidgets" && id === "layouts") {
+    const widgets = (db.dashboardWidgets as Item[]) ?? [];
+    const updates = (await req.json()) as Array<{ id: number; layout: unknown }>;
+    for (const u of updates) {
+      const w = widgets.find((it) => String(it.id) === String(u.id));
+      if (w) w.layout = u.layout;
+    }
+    await saveDb(db);
+    return json(widgets);
+  }
+
   if (!resource || PRIVATE.has(resource) || !Array.isArray(db[resource]))
     return json({}, 404);
 
