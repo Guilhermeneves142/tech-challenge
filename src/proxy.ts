@@ -1,0 +1,36 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { AUTH_COOKIE, verifySessionToken } from "@/server/auth";
+
+// Prefixo das zonas públicas (MFE de autenticação via multizone).
+const PUBLIC_PREFIX = "/auth";
+
+export default function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Deixa os assets dos MFEs (/auth/_next/...) passarem direto para o rewrite.
+  if (pathname.includes("/_next/")) {
+    return NextResponse.next();
+  }
+
+  // Token assinado (HMAC) e não expirado — não basta o cookie existir.
+  const token =
+    verifySessionToken(request.cookies.get(AUTH_COOKIE)?.value) !== null;
+  const isPublic = pathname.startsWith(PUBLIC_PREFIX);
+
+  if (!token && !isPublic) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+
+  if (token && isPublic) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  // Exclui /api (rotas de dados — não passam pelo auth guard, senão login/SSR
+  // são redirecionados pra /auth/login e recebem HTML em vez de JSON).
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|em-construcao).*)"],
+};

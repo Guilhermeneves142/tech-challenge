@@ -1,0 +1,21 @@
+# Contexto de build = pasta-pai (../). Por padrão isso enviaria TODOS
+# os projetos irmãos (backend, frontend, figma-*, finance-ui, etc.).
+# Estratégia: ignora tudo e libera só os 3 projetos do tech-challenge.
+
+# 1) Ignora tudo
+*
+
+# 2) Libera apenas os 3 repositórios necessários
+!tech-challenge
+!mfe-auth
+!mfe-transactions
+
+# 3) Mesmo dentro deles, descarta o que é pesado / específico de máquina
+**/node_modules
+**/.next
+**/.git
+**/.env*.local
+**/npm-debug.log*
+**/*.tsbuildinfo
+tech-challenge/stories
+tech-challenge/docs

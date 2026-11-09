@@ -6,9 +6,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-0 lg:w-[255px] shrink-0">
-        <div className="fixed left-0 top-0 h-screen w-[255px] flex flex-col justify-between">
+    <div className="flex min-h-screen max-lg:pt-[88px]">
+      <aside className="max-lg:w-0 w-[255px] shrink-0">
+        <div className="fixed left-0 top-0 z-50 h-screen w-[255px] flex flex-col justify-between">
           <Sidebar />
         </div>
       </aside>
@@ -16,7 +16,7 @@ export default function DashboardLayout({
       <section className="flex flex-col flex-1 px-6">
         <main className="py-4">{children}</main>
         <footer className="text-center mt-auto">
-          <span className="text-[12px] text-text-tertiary">
+          <span className="text-[12px] text-text-secondary">
             © 2023 FinanceApp - Sua Gestão Financeira Profissional.
           </span>
         </footer>

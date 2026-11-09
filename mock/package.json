@@ -1,0 +1,12 @@
+{
+  "name": "financeapp-mock",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API mock (json-server) do FinanceApp — Tech Challenge",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "json-server": "0.17.4"
+  }
+}

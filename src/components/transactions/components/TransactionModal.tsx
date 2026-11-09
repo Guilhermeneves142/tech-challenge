@@ -10,26 +10,28 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialogModal/dialog";
-import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/inputs/input";
-import { Label } from "@/components/ui/label/label";
-import { Calendar } from "@/components/ui/calendar/calendar";
-import {
+  Button,
+  Input,
+  Label,
+  Calendar,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover/popover";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select/select";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs/tabs";
-import { TransactionFormType, TransactionModalProps } from "@/components/transactions/types";
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@vandrei/finance-ui";
+import { DESCRIPTION_MAX_LENGTH } from "@/domain";
+import type { TransactionFormType, TransactionModalProps } from "@/components/transactions/types";
 import { useTransactionForm } from "@/components/transactions/hooks/useTransactionForm";
+
+const tabTriggerClass =
+  "flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text-white hover:text-white hover:bg-white/10 data-active:bg-brand-secondary data-active:text-brand-primary data-active:shadow-sm data-active:hover:brightness-95 data-active:hover:bg-brand-secondary";
 
 export function TransactionModal({
   open,
@@ -73,16 +75,10 @@ export function TransactionModal({
         >
           <Tabs value={form.type} onValueChange={(v) => setType(v as TransactionFormType)}>
             <TabsList className="w-full bg-brand-primary rounded-[10px] !h-[35px]">
-              <TabsTrigger
-                value="credit"
-                className="flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text-white hover:text-white hover:bg-white/10 data-active:bg-brand-secondary data-active:text-brand-primary data-active:shadow-sm data-active:hover:brightness-95 data-active:hover:bg-brand-secondary"
-              >
+              <TabsTrigger value="credit" className={tabTriggerClass}>
                 Receita
               </TabsTrigger>
-              <TabsTrigger
-                value="debit"
-                className="flex-1 !h-[29px] rounded-[10px] py-1 px-2 cursor-pointer text-white hover:text-white hover:bg-white/10 data-active:bg-brand-secondary data-active:text-brand-primary data-active:shadow-sm data-active:hover:brightness-95 data-active:hover:bg-brand-secondary"
-              >
+              <TabsTrigger value="debit" className={tabTriggerClass}>
                 Despesa
               </TabsTrigger>
             </TabsList>
@@ -98,7 +94,7 @@ export function TransactionModal({
               className="rounded-lg"
               value={form.description}
               onChange={(e) => setField("description", e.target.value)}
-              maxLength={20}
+              maxLength={DESCRIPTION_MAX_LENGTH}
             />
           </div>
 
@@ -174,7 +170,11 @@ export function TransactionModal({
             </Popover>
           </div>
 
-          {error && <p className="text-caption text-feedback-error">{error}</p>}
+          {error && (
+            <p role="alert" className="text-caption text-feedback-error">
+              {error}
+            </p>
+          )}
         </form>
 
         <DialogFooter className="mt-4 bg-white border-none">

@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
-import { TransactionModal } from "@/components/transactions";
-import { api } from "@/lib/api";
-import type { Category } from "@/lib/api";
+import dynamic from "next/dynamic";
+import { useCategories } from "@/lib/queries/transactions";
+import type { Category } from "@/domain";
+
+const TransactionModal = dynamic(() =>
+  import("@/components/transactions").then((m) => m.TransactionModal)
+);
 
 type Props = {
   className?: string;
@@ -13,12 +17,13 @@ type Props = {
 
 export default function NewTransactionAction({ className, categories: categoriesProp }: Props) {
   const [open, setOpen] = useState(false);
-  const [categories, setCategories] = useState<Category[]>(categoriesProp ?? []);
-
-  useEffect(() => {
-    if (categoriesProp && categoriesProp.length > 0) return;
-    api.getCategories().then(setCategories).catch(console.error);
-  }, []);
+  const hasInitialCategories = !!categoriesProp && categoriesProp.length > 0;
+  const { data: fetchedCategories } = useCategories({
+    enabled: !hasInitialCategories,
+  });
+  const categories = hasInitialCategories
+    ? categoriesProp
+    : (fetchedCategories ?? []);
 
   return (
     <>
@@ -36,12 +41,14 @@ export default function NewTransactionAction({ className, categories: categories
         <span className="pt-2 text-[18px] font-medium">Transação</span>
       </button>
 
-      <TransactionModal
-        open={open}
-        onOpenChange={setOpen}
-        categories={categories}
-        mode="create"
-      />
+      {open && (
+        <TransactionModal
+          open={open}
+          onOpenChange={setOpen}
+          categories={categories}
+          mode="create"
+        />
+      )}
     </>
   );
 }

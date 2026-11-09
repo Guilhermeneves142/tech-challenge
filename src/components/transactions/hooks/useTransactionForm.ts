@@ -1,93 +1,67 @@
 "use client";
 
+// Hook de APRESENTAÇÃO: só estado do formulário + ponte com o caso de uso.
+// Validação, conversão de valor e montagem do payload vivem em @/domain.
 import { useState } from "react";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { api } from "@/lib/api";
-import type { TransactionFormState, TransactionFormType, CreateTransactionPayload, TransactionModalMode } from "../types";
-import type { Transaction } from "@/lib/api";
-
-const INITIAL_STATE: TransactionFormState = {
-  description: "",
-  amount: "",
-  category: "",
-  date: "",
-  type: "credit",
-};
+import {
+  EMPTY_TRANSACTION_DRAFT,
+  TransactionValidationError,
+  type Transaction,
+  type TransactionDraft,
+  type TransactionType,
+} from "@/domain";
+import { useSaveTransaction } from "@/lib/queries/transactions";
+import type { TransactionModalMode } from "../types";
 
 interface UseTransactionFormOptions {
   mode?: TransactionModalMode;
   transactionId?: number;
-  initialData?: Partial<TransactionFormState>;
+  initialData?: Partial<TransactionDraft>;
   onSuccess?: (transaction: Transaction) => void;
   onClose: () => void;
 }
 
-export function useTransactionForm({ mode = "create", transactionId, initialData, onSuccess, onClose }: UseTransactionFormOptions) {
-  const [form, setForm] = useState<TransactionFormState>({
-    ...INITIAL_STATE,
-    ...initialData,
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const SAVE_ERROR = "Não foi possível salvar a transação. Tente novamente.";
 
-  function setField<K extends keyof TransactionFormState>(key: K, value: TransactionFormState[K]) {
+export function useTransactionForm({
+  mode = "create",
+  transactionId,
+  initialData,
+  onSuccess,
+  onClose,
+}: UseTransactionFormOptions) {
+  const initial = { ...EMPTY_TRANSACTION_DRAFT, ...initialData };
+  const [form, setForm] = useState<TransactionDraft>(initial);
+  const [error, setError] = useState<string | null>(null);
+  const saveTransaction = useSaveTransaction();
+
+  function setField<K extends keyof TransactionDraft>(key: K, value: TransactionDraft[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  function setType(type: TransactionFormType) {
+  function setType(type: TransactionType) {
     setField("type", type);
   }
 
   function reset() {
-    setForm({ ...INITIAL_STATE, ...initialData });
+    setForm(initial);
     setError(null);
-  }
-
-  function validate(): string | null {
-    if (!form.description.trim()) return "Descrição é obrigatória.";
-    const parsed = parseFloat(form.amount.replace(",", "."));
-    if (isNaN(parsed) || parsed <= 0) return "Informe um valor válido.";
-    if (!form.category) return "Selecione uma categoria.";
-    if (!form.date) return "Selecione uma data.";
-    return null;
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
 
-    const validationError = validate();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    const rawAmount = parseFloat(form.amount.replace(",", "."));
-    const now = new Date();
-    const dateLabel = format(new Date(`${form.date}T${format(now, "HH:mm:ss")}`), "dd MMM, HH:mm", { locale: ptBR });
-
-    const payload: CreateTransactionPayload = {
-      description: form.description.trim(),
-      amount: form.type === "debit" ? -rawAmount : rawAmount,
-      category: form.category,
-      date: new Date(form.date).toISOString(),
-      dateLabel,
-      type: form.type,
-    };
-
-    setLoading(true);
     try {
-      const result = mode === "edit" && transactionId
-        ? await api.updateTransaction(transactionId, payload)
-        : await api.createTransaction(payload);
+      const result = await saveTransaction.mutateAsync({
+        draft: form,
+        id: mode === "edit" ? transactionId : undefined,
+      });
       onSuccess?.(result);
       reset();
       onClose();
-    } catch {
-      setError("Não foi possível salvar a transação. Tente novamente.");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      setError(err instanceof TransactionValidationError ? err.message : SAVE_ERROR);
     }
   }
 
@@ -96,5 +70,14 @@ export function useTransactionForm({ mode = "create", transactionId, initialData
     onClose();
   }
 
-  return { form, loading, error, setField, setType, handleSubmit, handleCancel, reset };
+  return {
+    form,
+    loading: saveTransaction.isPending,
+    error,
+    setField,
+    setType,
+    handleSubmit,
+    handleCancel,
+    reset,
+  };
 }

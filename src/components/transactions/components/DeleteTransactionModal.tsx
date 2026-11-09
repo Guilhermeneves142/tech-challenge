@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ShoppingBag } from "lucide-react";
 import {
   Dialog,
@@ -9,10 +8,11 @@ import {
   DialogTitle,
   DialogFooter,
   DialogClose,
-} from "@/components/ui/dialogModal/dialog";
-import { Button } from "@/components/ui/button/button";
-import { api } from "@/lib/api";
-import type { Transaction } from "@/lib/api";
+  Button,
+} from "@vandrei/finance-ui";
+import type { Transaction } from "@/domain";
+import { formatSignedCurrency } from "@/shared/formatters/currency";
+import { useDeleteTransaction } from "@/lib/queries/transactions";
 
 export interface DeleteTransactionModalProps {
   open: boolean;
@@ -27,26 +27,24 @@ export function DeleteTransactionModal({
   transaction,
   onSuccess,
 }: DeleteTransactionModalProps) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const deleteTransaction = useDeleteTransaction();
+  const loading = deleteTransaction.isPending;
+  const error = deleteTransaction.isError
+    ? "Não foi possível remover a transação. Tente novamente."
+    : null;
 
   async function handleDelete() {
     if (!transaction) return;
-    setError(null);
-    setLoading(true);
     try {
-      await api.deleteTransaction(transaction.id);
+      await deleteTransaction.mutateAsync(transaction.id);
       onSuccess?.(transaction.id);
       onOpenChange(false);
     } catch {
-      setError("Não foi possível remover a transação. Tente novamente.");
-    } finally {
-      setLoading(false);
+      // erro exposto via deleteTransaction.isError
     }
   }
 
   const amount = transaction?.amount ?? 0;
-  const formatted = `R$ ${Math.abs(amount).toFixed(2).replace(".", ",")}`;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -69,13 +67,16 @@ export function DeleteTransactionModal({
                 <h6>{transaction.description}</h6>
               </div>
               <h6 className={amount < 0 ? "text-feedback-error" : "text-primary"}>
-                {amount < 0 ? "- " : "+ "}
-                {formatted}
+                {formatSignedCurrency(amount)}
               </h6>
             </div>
           )}
 
-          {error && <p className="text-caption text-feedback-error">{error}</p>}
+          {error && (
+            <p role="alert" className="text-caption text-feedback-error">
+              {error}
+            </p>
+          )}
         </div>
 
         <DialogFooter className="mt-4 bg-white border-none">
